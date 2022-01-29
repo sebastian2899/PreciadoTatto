@@ -1,0 +1,29 @@
+{
+  "preciadoTattoApp": {
+    "ventas": {
+      "home": {
+        "title": "Ventas",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nueva Venta",
+        "createOrEditLabel": "Crear o editar Venta",
+        "notFound": "Ningúna Venta encontrado"
+      },
+      "created": "Una nueva Venta ha sido creada con el identificador {{ param }}",
+      "updated": "Una Venta ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una Venta ha sido eliminada con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Venta {{ id }}?"
+      },
+      "detail": {
+        "title": "Ventas"
+      },
+      "id": "ID",
+      "fechaCreacion": "Fecha Creacion",
+      "idCliente": "Id Cliente",
+      "valorVenta": "Valor Venta",
+      "valorPagado": "Valor Pagado",
+      "valorDeuda": "Valor Deuda",
+      "estado": "Estado"
+    }
+  }
+}

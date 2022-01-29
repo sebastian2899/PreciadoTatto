@@ -1,8 +1,11 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-primary">
+<nav
+  style="background: linear-gradient(45deg, rgb(19, 18, 18), black, rgba(0, 255, 255, 0.83))"
+  data-cy="navbar"
+  class="navbar navbar-dark navbar-expand-md"
+>
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
-    <span jhiTranslate="global.title" class="navbar-title">PreciadoTatto</span>
-    <span class="navbar-version">{{ version }}</span>
+    <span jhiTranslate="global.title" style="color: aqua" class="navbar-title">PreciadoTatto</span>
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -21,8 +24,8 @@
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
           <span>
-            <fa-icon icon="home"></fa-icon>
-            <span jhiTranslate="global.menu.home">Home</span>
+            <fa-icon style="color: black" icon="home"></fa-icon>
+            <span class="color-textos-black" jhiTranslate="global.menu.home">Home</span>
           </span>
         </a>
       </li>
@@ -37,15 +40,123 @@
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
           <span>
-            <fa-icon icon="th-list"></fa-icon>
-            <span jhiTranslate="global.menu.entities.main">Entities</span>
+            <fa-icon style="color: black" icon="th-list"></fa-icon>
+            <span class="color-textos-black">Administracion</span>
           </span>
         </a>
-        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+        <ul class="dropdown-menu color-toggle" ngbDropdownMenu aria-labelledby="entity-menu">
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="cliente"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon style="color: black" icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.cliente">Cliente</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="producto"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.producto">Producto</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="caja-ingresos"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.cajaIngresos">Caja Ingresos</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="caja-tattos"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.cajaTattos">Caja Tattos</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="compras"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.compras">Compras</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="egreso"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.egreso">Egreso</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="ventas"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.ventas">Ventas</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="cita-tatto"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.citaTatto">Cita Tatto</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="cita-perforacion"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.citaPerforacion">Cita Perforacion</span>
+            </a>
+          </li>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
-      <li
+      <!-- <li
         *jhiHasAnyAuthority="'ROLE_ADMIN'"
         ngbDropdown
         class="nav-item dropdown pointer"
@@ -96,9 +207,10 @@
               <span jhiTranslate="global.menu.admin.apidocs">API</span>
             </a>
           </li>
-          <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+           jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here 
         </ul>
       </li>
+    -->
       <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
           <span>
@@ -127,14 +239,14 @@
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
           <span *ngIf="!account?.imageUrl">
-            <fa-icon icon="user"></fa-icon>
-            <span jhiTranslate="global.menu.account.main">Account</span>
+            <fa-icon style="color: black" icon="user"></fa-icon>
+            <span class="color-textos-black" jhiTranslate="global.menu.account.main">Account</span>
           </span>
           <span *ngIf="account?.imageUrl">
             <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
           </span>
         </a>
-        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+        <ul class="dropdown-menu color-toggle" ngbDropdownMenu aria-labelledby="account-menu">
           <li *ngSwitchCase="true">
             <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
               <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>

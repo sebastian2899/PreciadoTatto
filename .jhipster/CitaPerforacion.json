@@ -1,0 +1,48 @@
+{
+  "name": "CitaPerforacion",
+  "fields": [
+    {
+      "fieldName": "fechaCreacion",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "fechaCita",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "hora",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nombreCliente",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "valorPerforacion",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "valorPagado",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "valorDeuda",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "cita_perforacion",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220127223642"
+}

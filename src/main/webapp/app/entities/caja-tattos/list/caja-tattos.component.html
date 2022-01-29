@@ -1,0 +1,78 @@
+<div style="height: 700px">
+  <h2 id="page-heading" data-cy="CajaTattosHeading">
+    <span class="aqua-text" jhiTranslate="preciadoTattoApp.cajaTattos.home.title">Caja Tattos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.cajaTattos.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-caja-tattos"
+        [routerLink]="['/caja-tattos/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.cajaTattos.home.createLabel"> Create a new Caja Tattos </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert-back" id="no-result" *ngIf="cajaTattos?.length === 0">
+    <span style="color: #000" jhiTranslate="preciadoTattoApp.cajaTattos.home.notFound">No cajaTattos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="cajaTattos && cajaTattos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaTattos.valorTattoDia">Valor Tatto Dia</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaTattos.valorRegistrado">Valor Registrado</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaTattos.diferencia">Diferencia</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cajaTattos of cajaTattos; trackBy: trackId" data-cy="entityTable">
+          <td>{{ cajaTattos.valorTattoDia }}</td>
+          <td>{{ cajaTattos.valorRegistrado }}</td>
+          <td>{{ cajaTattos.diferencia }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/caja-tattos', cajaTattos.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/caja-tattos', cajaTattos.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(cajaTattos)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+{
+  "name": "Cliente",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroTelefono",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "cliente",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220127223634"
+}

@@ -1,0 +1,28 @@
+{
+  "name": "CajaIngresos",
+  "fields": [
+    {
+      "fieldName": "valorVendidoDia",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "valorRegistradoDia",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "diferencia",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "caja_ingresos",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220127223636"
+}

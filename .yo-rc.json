@@ -42,6 +42,8 @@
     "devServerPort": 4200,
     "clientPackageManager": "npm",
     "languages": ["es"],
-    "enableGradleEnterprise": false
+    "enableGradleEnterprise": false,
+    "entities": ["Cliente", "Producto", "CajaIngresos", "CajaTattos", "Compras", "Egreso", "Ventas", "CitaTatto", "CitaPerforacion"],
+    "lastLiquibaseTimestamp": 1643323002000
   }
 }

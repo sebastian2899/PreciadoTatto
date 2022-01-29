@@ -1,0 +1,65 @@
+{
+  "name": "CitaTatto",
+  "fields": [
+    {
+      "fieldName": "idCliente",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "fechaCreacion",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "fechaCita",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "hora",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "emailCliente",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fotoDiseno",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "valorTatto",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "valorPagado",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "abono",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "deuda",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "cita_tatto",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220127223641"
+}

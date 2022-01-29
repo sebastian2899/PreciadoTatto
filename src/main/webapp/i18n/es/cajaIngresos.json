@@ -1,0 +1,26 @@
+{
+  "preciadoTattoApp": {
+    "cajaIngresos": {
+      "home": {
+        "title": "Caja Ingresos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nueva Caja Ingresos",
+        "createOrEditLabel": "Crear o editar Caja Ingresos",
+        "notFound": "Ningún Caja Ingresos encontrada"
+      },
+      "created": "Una nueva Caja Ingresos ha sido creada con el identificador {{ param }}",
+      "updated": "Una Caja Ingresos ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una Caja Ingresos ha sido eliminada con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar la Caja Ingresos {{ id }}?"
+      },
+      "detail": {
+        "title": "Caja Ingresos"
+      },
+      "id": "ID",
+      "valorVendidoDia": "Valor Vendido Dia",
+      "valorRegistradoDia": "Valor Registrado Dia",
+      "diferencia": "Diferencia"
+    }
+  }
+}

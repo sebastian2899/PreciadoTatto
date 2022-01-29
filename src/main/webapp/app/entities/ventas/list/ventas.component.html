@@ -1,0 +1,74 @@
+<div style="height: 700px">
+  <h2 id="page-heading" data-cy="VentasHeading">
+    <span class="aqua-text" jhiTranslate="preciadoTattoApp.ventas.home.title">Ventas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.ventas.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-ventas"
+        [routerLink]="['/ventas/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.ventas.home.createLabel"> Create a new Ventas </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert-back" id="no-result" *ngIf="ventas?.length === 0">
+    <span class="text-black" jhiTranslate="preciadoTattoApp.ventas.home.notFound">No ventas found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="ventas && ventas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.ventas.fechaCreacion">Fecha Creacion</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.ventas.idCliente">Id Cliente</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.ventas.valorVenta">Valor Venta</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.ventas.valorPagado">Valor Pagado</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.ventas.valorDeuda">Valor Deuda</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.ventas.estado">Estado</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ventas of ventas; trackBy: trackId" data-cy="entityTable">
+          <td>{{ ventas.fechaCreacion }}</td>
+          <td>{{ ventas.idCliente }}</td>
+          <td>{{ ventas.valorVenta }}</td>
+          <td>{{ ventas.valorPagado }}</td>
+          <td>{{ ventas.valorDeuda }}</td>
+          <td>{{ ventas.estado }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/ventas', ventas.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/ventas', ventas.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(ventas)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

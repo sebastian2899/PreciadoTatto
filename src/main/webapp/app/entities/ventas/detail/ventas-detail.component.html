@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="ventas">
+      <h2 data-cy="ventasDetailsHeading"><span class="aqua-text" jhiTranslate="preciadoTattoApp.ventas.detail.title">Ventas</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="preciadoTattoApp.ventas.fechaCreacion">Fecha Creacion</span></dt>
+        <dd>
+          <span>{{ ventas.fechaCreacion }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.ventas.idCliente">Id Cliente</span></dt>
+        <dd>
+          <span>{{ ventas.idCliente }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.ventas.valorVenta">Valor Venta</span></dt>
+        <dd>
+          <span>{{ ventas.valorVenta }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.ventas.valorPagado">Valor Pagado</span></dt>
+        <dd>
+          <span>{{ ventas.valorPagado }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.ventas.valorDeuda">Valor Deuda</span></dt>
+        <dd>
+          <span>{{ ventas.valorDeuda }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.ventas.estado">Estado</span></dt>
+        <dd>
+          <span>{{ ventas.estado }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/ventas', ventas.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

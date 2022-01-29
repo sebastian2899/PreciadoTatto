@@ -1,0 +1,28 @@
+{
+  "preciadoTattoApp": {
+    "compras": {
+      "home": {
+        "title": "Compras (EGRESOS)",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nueva Compras",
+        "createOrEditLabel": "Crear o editar Compra",
+        "notFound": "Ningúna Compra encontrado"
+      },
+      "created": "Una nueva Compra ha sido creada con el identificador {{ param }}",
+      "updated": "Una Compra ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una Compra ha sido eliminada con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Compra {{ id }}?"
+      },
+      "detail": {
+        "title": "Compras (EGRESOS)"
+      },
+      "id": "ID",
+      "fechaCreacion": "Fecha Creacion",
+      "valorCompra": "Valor Compra",
+      "valorPagado": "Valor Pagado",
+      "valorDeuda": "Valor Deuda",
+      "estado": "Estado"
+    }
+  }
+}

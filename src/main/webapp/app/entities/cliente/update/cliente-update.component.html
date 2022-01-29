@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-cliente-heading"
+        class="aqua-text"
+        data-cy="ClienteCreateUpdateHeading"
+        jhiTranslate="preciadoTattoApp.cliente.home.createOrEditLabel"
+      >
+        Create or edit a Cliente
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cliente.nombre" for="field_nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cliente.numeroTelefono" for="field_numeroTelefono"
+              >Numero Telefono</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="numeroTelefono"
+              id="field_numeroTelefono"
+              data-cy="numeroTelefono"
+              formControlName="numeroTelefono"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

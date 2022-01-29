@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="cajaIngresos">
+      <h2 data-cy="cajaIngresosDetailsHeading">
+        <span class="aqua-text" jhiTranslate="preciadoTattoApp.cajaIngresos.detail.title">Caja Ingresos</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="preciadoTattoApp.cajaIngresos.valorVendidoDia">Valor Vendido Dia</span></dt>
+        <dd>
+          <span>{{ cajaIngresos.valorVendidoDia }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.cajaIngresos.valorRegistradoDia">Valor Registrado Dia</span></dt>
+        <dd>
+          <span>{{ cajaIngresos.valorRegistradoDia }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.cajaIngresos.diferencia">Diferencia</span></dt>
+        <dd>
+          <span>{{ cajaIngresos.diferencia }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/caja-ingresos', cajaIngresos.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

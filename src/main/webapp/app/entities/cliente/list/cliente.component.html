@@ -1,0 +1,76 @@
+<div style="height: 1001px">
+  <h2 id="page-heading" data-cy="ClienteHeading">
+    <span class="aqua-text" jhiTranslate="preciadoTattoApp.cliente.home.title">Clientes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="botones-aqua mr-2" (click)="agendarCita()" [disabled]="isLoading">
+        <fa-icon icon="plus" [spin]="isLoading"></fa-icon>
+        <span>Agendar Cita</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cliente"
+        [routerLink]="['/cliente/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.cliente.home.createLabel"> Create a new Cliente </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert-back" id="no-result" *ngIf="clientes?.length === 0">
+    <span style="color: black" jhiTranslate="preciadoTattoApp.cliente.home.notFound">No clientes found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="clientes && clientes.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.cliente.nombre">Nombre</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.cliente.numeroTelefono">Numero Telefono</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes; trackBy: trackId" data-cy="entityTable">
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.numeroTelefono }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/cliente', cliente.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/cliente', cliente.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(cliente)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

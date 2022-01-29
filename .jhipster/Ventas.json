@@ -1,0 +1,40 @@
+{
+  "name": "Ventas",
+  "fields": [
+    {
+      "fieldName": "fechaCreacion",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "idCliente",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "valorVenta",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "valorPagado",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "valorDeuda",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "ventas",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220127223640"
+}

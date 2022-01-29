@@ -1,0 +1,78 @@
+<div style="height: 700px">
+  <h2 id="page-heading" data-cy="CajaIngresosHeading">
+    <span class="aqua-text" jhiTranslate="preciadoTattoApp.cajaIngresos.home.title">Caja Ingresos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.cajaIngresos.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-caja-ingresos"
+        [routerLink]="['/caja-ingresos/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.cajaIngresos.home.createLabel"> Create a new Caja Ingresos </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert-back" id="no-result" *ngIf="cajaIngresos?.length === 0">
+    <span style="color: #000" jhiTranslate="preciadoTattoApp.cajaIngresos.home.notFound">No cajaIngresos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="cajaIngresos && cajaIngresos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaIngresos.valorVendidoDia">Valor Vendido Dia</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaIngresos.valorRegistradoDia">Valor Registrado Dia</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaIngresos.diferencia">Diferencia</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cajaIngresos of cajaIngresos; trackBy: trackId" data-cy="entityTable">
+          <td>{{ cajaIngresos.valorVendidoDia }}</td>
+          <td>{{ cajaIngresos.valorRegistradoDia }}</td>
+          <td>{{ cajaIngresos.diferencia }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/caja-ingresos', cajaIngresos.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/caja-ingresos', cajaIngresos.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(cajaIngresos)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

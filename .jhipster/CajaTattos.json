@@ -1,0 +1,28 @@
+{
+  "name": "CajaTattos",
+  "fields": [
+    {
+      "fieldName": "valorTattoDia",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "valorRegistrado",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "diferencia",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "caja_tattos",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220127223637"
+}

@@ -1,0 +1,88 @@
+<div style="height: 700px">
+  <h2 id="page-heading" data-cy="CitaPerforacionHeading">
+    <span class="aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.home.title">Cita Perforacions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.citaPerforacion.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cita-perforacion"
+        [routerLink]="['/cita-perforacion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.citaPerforacion.home.createLabel"> Create a new Cita Perforacion </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert-back" id="no-result" *ngIf="citaPerforacions?.length === 0">
+    <span style="color: #000" jhiTranslate="preciadoTattoApp.citaPerforacion.home.notFound">No citaPerforacions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="citaPerforacions && citaPerforacions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCreacion">Fecha Creacion</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCita">Fecha Cita</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.hora">Hora</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.nombreCliente">Nombre Cliente</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.valorPerforacion">Valor Perforacion</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.valorPagado">Valor Pagado</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.valorDeuda">Valor Deuda</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.estado">Estado</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let citaPerforacion of citaPerforacions; trackBy: trackId" data-cy="entityTable">
+          <td>{{ citaPerforacion.fechaCreacion | formatMediumDatetime }}</td>
+          <td>{{ citaPerforacion.fechaCita | formatMediumDatetime }}</td>
+          <td>{{ citaPerforacion.hora }}</td>
+          <td>{{ citaPerforacion.nombreCliente }}</td>
+          <td>{{ citaPerforacion.valorPerforacion }}</td>
+          <td>{{ citaPerforacion.valorPagado }}</td>
+          <td>{{ citaPerforacion.valorDeuda }}</td>
+          <td>{{ citaPerforacion.estado }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/cita-perforacion', citaPerforacion.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/cita-perforacion', citaPerforacion.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(citaPerforacion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

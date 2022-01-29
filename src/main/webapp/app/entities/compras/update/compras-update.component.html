@@ -1,0 +1,104 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-compras-heading"
+        data-cy="ComprasCreateUpdateHeading"
+        class="aqua-text"
+        jhiTranslate="preciadoTattoApp.compras.home.createOrEditLabel"
+      >
+        Create or edit a Compras
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.fechaCreacion" for="field_fechaCreacion"
+              >Fecha Creacion</label
+            >
+            <div class="d-flex">
+              <input
+                id="field_fechaCreacion"
+                data-cy="fechaCreacion"
+                type="datetime-local"
+                class="form-control"
+                name="fechaCreacion"
+                formControlName="fechaCreacion"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.valorCompra" for="field_valorCompra"
+              >Valor Compra</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorCompra"
+              id="field_valorCompra"
+              data-cy="valorCompra"
+              formControlName="valorCompra"
+            />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.valorPagado" for="field_valorPagado"
+              >Valor Pagado</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorPagado"
+              id="field_valorPagado"
+              data-cy="valorPagado"
+              formControlName="valorPagado"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.valorDeuda" for="field_valorDeuda"
+              >Valor Deuda</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorDeuda"
+              id="field_valorDeuda"
+              data-cy="valorDeuda"
+              formControlName="valorDeuda"
+            />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.estado" for="field_estado">Estado</label>
+            <input type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="cajaTattos">
+      <h2 data-cy="cajaTattosDetailsHeading">
+        <span class="aqua-text" jhiTranslate="preciadoTattoApp.cajaTattos.detail.title">Caja Tattos</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="preciadoTattoApp.cajaTattos.valorTattoDia">Valor Tatto Dia</span></dt>
+        <dd>
+          <span>{{ cajaTattos.valorTattoDia }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.cajaTattos.valorRegistrado">Valor Registrado</span></dt>
+        <dd>
+          <span>{{ cajaTattos.valorRegistrado }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.cajaTattos.diferencia">Diferencia</span></dt>
+        <dd>
+          <span>{{ cajaTattos.diferencia }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/caja-tattos', cajaTattos.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

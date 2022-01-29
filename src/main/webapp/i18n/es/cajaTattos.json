@@ -1,0 +1,26 @@
+{
+  "preciadoTattoApp": {
+    "cajaTattos": {
+      "home": {
+        "title": "Caja Tattos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nueva Caja Tattos",
+        "createOrEditLabel": "Crear o editar Caja Tattos",
+        "notFound": "Ningúna Caja Tattos encontrada"
+      },
+      "created": "Una nueva Caja Tattos ha sido creada con el identificador {{ param }}",
+      "updated": "Una Caja Tatto ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Un Caja Tatto ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Caja Tattos {{ id }}?"
+      },
+      "detail": {
+        "title": "Caja Tattos"
+      },
+      "id": "ID",
+      "valorTattoDia": "Valor Tatto Dia",
+      "valorRegistrado": "Valor Registrado",
+      "diferencia": "Diferencia"
+    }
+  }
+}

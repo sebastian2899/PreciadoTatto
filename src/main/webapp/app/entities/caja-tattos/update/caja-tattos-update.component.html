@@ -1,0 +1,83 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-caja-tattos-heading"
+        data-cy="CajaTattosCreateUpdateHeading"
+        jhiTranslate="preciadoTattoApp.cajaTattos.home.createOrEditLabel"
+        class="aqua-text"
+      >
+        Create or edit a Caja Tattos
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cajaTattos.valorTattoDia" for="field_valorTattoDia"
+              >Valor Tatto Dia</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorTattoDia"
+              id="field_valorTattoDia"
+              data-cy="valorTattoDia"
+              formControlName="valorTattoDia"
+            />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label
+              class="form-control-label aqua-text"
+              jhiTranslate="preciadoTattoApp.cajaTattos.valorRegistrado"
+              for="field_valorRegistrado"
+              >Valor Registrado</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorRegistrado"
+              id="field_valorRegistrado"
+              data-cy="valorRegistrado"
+              formControlName="valorRegistrado"
+            />
+          </div>
+        </div>
+
+        <div>
+          <div style="margin-left: 326px" class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cajaTattos.diferencia" for="field_diferencia"
+              >Diferencia</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="diferencia"
+              id="field_diferencia"
+              data-cy="diferencia"
+              formControlName="diferencia"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

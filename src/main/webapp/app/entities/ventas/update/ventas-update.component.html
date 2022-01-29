@@ -1,0 +1,115 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-ventas-heading"
+        class="aqua-text"
+        data-cy="VentasCreateUpdateHeading"
+        jhiTranslate="preciadoTattoApp.ventas.home.createOrEditLabel"
+      >
+        Create or edit a Ventas
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.fechaCreacion" for="field_fechaCreacion"
+              >Fecha Creacion</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="fechaCreacion"
+              id="field_fechaCreacion"
+              data-cy="fechaCreacion"
+              formControlName="fechaCreacion"
+            />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.idCliente" for="field_idCliente"
+              >Id Cliente</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="idCliente"
+              id="field_idCliente"
+              data-cy="idCliente"
+              formControlName="idCliente"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.valorVenta" for="field_valorVenta"
+              >Valor Venta</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorVenta"
+              id="field_valorVenta"
+              data-cy="valorVenta"
+              formControlName="valorVenta"
+            />
+          </div>
+
+          <div class="col-md-6 form-group aqua-text">
+            <label class="form-control-label" jhiTranslate="preciadoTattoApp.ventas.valorPagado" for="field_valorPagado"
+              >Valor Pagado</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorPagado"
+              id="field_valorPagado"
+              data-cy="valorPagado"
+              formControlName="valorPagado"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.valorDeuda" for="field_valorDeuda"
+              >Valor Deuda</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorDeuda"
+              id="field_valorDeuda"
+              data-cy="valorDeuda"
+              formControlName="valorDeuda"
+            />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.estado" for="field_estado">Estado</label>
+            <input type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

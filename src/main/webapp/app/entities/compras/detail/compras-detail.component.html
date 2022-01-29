@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="compras">
+      <h2 data-cy="comprasDetailsHeading"><span class="aqua-text" jhiTranslate="preciadoTattoApp.compras.detail.title">Compras</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="preciadoTattoApp.compras.fechaCreacion">Fecha Creacion</span></dt>
+        <dd>
+          <span>{{ compras.fechaCreacion | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.compras.valorCompra">Valor Compra</span></dt>
+        <dd>
+          <span>{{ compras.valorCompra }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.compras.valorPagado">Valor Pagado</span></dt>
+        <dd>
+          <span>{{ compras.valorPagado }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.compras.valorDeuda">Valor Deuda</span></dt>
+        <dd>
+          <span>{{ compras.valorDeuda }}</span>
+        </dd>
+        <dt><span jhiTranslate="preciadoTattoApp.compras.estado">Estado</span></dt>
+        <dd>
+          <span>{{ compras.estado }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/compras', compras.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

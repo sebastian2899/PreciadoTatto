@@ -1,0 +1,31 @@
+{
+  "preciadoTattoApp": {
+    "citaPerforacion": {
+      "home": {
+        "title": "Cita Perforaciones",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nueva Cita Perforacion",
+        "createOrEditLabel": "Crear o editar Cita Perforacion",
+        "notFound": "Ningúna Cita Perforacion encontrada"
+      },
+      "created": "Una nueva Cita Perforacion ha sido creada con el identificador {{ param }}",
+      "updated": "Una Cita Perforacion ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una Cita Perforacion ha sido eliminada con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Cita Perforacion {{ id }}?"
+      },
+      "detail": {
+        "title": "Cita Perforacion"
+      },
+      "id": "ID",
+      "fechaCreacion": "Fecha Creacion",
+      "fechaCita": "Fecha Cita",
+      "hora": "Hora",
+      "nombreCliente": "Nombre Cliente",
+      "valorPerforacion": "Valor Perforacion",
+      "valorPagado": "Valor Pagado",
+      "valorDeuda": "Valor Deuda",
+      "estado": "Estado"
+    }
+  }
+}

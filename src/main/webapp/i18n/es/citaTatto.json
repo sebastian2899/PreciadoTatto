@@ -1,0 +1,35 @@
+{
+  "preciadoTattoApp": {
+    "citaTatto": {
+      "home": {
+        "title": "Cita Tattoos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nueva Cita Tattoo",
+        "createOrEditLabel": "Crear o editar Cita Tatto",
+        "notFound": "Ningún Cita registrada hasta el momento"
+      },
+      "created": "Una nueva Cita Tattoo ha sido creada con el identificador {{ param }}",
+      "updated": "Una Cita Tattoo ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Un Cita Tatto ha sido eliminada con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar la Cita Tattoo {{ id }}?"
+      },
+      "detail": {
+        "title": "Cita Tattoo"
+      },
+      "id": "ID",
+      "idCliente": "Cliente",
+      "fechaCreacion": "Fecha Creacion",
+      "fechaCita": "Fecha Cita",
+      "hora": "Hora",
+      "emailCliente": "Email Cliente",
+      "fotoDiseno": "Foto Diseño",
+      "valorTatto": "Valor Tattoo",
+      "valorPagado": "Valor Pagado",
+      "abono": "Abono",
+      "deuda": "Deuda",
+      "estado": "Estado",
+      "descripcion": "Descripcion"
+    }
+  }
+}

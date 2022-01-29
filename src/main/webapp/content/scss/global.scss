@@ -46,9 +46,38 @@ Generic styles
   border: none;
 }
 
+.text-black {
+  color: #000;
+}
+
+.fondo-image {
+  background: url('../../content/images/fondo2.png');
+  background-size: contain;
+}
+
 .error {
   color: white;
   background-color: red;
+}
+.color-textos-black {
+  color: #000;
+}
+
+.background-main {
+  background: linear-gradient(45deg, rgb(5, 5, 5), rgb(0, 43, 44), rgb(43, 184, 184));
+}
+
+.color-toggle {
+  background: linear-gradient(45deg, rgb(67, 71, 72), rgb(17, 200, 206), rgba(0, 255, 255));
+}
+
+.botones-aqua {
+  background: linear-gradient(45deg, rgb(183, 230, 237), rgb(17, 187, 206), aqua);
+  color: rgba(9, 8, 8, 0.679);
+}
+
+.color-item {
+  color: #000;
 }
 
 .pad {
@@ -116,6 +145,14 @@ Custom alerts for notification
       bottom: 55px;
     }
   }
+}
+
+.alert-back {
+  background: linear-gradient(45deg, rgb(183, 230, 237), rgb(17, 187, 206), aqua);
+}
+
+.aqua-text {
+  color: rgb(7, 238, 238);
 }
 
 @media screen and (min-width: 480px) {

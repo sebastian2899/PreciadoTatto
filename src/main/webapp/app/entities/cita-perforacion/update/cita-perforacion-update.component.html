@@ -1,0 +1,153 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-cita-perforacion-heading"
+        data-cy="CitaPerforacionCreateUpdateHeading"
+        jhiTranslate="preciadoTattoApp.citaPerforacion.home.createOrEditLabel"
+        class="aqua-text"
+      >
+        Create or edit a Cita Perforacion
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label
+              class="form-control-label aqua-text"
+              jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCreacion"
+              for="field_fechaCreacion"
+              >Fecha Creacion</label
+            >
+            <div class="d-flex">
+              <input
+                id="field_fechaCreacion"
+                data-cy="fechaCreacion"
+                type="datetime-local"
+                class="form-control"
+                name="fechaCreacion"
+                formControlName="fechaCreacion"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCita" for="field_fechaCita"
+              >Fecha Cita</label
+            >
+            <div class="d-flex">
+              <input
+                id="field_fechaCita"
+                data-cy="fechaCita"
+                type="datetime-local"
+                class="form-control"
+                name="fechaCita"
+                formControlName="fechaCita"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.hora" for="field_hora">Hora</label>
+            <input type="text" class="form-control" name="hora" id="field_hora" data-cy="hora" formControlName="hora" />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label
+              class="form-control-label aqua-text"
+              jhiTranslate="preciadoTattoApp.citaPerforacion.nombreCliente"
+              for="field_nombreCliente"
+              >Nombre Cliente</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="nombreCliente"
+              id="field_nombreCliente"
+              data-cy="nombreCliente"
+              formControlName="nombreCliente"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label
+              class="form-control-label aqua-text"
+              jhiTranslate="preciadoTattoApp.citaPerforacion.valorPerforacion"
+              for="field_valorPerforacion"
+              >Valor Perforacion</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorPerforacion"
+              id="field_valorPerforacion"
+              data-cy="valorPerforacion"
+              formControlName="valorPerforacion"
+            />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.valorPagado" for="field_valorPagado"
+              >Valor Pagado</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorPagado"
+              id="field_valorPagado"
+              data-cy="valorPagado"
+              formControlName="valorPagado"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.valorDeuda" for="field_valorDeuda"
+              >Valor Deuda</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="valorDeuda"
+              id="field_valorDeuda"
+              data-cy="valorDeuda"
+              formControlName="valorDeuda"
+            />
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.estado" for="field_estado"
+              >Estado</label
+            >
+            <input type="number" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

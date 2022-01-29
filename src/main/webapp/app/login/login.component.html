@@ -1,13 +1,13 @@
 <div>
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8 col-sm-10">
-      <h1 jhiTranslate="login.title" data-cy="loginTitle">Sign in</h1>
-      <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication" data-cy="loginError">
+      <h1 class="aqua-text" jhiTranslate="login.title" data-cy="loginTitle">Sign in</h1>
+      <div class="alert-back" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication" data-cy="loginError">
         <strong>Failed to sign in!</strong> Please check your credentials and try again.
       </div>
       <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
         <div class="form-group">
-          <label class="username-label" for="username" jhiTranslate="global.form.username.label">Login</label>
+          <label class="username-label aqua-text" for="username" jhiTranslate="global.form.username.label">Login</label>
           <input
             type="text"
             class="form-control"
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-group">
-          <label for="password" jhiTranslate="login.form.password">Password</label>
+          <label class="aqua-text" for="password" jhiTranslate="login.form.password">Password</label>
           <input
             type="password"
             class="form-control"
@@ -40,17 +40,17 @@
           </label>
         </div>
 
-        <button type="submit" class="btn btn-primary" jhiTranslate="login.form.button" data-cy="submit">Sign in</button>
+        <button type="submit" class="botones-aqua" jhiTranslate="login.form.button" data-cy="submit">Sign in</button>
       </form>
-      <div class="mt-3 alert alert-warning">
-        <a class="alert-link" routerLink="/account/reset/request" jhiTranslate="login.password.forgot" data-cy="forgetYourPasswordSelector"
+      <div class="mt-3 alert alert-back">
+        <a class="text-black" routerLink="/account/reset/request" jhiTranslate="login.password.forgot" data-cy="forgetYourPasswordSelector"
           >Did you forget your password?</a
         >
       </div>
 
-      <div class="alert alert-warning">
-        <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>
-        <a class="alert-link" routerLink="/account/register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+      <div class="alert-back">
+        <span class="text-black" jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>
+        <a class="botones-aqua" routerLink="/account/register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
       </div>
     </div>
   </div>

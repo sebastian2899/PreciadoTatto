@@ -1,0 +1,105 @@
+<div style="height: 700px">
+  <h2 id="page-heading" data-cy="CitaTattoHeading">
+    <span class="aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.home.title">Cita Tattos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.citaTatto.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cita-tatto"
+        [routerLink]="['/cita-tatto/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.citaTatto.home.createLabel"> Create a new Cita Tatto </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert-back" id="no-result" *ngIf="citaTattos?.length === 0">
+    <span style="color: #000" jhiTranslate="preciadoTattoApp.citaTatto.home.notFound">No citaTattos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="citaTattos && citaTattos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.idCliente">Id Cliente</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion">Fecha Creacion</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCita">Fecha Cita</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.hora">Hora</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.emailCliente">Email Cliente</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno">Foto Diseno</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorTatto">Valor Tatto</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorPagado">Valor Pagado</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.abono">Abono</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.deuda">Deuda</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.estado">Estado</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.descripcion">Descripcion</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let citaTatto of citaTattos; trackBy: trackId" data-cy="entityTable">
+          <td>{{ citaTatto.idCliente }}</td>
+          <td>{{ citaTatto.fechaCreacion | formatMediumDatetime }}</td>
+          <td>{{ citaTatto.fechaCita | formatMediumDatetime }}</td>
+          <td>{{ citaTatto.hora }}</td>
+          <td>{{ citaTatto.emailCliente }}</td>
+          <td>
+            <a *ngIf="citaTatto.fotoDiseno" (click)="openFile(citaTatto.fotoDiseno, citaTatto.fotoDisenoContentType)">
+              <img
+                [src]="'data:' + citaTatto.fotoDisenoContentType + ';base64,' + citaTatto.fotoDiseno"
+                style="max-height: 30px"
+                alt="citaTatto image"
+              />
+            </a>
+            <span *ngIf="citaTatto.fotoDiseno">{{ citaTatto.fotoDisenoContentType }}, {{ byteSize(citaTatto.fotoDiseno) }}</span>
+          </td>
+          <td>{{ citaTatto.valorTatto }}</td>
+          <td>{{ citaTatto.valorPagado }}</td>
+          <td>{{ citaTatto.abono }}</td>
+          <td>{{ citaTatto.deuda }}</td>
+          <td>{{ citaTatto.estado }}</td>
+          <td>{{ citaTatto.descripcion }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/cita-tatto', citaTatto.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/cita-tatto', citaTatto.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(citaTatto)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

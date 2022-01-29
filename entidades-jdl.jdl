@@ -1,0 +1,85 @@
+
+entity Cliente {
+nombre String
+numeroTelefono String
+}  
+
+entity Producto {
+    foto ImageBlob
+	nombre String
+    precio BigDecimal
+    cantidad Long
+    descripcion String
+}
+
+entity CajaIngresos {
+	valorVendidoDia BigDecimal
+    valorRegistradoDia BigDecimal
+  	diferencia BigDecimal
+}
+
+entity CajaTattos{
+	valorTattoDia BigDecimal 
+    valorRegistrado BigDecimal
+    diferencia BigDecimal
+}
+
+entity Compras {
+ fechaCreacion Instant
+ valorCompra BigDecimal
+ valorPagado BigDecimal
+ valorDeuda BigDecimal
+ estado String
+}
+
+entity Egreso {
+fechaCreacion Instant
+descripcion String
+valor BigDecimal
+}
+
+entity Ventas {
+fechaCreacion String
+idCliente Long
+valorVenta BigDecimal
+valorPagado BigDecimal
+valorDeuda BigDecimal
+estado String
+}
+
+entity CitaTatto {
+	idCliente Long
+    fechaCreacion Instant
+    fechaCita Instant
+    hora String
+    emailCliente String
+    fotoDiseno ImageBlob
+    valorTatto BigDecimal
+    valorPagado BigDecimal
+    abono BigDecimal
+    deuda BigDecimal
+    estado String
+    descripcion String
+}
+
+entity CitaPerforacion {
+	fechaCreacion Instant
+    fechaCita Instant
+    hora String
+    nombreCliente String
+    valorPerforacion BigDecimal
+    valorPagado BigDecimal
+    valorDeuda BigDecimal
+    estado BigDecimal
+}
+
+
+
+//Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
