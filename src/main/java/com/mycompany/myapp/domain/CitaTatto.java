@@ -51,9 +51,6 @@ public class CitaTatto implements Serializable {
     @Column(name = "valor_pagado", precision = 21, scale = 2)
     private BigDecimal valorPagado;
 
-    @Column(name = "abono", precision = 21, scale = 2)
-    private BigDecimal abono;
-
     @Column(name = "deuda", precision = 21, scale = 2)
     private BigDecimal deuda;
 
@@ -63,10 +60,21 @@ public class CitaTatto implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Transient
+    private String nombreCliente;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
         return this.id;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
     public CitaTatto id(Long id) {
@@ -195,19 +203,6 @@ public class CitaTatto implements Serializable {
         this.valorPagado = valorPagado;
     }
 
-    public BigDecimal getAbono() {
-        return this.abono;
-    }
-
-    public CitaTatto abono(BigDecimal abono) {
-        this.setAbono(abono);
-        return this;
-    }
-
-    public void setAbono(BigDecimal abono) {
-        this.abono = abono;
-    }
-
     public BigDecimal getDeuda() {
         return this.deuda;
     }
@@ -280,7 +275,6 @@ public class CitaTatto implements Serializable {
             ", fotoDisenoContentType='" + getFotoDisenoContentType() + "'" +
             ", valorTatto=" + getValorTatto() +
             ", valorPagado=" + getValorPagado() +
-            ", abono=" + getAbono() +
             ", deuda=" + getDeuda() +
             ", estado='" + getEstado() + "'" +
             ", descripcion='" + getDescripcion() + "'" +

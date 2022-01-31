@@ -1,10 +1,10 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-compras-heading"
         data-cy="ComprasCreateUpdateHeading"
-        class="aqua-text"
+        class="text-black"
         jhiTranslate="preciadoTattoApp.compras.home.createOrEditLabel"
       >
         Create or edit a Compras
@@ -15,7 +15,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.fechaCreacion" for="field_fechaCreacion"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.compras.fechaCreacion" for="field_fechaCreacion"
               >Fecha Creacion</label
             >
             <div class="d-flex">
@@ -34,7 +34,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.valorCompra" for="field_valorCompra"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.compras.valorCompra" for="field_valorCompra"
               >Valor Compra</label
             >
             <input
@@ -48,7 +48,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.valorPagado" for="field_valorPagado"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.compras.valorPagado" for="field_valorPagado"
               >Valor Pagado</label
             >
             <input
@@ -64,7 +64,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.valorDeuda" for="field_valorDeuda"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.compras.valorDeuda" for="field_valorDeuda"
               >Valor Deuda</label
             >
             <input
@@ -78,7 +78,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.compras.estado" for="field_estado">Estado</label>
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.compras.estado" for="field_estado">Estado</label>
             <input type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
           </div>
         </div>

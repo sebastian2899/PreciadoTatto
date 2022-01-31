@@ -2,6 +2,7 @@ package com.mycompany.myapp.service.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -11,6 +12,8 @@ public class CajaIngresosDTO implements Serializable {
 
     private Long id;
 
+    private Instant fechaCreacion;
+
     private BigDecimal valorVendidoDia;
 
     private BigDecimal valorRegistradoDia;
@@ -19,6 +22,14 @@ public class CajaIngresosDTO implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public Instant getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Instant fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public void setId(Long id) {

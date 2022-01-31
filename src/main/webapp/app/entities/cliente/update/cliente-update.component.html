@@ -1,9 +1,9 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-cliente-heading"
-        class="aqua-text"
+        class="text-black"
         data-cy="ClienteCreateUpdateHeading"
         jhiTranslate="preciadoTattoApp.cliente.home.createOrEditLabel"
       >
@@ -15,12 +15,12 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cliente.nombre" for="field_nombre">Nombre</label>
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.cliente.nombre" for="field_nombre">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cliente.numeroTelefono" for="field_numeroTelefono"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.cliente.numeroTelefono" for="field_numeroTelefono"
               >Numero Telefono</label
             >
             <input

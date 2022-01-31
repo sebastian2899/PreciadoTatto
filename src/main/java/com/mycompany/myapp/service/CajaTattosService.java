@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.CajaTattosDTO;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,8 @@ public interface CajaTattosService {
      * @return the entity.
      */
     Optional<CajaTattosDTO> findOne(Long id);
+
+    BigDecimal consultarValoresDiariosTattos();
 
     /**
      * Delete the "id" cajaTattos.

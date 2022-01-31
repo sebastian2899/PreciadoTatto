@@ -1,11 +1,11 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-cita-perforacion-heading"
         data-cy="CitaPerforacionCreateUpdateHeading"
         jhiTranslate="preciadoTattoApp.citaPerforacion.home.createOrEditLabel"
-        class="aqua-text"
+        class="text-black"
       >
         Create or edit a Cita Perforacion
       </h2>
@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-md-6 form-group">
             <label
-              class="form-control-label aqua-text"
+              class="form-control-label text-black"
               jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCreacion"
               for="field_fechaCreacion"
               >Fecha Creacion</label
@@ -35,7 +35,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCita" for="field_fechaCita"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCita" for="field_fechaCita"
               >Fecha Cita</label
             >
             <div class="d-flex">
@@ -54,13 +54,13 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.hora" for="field_hora">Hora</label>
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.hora" for="field_hora">Hora</label>
             <input type="text" class="form-control" name="hora" id="field_hora" data-cy="hora" formControlName="hora" />
           </div>
 
           <div class="col-md-6 form-group">
             <label
-              class="form-control-label aqua-text"
+              class="form-control-label text-black"
               jhiTranslate="preciadoTattoApp.citaPerforacion.nombreCliente"
               for="field_nombreCliente"
               >Nombre Cliente</label
@@ -79,7 +79,7 @@
         <div class="row">
           <div class="col-md-6 form-group">
             <label
-              class="form-control-label aqua-text"
+              class="form-control-label text-black"
               jhiTranslate="preciadoTattoApp.citaPerforacion.valorPerforacion"
               for="field_valorPerforacion"
               >Valor Perforacion</label
@@ -95,7 +95,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.valorPagado" for="field_valorPagado"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.valorPagado" for="field_valorPagado"
               >Valor Pagado</label
             >
             <input
@@ -111,7 +111,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.valorDeuda" for="field_valorDeuda"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.valorDeuda" for="field_valorDeuda"
               >Valor Deuda</label
             >
             <input
@@ -125,7 +125,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.estado" for="field_estado"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.estado" for="field_estado"
               >Estado</label
             >
             <input type="number" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />

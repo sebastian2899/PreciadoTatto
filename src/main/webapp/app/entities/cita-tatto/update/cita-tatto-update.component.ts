@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map, startWith } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { EventManager, EventWithContent } from 'app/core/util/event-manager.serv
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-cita-tatto-update',
@@ -21,9 +22,9 @@ import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 })
 export class CitaTattoUpdateComponent implements OnInit {
   isSaving = false;
-  clientes?: ICliente[] = [];
-  filteredOptions: Observable<ICliente[]> | undefined;
-  myControl = new FormControl();
+  clientes: ICliente[] = [];
+  updateCita = false;
+  saving = true;
 
   editForm = this.fb.group({
     id: [],
@@ -49,7 +50,8 @@ export class CitaTattoUpdateComponent implements OnInit {
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
-    protected clienteService: ClienteService
+    protected clienteService: ClienteService,
+    protected alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -58,9 +60,13 @@ export class CitaTattoUpdateComponent implements OnInit {
         const today = dayjs().startOf('day');
         citaTatto.fechaCreacion = today;
         citaTatto.fechaCita = today;
+        this.updateCita = false;
+      } else {
+        this.updateCita = true;
       }
 
       this.updateForm(citaTatto);
+      this.consultarClientes();
     });
   }
 
@@ -89,24 +95,34 @@ export class CitaTattoUpdateComponent implements OnInit {
     }
   }
 
+  calcularValores(): void {
+    const valorTatto = this.editForm.get(['valorTatto'])!.value;
+    const valorPagado = this.editForm.get(['valorPagado'])!.value;
+
+    if (valorPagado === 0 || valorPagado === null) {
+      this.editForm.get(['deuda'])?.setValue(0);
+    } else {
+      const valorDeuda = valorTatto - valorPagado;
+      this.editForm.get(['deuda'])?.setValue(valorDeuda);
+      if (valorDeuda === 0) {
+        this.editForm.get(['estado'])?.setValue('Pagada');
+      } else {
+        this.editForm.get(['estado'])?.setValue('Deuda');
+      }
+    }
+
+    this.saving = false;
+  }
+
   consultarClientes(): void {
     this.clienteService.query().subscribe(
       (res: HttpResponse<ICliente[]>) => {
         this.clientes = res.body ?? [];
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map(value => this._filter(value))
-        );
       },
       () => {
         this.clientes = [];
       }
     );
-  }
-
-  _filter(value: string): ICliente[] {
-    const filterValue = value.toLocaleLowerCase();
-    return this.clientes!.filter(option => option.nombre?.toLocaleLowerCase().includes(filterValue));
   }
 
   previousState(): void {
@@ -154,7 +170,6 @@ export class CitaTattoUpdateComponent implements OnInit {
       fotoDisenoContentType: citaTatto.fotoDisenoContentType,
       valorTatto: citaTatto.valorTatto,
       valorPagado: citaTatto.valorPagado,
-      abono: citaTatto.abono,
       deuda: citaTatto.deuda,
       estado: citaTatto.estado,
       descripcion: citaTatto.descripcion,
@@ -176,7 +191,6 @@ export class CitaTattoUpdateComponent implements OnInit {
       fotoDiseno: this.editForm.get(['fotoDiseno'])!.value,
       valorTatto: this.editForm.get(['valorTatto'])!.value,
       valorPagado: this.editForm.get(['valorPagado'])!.value,
-      abono: this.editForm.get(['abono'])!.value,
       deuda: this.editForm.get(['deuda'])!.value,
       estado: this.editForm.get(['estado'])!.value,
       descripcion: this.editForm.get(['descripcion'])!.value,

@@ -1,40 +1,29 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-cita-tatto-heading"
         data-cy="CitaTattoCreateUpdateHeading"
         jhiTranslate="preciadoTattoApp.citaTatto.home.createOrEditLabel"
-        class="aqua-text"
+        class="text-black"
       >
         Create or edit a Cita Tatto
       </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label class="aqua-text">Cliente</mat-label>
-              <input
-                type="text"
-                placeholder="Pick one"
-                aria-label="Seleccione"
-                matInput
-                [formControl]="myControl"
-                [matAutocomplete]="auto"
-              />
-              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
-                  {{ option.nombre }}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
+            <label class="form-control-label text-black" for="cliente">Cliente</label>
+            <select type="text" class="form-control" name="cliente" id="field_idCliente" data-cy="idCliente" formControlName="idCliente">
+              <option [value]="cliente.id" *ngFor="let cliente of clientes">{{ cliente.nombre }}</option>
+            </select>
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion" for="field_fechaCreacion"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion" for="field_fechaCreacion"
               >Fecha Creacion</label
             >
             <div class="d-flex">
@@ -53,7 +42,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.fechaCita" for="field_fechaCita"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCita" for="field_fechaCita"
               >Fecha Cita</label
             >
             <div class="d-flex">
@@ -70,14 +59,14 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.hora" for="field_hora">Hora</label>
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.hora" for="field_hora">Hora</label>
             <input type="text" class="form-control" name="hora" id="field_hora" data-cy="hora" formControlName="hora" />
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.emailCliente" for="field_emailCliente"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.emailCliente" for="field_emailCliente"
               >Email Cliente</label
             >
             <input
@@ -91,7 +80,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno" for="field_fotoDiseno"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno" for="field_fotoDiseno"
               >Foto Diseno</label
             >
             <div>
@@ -142,7 +131,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.valorTatto" for="field_valorTatto"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.valorTatto" for="field_valorTatto"
               >Valor Tatto</label
             >
             <input
@@ -156,10 +145,12 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.valorPagado" for="field_valorPagado"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.valorPagado" for="field_valorPagado"
               >Valor Pagado</label
             >
             <input
+              [readOnly]="updateCita"
+              (keyup)="calcularValores()"
               type="number"
               class="form-control"
               name="valorPagado"
@@ -172,34 +163,46 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.abono" for="field_abono">Abono</label>
-            <input type="number" class="form-control" name="abono" id="field_abono" data-cy="abono" formControlName="abono" />
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.deuda" for="field_deuda">Deuda</label>
+            <input
+              readonly="true"
+              type="number"
+              class="form-control"
+              name="deuda"
+              id="field_deuda"
+              data-cy="deuda"
+              formControlName="deuda"
+            />
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.deuda" for="field_deuda">Deuda</label>
-            <input type="number" class="form-control" name="deuda" id="field_deuda" data-cy="deuda" formControlName="deuda" />
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.estado" for="field_estado">Estado</label>
+            <input
+              readonly="true"
+              type="text"
+              class="form-control"
+              name="estado"
+              id="field_estado"
+              data-cy="estado"
+              formControlName="estado"
+            />
           </div>
         </div>
 
         <div class="row">
-          <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.estado" for="field_estado">Estado</label>
-            <input type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
-          </div>
-
-          <div class="col-md-6 form-group aqua-text">
+          <div class="col-md-6 form-group text-black">
             <label class="form-control-label" jhiTranslate="preciadoTattoApp.citaTatto.descripcion" for="field_descripcion"
               >Descripcion</label
             >
-            <input
+            <textarea
               type="text"
               class="form-control"
               name="descripcion"
               id="field_descripcion"
               data-cy="descripcion"
               formControlName="descripcion"
-            />
+            >
+            </textarea>
           </div>
         </div>
       </div>
@@ -213,7 +216,7 @@
           type="submit"
           id="save-entity"
           data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
+          [disabled]="editForm.invalid || isSaving || saving"
           class="btn btn-primary"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>

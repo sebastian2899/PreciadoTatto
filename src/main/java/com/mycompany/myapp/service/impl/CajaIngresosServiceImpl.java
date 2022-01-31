@@ -5,6 +5,7 @@ import com.mycompany.myapp.repository.CajaIngresosRepository;
 import com.mycompany.myapp.service.CajaIngresosService;
 import com.mycompany.myapp.service.dto.CajaIngresosDTO;
 import com.mycompany.myapp.service.mapper.CajaIngresosMapper;
+import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,11 @@ public class CajaIngresosServiceImpl implements CajaIngresosService {
     public CajaIngresosDTO save(CajaIngresosDTO cajaIngresosDTO) {
         log.debug("Request to save CajaIngresos : {}", cajaIngresosDTO);
         CajaIngresos cajaIngresos = cajaIngresosMapper.toEntity(cajaIngresosDTO);
+
+        if (cajaIngresos.getId() == null) {
+            cajaIngresos.setFechaCreacion(Instant.now());
+        }
+
         cajaIngresos = cajaIngresosRepository.save(cajaIngresos);
         return cajaIngresosMapper.toDto(cajaIngresos);
     }

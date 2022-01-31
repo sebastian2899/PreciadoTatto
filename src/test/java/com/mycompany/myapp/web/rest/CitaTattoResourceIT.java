@@ -111,7 +111,6 @@ class CitaTattoResourceIT {
             .fotoDisenoContentType(DEFAULT_FOTO_DISENO_CONTENT_TYPE)
             .valorTatto(DEFAULT_VALOR_TATTO)
             .valorPagado(DEFAULT_VALOR_PAGADO)
-            .abono(DEFAULT_ABONO)
             .deuda(DEFAULT_DEUDA)
             .estado(DEFAULT_ESTADO)
             .descripcion(DEFAULT_DESCRIPCION);
@@ -135,7 +134,6 @@ class CitaTattoResourceIT {
             .fotoDisenoContentType(UPDATED_FOTO_DISENO_CONTENT_TYPE)
             .valorTatto(UPDATED_VALOR_TATTO)
             .valorPagado(UPDATED_VALOR_PAGADO)
-            .abono(UPDATED_ABONO)
             .deuda(UPDATED_DEUDA)
             .estado(UPDATED_ESTADO)
             .descripcion(UPDATED_DESCRIPCION);
@@ -170,7 +168,6 @@ class CitaTattoResourceIT {
         assertThat(testCitaTatto.getFotoDisenoContentType()).isEqualTo(DEFAULT_FOTO_DISENO_CONTENT_TYPE);
         assertThat(testCitaTatto.getValorTatto()).isEqualByComparingTo(DEFAULT_VALOR_TATTO);
         assertThat(testCitaTatto.getValorPagado()).isEqualByComparingTo(DEFAULT_VALOR_PAGADO);
-        assertThat(testCitaTatto.getAbono()).isEqualByComparingTo(DEFAULT_ABONO);
         assertThat(testCitaTatto.getDeuda()).isEqualByComparingTo(DEFAULT_DEUDA);
         assertThat(testCitaTatto.getEstado()).isEqualTo(DEFAULT_ESTADO);
         assertThat(testCitaTatto.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
@@ -278,7 +275,6 @@ class CitaTattoResourceIT {
             .fotoDisenoContentType(UPDATED_FOTO_DISENO_CONTENT_TYPE)
             .valorTatto(UPDATED_VALOR_TATTO)
             .valorPagado(UPDATED_VALOR_PAGADO)
-            .abono(UPDATED_ABONO)
             .deuda(UPDATED_DEUDA)
             .estado(UPDATED_ESTADO)
             .descripcion(UPDATED_DESCRIPCION);
@@ -305,7 +301,6 @@ class CitaTattoResourceIT {
         assertThat(testCitaTatto.getFotoDisenoContentType()).isEqualTo(UPDATED_FOTO_DISENO_CONTENT_TYPE);
         assertThat(testCitaTatto.getValorTatto()).isEqualTo(UPDATED_VALOR_TATTO);
         assertThat(testCitaTatto.getValorPagado()).isEqualTo(UPDATED_VALOR_PAGADO);
-        assertThat(testCitaTatto.getAbono()).isEqualTo(UPDATED_ABONO);
         assertThat(testCitaTatto.getDeuda()).isEqualTo(UPDATED_DEUDA);
         assertThat(testCitaTatto.getEstado()).isEqualTo(UPDATED_ESTADO);
         assertThat(testCitaTatto.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
@@ -392,7 +387,6 @@ class CitaTattoResourceIT {
             .fechaCita(UPDATED_FECHA_CITA)
             .emailCliente(UPDATED_EMAIL_CLIENTE)
             .valorPagado(UPDATED_VALOR_PAGADO)
-            .abono(UPDATED_ABONO)
             .deuda(UPDATED_DEUDA)
             .estado(UPDATED_ESTADO);
 
@@ -417,7 +411,6 @@ class CitaTattoResourceIT {
         assertThat(testCitaTatto.getFotoDisenoContentType()).isEqualTo(DEFAULT_FOTO_DISENO_CONTENT_TYPE);
         assertThat(testCitaTatto.getValorTatto()).isEqualByComparingTo(DEFAULT_VALOR_TATTO);
         assertThat(testCitaTatto.getValorPagado()).isEqualByComparingTo(UPDATED_VALOR_PAGADO);
-        assertThat(testCitaTatto.getAbono()).isEqualByComparingTo(UPDATED_ABONO);
         assertThat(testCitaTatto.getDeuda()).isEqualByComparingTo(UPDATED_DEUDA);
         assertThat(testCitaTatto.getEstado()).isEqualTo(UPDATED_ESTADO);
         assertThat(testCitaTatto.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
@@ -445,7 +438,6 @@ class CitaTattoResourceIT {
             .fotoDisenoContentType(UPDATED_FOTO_DISENO_CONTENT_TYPE)
             .valorTatto(UPDATED_VALOR_TATTO)
             .valorPagado(UPDATED_VALOR_PAGADO)
-            .abono(UPDATED_ABONO)
             .deuda(UPDATED_DEUDA)
             .estado(UPDATED_ESTADO)
             .descripcion(UPDATED_DESCRIPCION);
@@ -471,7 +463,6 @@ class CitaTattoResourceIT {
         assertThat(testCitaTatto.getFotoDisenoContentType()).isEqualTo(UPDATED_FOTO_DISENO_CONTENT_TYPE);
         assertThat(testCitaTatto.getValorTatto()).isEqualByComparingTo(UPDATED_VALOR_TATTO);
         assertThat(testCitaTatto.getValorPagado()).isEqualByComparingTo(UPDATED_VALOR_PAGADO);
-        assertThat(testCitaTatto.getAbono()).isEqualByComparingTo(UPDATED_ABONO);
         assertThat(testCitaTatto.getDeuda()).isEqualByComparingTo(UPDATED_DEUDA);
         assertThat(testCitaTatto.getEstado()).isEqualTo(UPDATED_ESTADO);
         assertThat(testCitaTatto.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);

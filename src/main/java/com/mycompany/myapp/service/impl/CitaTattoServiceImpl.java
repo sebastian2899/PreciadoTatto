@@ -5,10 +5,9 @@ import com.mycompany.myapp.repository.CitaTattoRepository;
 import com.mycompany.myapp.service.CitaTattoService;
 import com.mycompany.myapp.service.dto.CitaTattoDTO;
 import com.mycompany.myapp.service.mapper.CitaTattoMapper;
-import java.util.LinkedList;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -36,6 +35,11 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     public CitaTattoDTO save(CitaTattoDTO citaTattoDTO) {
         log.debug("Request to save CitaTatto : {}", citaTattoDTO);
         CitaTatto citaTatto = citaTattoMapper.toEntity(citaTattoDTO);
+
+        if (citaTatto.getDeuda().equals(BigDecimal.ZERO)) {
+            citaTatto.estado("Pagada");
+        }
+
         citaTatto = citaTattoRepository.save(citaTatto);
         return citaTattoMapper.toDto(citaTatto);
     }
@@ -59,14 +63,29 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     @Transactional(readOnly = true)
     public List<CitaTattoDTO> findAll() {
         log.debug("Request to get all CitaTattos");
-        return citaTattoRepository.findAll().stream().map(citaTattoMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+
+        List<CitaTatto> citas = citaTattoRepository.findAll();
+
+        for (CitaTatto citaTatto : citas) {
+            citaTatto.setNombreCliente(nombreCliente(citaTatto.getIdCliente()));
+        }
+
+        return citaTattoMapper.toDto(citas);
+    }
+
+    private String nombreCliente(Long id) {
+        return citaTattoRepository.nombreCliente(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<CitaTattoDTO> findOne(Long id) {
         log.debug("Request to get CitaTatto : {}", id);
-        return citaTattoRepository.findById(id).map(citaTattoMapper::toDto);
+
+        CitaTatto cita = citaTattoRepository.getById(id);
+        cita.setNombreCliente(nombreCliente(id));
+
+        return Optional.ofNullable(citaTattoMapper.toDto(cita));
     }
 
     @Override

@@ -29,24 +29,24 @@
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="compras && compras.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table class="table table-dark color-toggle" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.compras.fechaCreacion">Fecha Creacion</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.compras.valorCompra">Valor Compra</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.compras.valorPagado">Valor Pagado</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.compras.valorDeuda">Valor Deuda</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.compras.estado">Estado</span></th>
+          <th scope="col"><span class="text-black" jhiTranslate="preciadoTattoApp.compras.fechaCreacion">Fecha Creacion</span></th>
+          <th scope="col"><span class="text-black" jhiTranslate="preciadoTattoApp.compras.valorCompra">Valor Compra</span></th>
+          <th scope="col"><span class="text-black" jhiTranslate="preciadoTattoApp.compras.valorPagado">Valor Pagado</span></th>
+          <th scope="col"><span class="text-black" jhiTranslate="preciadoTattoApp.compras.valorDeuda">Valor Deuda</span></th>
+          <th scope="col"><span class="text-black" jhiTranslate="preciadoTattoApp.compras.estado">Estado</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let compras of compras; trackBy: trackId" data-cy="entityTable">
-          <td>{{ compras.fechaCreacion | formatMediumDatetime }}</td>
-          <td>{{ compras.valorCompra }}</td>
-          <td>{{ compras.valorPagado }}</td>
-          <td>{{ compras.valorDeuda }}</td>
-          <td>{{ compras.estado }}</td>
+          <td class="text-black">{{ compras.fechaCreacion | formatMediumDatetime }}</td>
+          <td class="text-black">{{ compras.valorCompra }}</td>
+          <td class="text-black">{{ compras.valorPagado }}</td>
+          <td class="text-black">{{ compras.valorDeuda }}</td>
+          <td class="text-black">{{ compras.estado }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button

@@ -1,9 +1,9 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form style="padding: 31px" class="color-toggle" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-ventas-heading"
-        class="aqua-text"
+        class="text-black"
         data-cy="VentasCreateUpdateHeading"
         jhiTranslate="preciadoTattoApp.ventas.home.createOrEditLabel"
       >
@@ -15,7 +15,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.fechaCreacion" for="field_fechaCreacion"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.ventas.fechaCreacion" for="field_fechaCreacion"
               >Fecha Creacion</label
             >
             <input
@@ -29,7 +29,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.idCliente" for="field_idCliente"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.ventas.idCliente" for="field_idCliente"
               >Id Cliente</label
             >
             <input
@@ -45,7 +45,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.valorVenta" for="field_valorVenta"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.ventas.valorVenta" for="field_valorVenta"
               >Valor Venta</label
             >
             <input
@@ -58,7 +58,7 @@
             />
           </div>
 
-          <div class="col-md-6 form-group aqua-text">
+          <div class="col-md-6 form-group text-black">
             <label class="form-control-label" jhiTranslate="preciadoTattoApp.ventas.valorPagado" for="field_valorPagado"
               >Valor Pagado</label
             >
@@ -75,7 +75,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.valorDeuda" for="field_valorDeuda"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.ventas.valorDeuda" for="field_valorDeuda"
               >Valor Deuda</label
             >
             <input
@@ -89,7 +89,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.ventas.estado" for="field_estado">Estado</label>
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.ventas.estado" for="field_estado">Estado</label>
             <input type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
           </div>
         </div>

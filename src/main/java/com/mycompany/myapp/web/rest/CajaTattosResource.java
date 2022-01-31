@@ -4,6 +4,7 @@ import com.mycompany.myapp.repository.CajaTattosRepository;
 import com.mycompany.myapp.service.CajaTattosService;
 import com.mycompany.myapp.service.dto.CajaTattosDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -13,7 +14,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -139,6 +148,12 @@ public class CajaTattosResource {
     public List<CajaTattosDTO> getAllCajaTattos() {
         log.debug("REST request to get all CajaTattos");
         return cajaTattosService.findAll();
+    }
+
+    @GetMapping("/consultarValorDia")
+    public BigDecimal consultarValorDia() {
+        log.debug("REST request to get valor vendido dia");
+        return cajaTattosService.consultarValoresDiariosTattos();
     }
 
     /**

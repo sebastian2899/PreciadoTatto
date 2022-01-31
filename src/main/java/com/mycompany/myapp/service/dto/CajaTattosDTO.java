@@ -2,6 +2,7 @@ package com.mycompany.myapp.service.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -16,6 +17,16 @@ public class CajaTattosDTO implements Serializable {
     private BigDecimal valorRegistrado;
 
     private BigDecimal diferencia;
+
+    private Instant fechaCreacion;
+
+    public Instant getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Instant fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 
     public Long getId() {
         return id;

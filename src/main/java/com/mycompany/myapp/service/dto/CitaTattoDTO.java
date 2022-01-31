@@ -31,13 +31,21 @@ public class CitaTattoDTO implements Serializable {
 
     private BigDecimal valorPagado;
 
-    private BigDecimal abono;
-
     private BigDecimal deuda;
 
     private String estado;
 
     private String descripcion;
+
+    private String nombreCliente;
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
 
     public Long getId() {
         return id;
@@ -119,14 +127,6 @@ public class CitaTattoDTO implements Serializable {
         this.valorPagado = valorPagado;
     }
 
-    public BigDecimal getAbono() {
-        return abono;
-    }
-
-    public void setAbono(BigDecimal abono) {
-        this.abono = abono;
-    }
-
     public BigDecimal getDeuda() {
         return deuda;
     }
@@ -185,7 +185,6 @@ public class CitaTattoDTO implements Serializable {
             ", fotoDiseno='" + getFotoDiseno() + "'" +
             ", valorTatto=" + getValorTatto() +
             ", valorPagado=" + getValorPagado() +
-            ", abono=" + getAbono() +
             ", deuda=" + getDeuda() +
             ", estado='" + getEstado() + "'" +
             ", descripcion='" + getDescripcion() + "'" +

@@ -9,10 +9,12 @@ import { ICajaTattos, getCajaTattosIdentifier } from '../caja-tattos.model';
 
 export type EntityResponseType = HttpResponse<ICajaTattos>;
 export type EntityArrayResponseType = HttpResponse<ICajaTattos[]>;
+export type NumberType = HttpResponse<number>;
 
 @Injectable({ providedIn: 'root' })
 export class CajaTattosService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/caja-tattos');
+  protected URLconsultarValorVendidoDia = this.applicationConfigService.getEndpointFor('api/consultarValorDia');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -34,6 +36,10 @@ export class CajaTattosService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<ICajaTattos>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  valorDia(): Observable<NumberType> {
+    return this.http.get<number>(this.URLconsultarValorVendidoDia, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

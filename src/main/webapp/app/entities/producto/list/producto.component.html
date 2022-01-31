@@ -29,16 +29,16 @@
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="productos && productos.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table class="table table-dark color-toggle" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.producto.foto">Foto</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.producto.nombre">Nombre</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.producto.precio">Precio</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.producto.cantidad">Cantidad</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.producto.descripcion">Descripcion</span></th>
-          <th scope="col"></th>
+          <th class="text-black" scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.producto.foto">Foto</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.producto.nombre">Nombre</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.producto.precio">Precio</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.producto.cantidad">Cantidad</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.producto.descripcion">Descripcion</span></th>
+          <th class="text-black" scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -49,10 +49,10 @@
             </a>
             <span *ngIf="producto.foto">{{ producto.fotoContentType }}, {{ byteSize(producto.foto) }}</span>
           </td>
-          <td>{{ producto.nombre }}</td>
-          <td>{{ producto.precio }}</td>
-          <td>{{ producto.cantidad }}</td>
-          <td>{{ producto.descripcion }}</td>
+          <td class="text-black">{{ producto.nombre }}</td>
+          <td class="text-black">{{ producto.precio }}</td>
+          <td class="text-black">{{ producto.cantidad }}</td>
+          <td class="text-black">{{ producto.descripcion }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button

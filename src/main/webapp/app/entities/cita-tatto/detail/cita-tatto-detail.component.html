@@ -11,31 +11,31 @@
 
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.idCliente">Id Cliente</span></dt>
+      <dl class="row-md jh-entity-details color-toggle">
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.idCliente">Id Cliente</span></dt>
         <dd>
-          <span>{{ citaTatto.idCliente }}</span>
+          <span class="text-black">{{ citaTatto.nombreCliente }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion">Fecha Creacion</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion">Fecha Creacion</span></dt>
         <dd>
-          <span>{{ citaTatto.fechaCreacion | formatMediumDatetime }}</span>
+          <span class="text-black">{{ citaTatto.fechaCreacion | formatMediumDatetime }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCita">Fecha Cita</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCita">Fecha Cita</span></dt>
         <dd>
-          <span>{{ citaTatto.fechaCita | formatMediumDatetime }}</span>
+          <span class="text-black">{{ citaTatto.fechaCita | formatMediumDatetime }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.hora">Hora</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.hora">Hora</span></dt>
         <dd>
-          <span>{{ citaTatto.hora }}</span>
+          <span class="text-black" class="text-black">{{ citaTatto.hora }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.emailCliente">Email Cliente</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.emailCliente">Email Cliente</span></dt>
         <dd>
-          <span>{{ citaTatto.emailCliente }}</span>
+          <span class="text-black">{{ citaTatto.emailCliente }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno">Foto Diseno</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno">Foto Diseno</span></dt>
         <dd>
-          <div *ngIf="citaTatto.fotoDiseno">
-            <a (click)="openFile(citaTatto.fotoDiseno, citaTatto.fotoDisenoContentType)">
+          <div *ngIf="citaTatto.fotoDiseno" class="text-black">
+            <a class="text-black" (click)="openFile(citaTatto.fotoDiseno, citaTatto.fotoDisenoContentType)">
               <img
                 [src]="'data:' + citaTatto.fotoDisenoContentType + ';base64,' + citaTatto.fotoDiseno"
                 style="max-width: 100%"
@@ -45,29 +45,25 @@
             {{ citaTatto.fotoDisenoContentType }}, {{ byteSize(citaTatto.fotoDiseno) }}
           </div>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.valorTatto">Valor Tatto</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.valorTatto">Valor Tatto</span></dt>
         <dd>
-          <span>{{ citaTatto.valorTatto }}</span>
+          <span class="text-black">{{ citaTatto.valorTatto }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.valorPagado">Valor Pagado</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.valorPagado">Valor Pagado</span></dt>
         <dd>
-          <span>{{ citaTatto.valorPagado }}</span>
+          <span class="text-black">{{ citaTatto.valorPagado }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.abono">Abono</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.deuda">Deuda</span></dt>
         <dd>
-          <span>{{ citaTatto.abono }}</span>
+          <span class="text-black">{{ citaTatto.deuda }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.deuda">Deuda</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.estado">Estado</span></dt>
         <dd>
-          <span>{{ citaTatto.deuda }}</span>
+          <span class="text-black">{{ citaTatto.estado }}</span>
         </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.estado">Estado</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.descripcion">Descripcion</span></dt>
         <dd>
-          <span>{{ citaTatto.estado }}</span>
-        </dd>
-        <dt><span jhiTranslate="preciadoTattoApp.citaTatto.descripcion">Descripcion</span></dt>
-        <dd>
-          <span>{{ citaTatto.descripcion }}</span>
+          <span class="text-black">{{ citaTatto.descripcion }}</span>
         </dd>
       </dl>
 

@@ -1,24 +1,26 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-caja-tattos-heading"
         data-cy="CajaTattosCreateUpdateHeading"
         jhiTranslate="preciadoTattoApp.cajaTattos.home.createOrEditLabel"
-        class="aqua-text"
+        class="text-black"
       >
         Create or edit a Caja Tattos
       </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cajaTattos.valorTattoDia" for="field_valorTattoDia"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.cajaTattos.valorTattoDia" for="field_valorTattoDia"
               >Valor Tatto Dia</label
             >
             <input
+              readonly="true"
               type="number"
               class="form-control"
               name="valorTattoDia"
@@ -30,12 +32,13 @@
 
           <div class="col-md-6 form-group">
             <label
-              class="form-control-label aqua-text"
+              class="form-control-label text-black"
               jhiTranslate="preciadoTattoApp.cajaTattos.valorRegistrado"
               for="field_valorRegistrado"
               >Valor Registrado</label
             >
             <input
+              (keyup)="calcularDiferencia()"
               type="number"
               class="form-control"
               name="valorRegistrado"
@@ -48,10 +51,11 @@
 
         <div>
           <div style="margin-left: 326px" class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cajaTattos.diferencia" for="field_diferencia"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.cajaTattos.diferencia" for="field_diferencia"
               >Diferencia</label
             >
             <input
+              readonly="true"
               type="number"
               class="form-control"
               name="diferencia"
@@ -72,7 +76,7 @@
           type="submit"
           id="save-entity"
           data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
+          [disabled]="editForm.invalid || isSaving || saving"
           class="btn btn-primary"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
@@ -81,3 +85,15 @@
     </form>
   </div>
 </div>
+
+<ng-template #mensajeInicio>
+  <div class="modal-header color-toggle">
+    <h4 class="modal-title text-black">Advertencia</h4>
+  </div>
+  <div class="modal-body">
+    <div>Para crear una caja debe existir por lo menos una venta durante el dia<br />de lo contrario no se podra crear una caja.</div>
+  </div>
+  <div class="modal-footer color-toggle text-black">
+    <h4>Steven Preciado Tattoo</h4>
+  </div>
+</ng-template>

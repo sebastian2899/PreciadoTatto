@@ -29,20 +29,20 @@
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="egresos && egresos.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table class="table table-dark color-toggle" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.egreso.fechaCreacion">Fecha Creacion</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.egreso.descripcion">Descripcion</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.egreso.valor">Valor</span></th>
+          <th scope="col"><span class="text-black" jhiTranslate="preciadoTattoApp.egreso.fechaCreacion">Fecha Creacion</span></th>
+          <th scope="col"><span class="text-black" jhiTranslate="preciadoTattoApp.egreso.descripcion">Descripcion</span></th>
+          <th scope="col"><span class="text-black" jhiTranslate="preciadoTattoApp.egreso.valor">Valor</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let egreso of egresos; trackBy: trackId" data-cy="entityTable">
-          <td>{{ egreso.fechaCreacion | formatMediumDatetime }}</td>
-          <td>{{ egreso.descripcion }}</td>
-          <td>{{ egreso.valor }}</td>
+          <td class="text-black">{{ egreso.fechaCreacion | formatMediumDatetime }}</td>
+          <td class="text-black">{{ egreso.descripcion }}</td>
+          <td class="text-black">{{ egreso.valor }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/egreso', egreso.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

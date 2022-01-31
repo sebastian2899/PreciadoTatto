@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -8,6 +8,8 @@ import { finalize } from 'rxjs/operators';
 import { ICajaTattos, CajaTattos } from '../caja-tattos.model';
 import { CajaTattosService } from '../service/caja-tattos.service';
 import { ICliente } from 'app/entities/cliente/cliente.model';
+import { AlertService } from 'app/core/util/alert.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'jhi-caja-tattos-update',
@@ -15,6 +17,10 @@ import { ICliente } from 'app/entities/cliente/cliente.model';
 })
 export class CajaTattosUpdateComponent implements OnInit {
   isSaving = false;
+  saving?: boolean | undefined;
+  validarCaja?: boolean | undefined;
+
+  @ViewChild('mensajeInicio', { static: true }) content: ElementRef | undefined;
 
   editForm = this.fb.group({
     id: [],
@@ -23,12 +29,64 @@ export class CajaTattosUpdateComponent implements OnInit {
     diferencia: [],
   });
 
-  constructor(protected cajaTattosService: CajaTattosService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
-
+  constructor(
+    protected cajaTattosService: CajaTattosService,
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder,
+    protected alertService: AlertService,
+    protected modal: NgbModal
+  ) {}
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ cajaTattos }) => {
       this.updateForm(cajaTattos);
     });
+
+    this.valorDia();
+    this.modal.open(this.content);
+  }
+
+  valorDia(): void {
+    this.cajaTattosService.valorDia().subscribe((res: HttpResponse<number>) => {
+      const valorDia = res.body;
+      this.editForm.get(['valorTattoDia'])?.setValue(valorDia);
+      this.editForm.get(['diferencia'])?.setValue(valorDia);
+    }),
+      () => {
+        const valorCaja = 0;
+        this.editForm.get(['valorfinaldia'])!.setValue(valorCaja);
+      };
+  }
+
+  validCaja(): void {
+    const valorDia = this.editForm.get(['valorTattoDia'])!.value;
+    if (valorDia === 0 || valorDia === undefined) {
+      this.validarCaja = true;
+    } else {
+      this.validarCaja = false;
+    }
+  }
+
+  calcularDiferencia(): void {
+    const valorDia = this.editForm.get(['valorTattoDia'])!.value;
+    const valorRegistrado = this.editForm.get(['valorRegistrado'])!.value;
+
+    if (valorRegistrado === 0 || valorRegistrado === undefined || valorRegistrado === null) {
+      this.editForm.get(['diferencia'])?.setValue(valorDia);
+    }
+
+    if (valorRegistrado > valorDia) {
+      this.alertService.addAlert({
+        type: 'danger',
+        message: 'El valor a registrar no debe ni deberia ser mayor al valor registrado durante el dia',
+      });
+      this.editForm.get(['valorRegistrado'])?.setValue(0);
+      this.editForm.get(['diferencia'])?.setValue(0);
+      this.saving = true;
+    } else {
+      this.saving = false;
+      const diferencia = valorDia - valorRegistrado;
+      this.editForm.get(['diferencia'])?.setValue(diferencia);
+    }
   }
 
   previousState(): void {

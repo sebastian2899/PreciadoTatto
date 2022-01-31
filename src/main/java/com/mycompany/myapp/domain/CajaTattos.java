@@ -2,7 +2,14 @@ package com.mycompany.myapp.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
+import java.time.Instant;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,7 +38,18 @@ public class CajaTattos implements Serializable {
     @Column(name = "diferencia", precision = 21, scale = 2)
     private BigDecimal diferencia;
 
+    @Column(name = "fecha_creacion")
+    private Instant fechaCreacion;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Instant getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Instant fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 
     public Long getId() {
         return this.id;

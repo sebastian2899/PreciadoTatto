@@ -11,10 +11,10 @@ export interface ICitaTatto {
   fotoDiseno?: string | null;
   valorTatto?: number | null;
   valorPagado?: number | null;
-  abono?: number | null;
   deuda?: number | null;
   estado?: string | null;
   descripcion?: string | null;
+  nombreCliente?: string | null;
 }
 
 export class CitaTatto implements ICitaTatto {
@@ -32,7 +32,8 @@ export class CitaTatto implements ICitaTatto {
     public abono?: number | null,
     public deuda?: number | null,
     public estado?: string | null,
-    public descripcion?: string | null
+    public descripcion?: string | null,
+    public nombreCliente?: string | null
   ) {}
 }
 

@@ -1,11 +1,11 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-caja-ingresos-heading"
         data-cy="CajaIngresosCreateUpdateHeading"
         jhiTranslate="preciadoTattoApp.cajaIngresos.home.createOrEditLabel"
-        class="aqua-text"
+        class="text-black"
       >
         Create or edit a Caja Ingresos
       </h2>
@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-md-6 form-group">
             <label
-              class="form-control-label aqua-text"
+              class="form-control-label text-black"
               jhiTranslate="preciadoTattoApp.cajaIngresos.valorVendidoDia"
               for="field_valorVendidoDia"
               >Valor Vendido Dia</label
@@ -33,7 +33,7 @@
 
           <div class="col-md-6 form-group">
             <label
-              class="form-control-label aqua-text"
+              class="form-control-label text-black"
               jhiTranslate="preciadoTattoApp.cajaIngresos.valorRegistradoDia"
               for="field_valorRegistradoDia"
               >Valor Registrado Dia</label
@@ -51,7 +51,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group" style="margin-left: 315px">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.cajaIngresos.diferencia" for="field_diferencia"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.cajaIngresos.diferencia" for="field_diferencia"
               >Diferencia</label
             >
             <input

@@ -29,20 +29,24 @@
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="cajaIngresos && cajaIngresos.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table class="table table-dark color-toggle" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaIngresos.valorVendidoDia">Valor Vendido Dia</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaIngresos.valorRegistradoDia">Valor Registrado Dia</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.cajaIngresos.diferencia">Diferencia</span></th>
-          <th scope="col"></th>
+          <th class="text-black" scope="col">
+            <span jhiTranslate="preciadoTattoApp.cajaIngresos.valorVendidoDia">Valor Vendido Dia</span>
+          </th>
+          <th class="text-black" scope="col">
+            <span jhiTranslate="preciadoTattoApp.cajaIngresos.valorRegistradoDia">Valor Registrado Dia</span>
+          </th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.cajaIngresos.diferencia">Diferencia</span></th>
+          <th class="text-black" scope="col"></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style="background: radial-gradient(rgba(0, 255, 255, rgba(255, 255, 255, 0.474) 7), white)">
         <tr *ngFor="let cajaIngresos of cajaIngresos; trackBy: trackId" data-cy="entityTable">
-          <td>{{ cajaIngresos.valorVendidoDia }}</td>
-          <td>{{ cajaIngresos.valorRegistradoDia }}</td>
-          <td>{{ cajaIngresos.diferencia }}</td>
+          <td class="text-black">{{ cajaIngresos.valorVendidoDia }}</td>
+          <td class="text-black">{{ cajaIngresos.valorRegistradoDia }}</td>
+          <td class="text-black">{{ cajaIngresos.diferencia }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button

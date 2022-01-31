@@ -5,6 +5,10 @@ import com.mycompany.myapp.repository.CajaTattosRepository;
 import com.mycompany.myapp.service.CajaTattosService;
 import com.mycompany.myapp.service.dto.CajaTattosDTO;
 import com.mycompany.myapp.service.mapper.CajaTattosMapper;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +40,11 @@ public class CajaTattosServiceImpl implements CajaTattosService {
     public CajaTattosDTO save(CajaTattosDTO cajaTattosDTO) {
         log.debug("Request to save CajaTattos : {}", cajaTattosDTO);
         CajaTattos cajaTattos = cajaTattosMapper.toEntity(cajaTattosDTO);
+
+        if (cajaTattos.getId() == null) {
+            cajaTattos.setFechaCreacion(Instant.now());
+        }
+
         cajaTattos = cajaTattosRepository.save(cajaTattos);
         return cajaTattosMapper.toDto(cajaTattos);
     }
@@ -73,5 +82,21 @@ public class CajaTattosServiceImpl implements CajaTattosService {
     public void delete(Long id) {
         log.debug("Request to delete CajaTattos : {}", id);
         cajaTattosRepository.deleteById(id);
+    }
+
+    @Override
+    public BigDecimal consultarValoresDiariosTattos() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = format.format(new Date());
+
+        BigDecimal valorTattosPagados = cajaTattosRepository.valorTattooDia(fecha);
+
+        if (valorTattosPagados == null) {
+            valorTattosPagados = BigDecimal.ZERO;
+        }
+
+        //BigDecimal valorTotalDia = valorTattosPagados.add(valorAbonoDiario);
+
+        return valorTattosPagados;
     }
 }

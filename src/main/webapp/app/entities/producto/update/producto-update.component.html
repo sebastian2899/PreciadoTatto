@@ -1,9 +1,9 @@
 <div class="row justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-producto-heading"
-        class="aqua-text"
+        class="text-black"
         data-cy="ProductoCreateUpdateHeading"
         jhiTranslate="preciadoTattoApp.producto.home.createOrEditLabel"
       >
@@ -15,7 +15,7 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.producto.foto" for="field_foto">Foto</label>
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.producto.foto" for="field_foto">Foto</label>
             <div>
               <img
                 [src]="'data:' + editForm.get('fotoContentType')!.value + ';base64,' + editForm.get('foto')!.value"
@@ -49,26 +49,26 @@
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.producto.nombre" for="field_nombre">Nombre</label>
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.producto.nombre" for="field_nombre">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.producto.precio" for="field_precio">Precio</label>
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.producto.precio" for="field_precio">Precio</label>
             <input type="number" class="form-control" name="precio" id="field_precio" data-cy="precio" formControlName="precio" />
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.producto.cantidad" for="field_cantidad"
+            <label class="form-control-label text-blackt" jhiTranslate="preciadoTattoApp.producto.cantidad" for="field_cantidad"
               >Cantidad</label
             >
             <input type="number" class="form-control" name="cantidad" id="field_cantidad" data-cy="cantidad" formControlName="cantidad" />
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label aqua-text" jhiTranslate="preciadoTattoApp.producto.descripcion" for="field_descripcion"
+            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.producto.descripcion" for="field_descripcion"
               >Descripcion</label
             >
             <input
