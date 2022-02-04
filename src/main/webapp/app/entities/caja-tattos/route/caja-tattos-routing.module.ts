@@ -6,6 +6,7 @@ import { CajaTattosComponent } from '../list/caja-tattos.component';
 import { CajaTattosDetailComponent } from '../detail/caja-tattos-detail.component';
 import { CajaTattosUpdateComponent } from '../update/caja-tattos-update.component';
 import { CajaTattosRoutingResolveService } from './caja-tattos-routing-resolve.service';
+import { CajaFechasComponent } from '../caja-fechas/caja-fechas.component';
 
 const cajaTattosRoute: Routes = [
   {
@@ -32,6 +33,14 @@ const cajaTattosRoute: Routes = [
   {
     path: ':id/edit',
     component: CajaTattosUpdateComponent,
+    resolve: {
+      cajaTattos: CajaTattosRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'caja-fechas',
+    component: CajaFechasComponent,
     resolve: {
       cajaTattos: CajaTattosRoutingResolveService,
     },

@@ -1,8 +1,11 @@
+import * as dayjs from 'dayjs';
+
 export interface ICajaTattos {
   id?: number;
   valorTattoDia?: number | null;
   valorRegistrado?: number | null;
   diferencia?: number | null;
+  fechaCreacion?: dayjs.Dayjs | null;
 }
 
 export class CajaTattos implements ICajaTattos {
@@ -10,7 +13,8 @@ export class CajaTattos implements ICajaTattos {
     public id?: number,
     public valorTattoDia?: number | null,
     public valorRegistrado?: number | null,
-    public diferencia?: number | null
+    public diferencia?: number | null,
+    public fechaCreacion?: dayjs.Dayjs | null
   ) {}
 }
 

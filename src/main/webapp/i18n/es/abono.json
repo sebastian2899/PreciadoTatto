@@ -1,0 +1,26 @@
+{
+  "preciadoTattoApp": {
+    "abono": {
+      "home": {
+        "title": "Abonos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Abono",
+        "createOrEditLabel": "Crear o editar Abono",
+        "notFound": "Ningún Abonos encontrado"
+      },
+      "created": "Un nuevo Abono ha sido creado con el identificador {{ param }}",
+      "updated": "Un Abono ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Abono ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Abono {{ id }}?"
+      },
+      "detail": {
+        "title": "Abono"
+      },
+      "id": "ID",
+      "fechaAbono": "Fecha Abono",
+      "idFactura": "Id Cita",
+      "valorAbono": "Valor Abono"
+    }
+  }
+}

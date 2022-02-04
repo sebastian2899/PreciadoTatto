@@ -3,10 +3,13 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.repository.CajaTattosRepository;
 import com.mycompany.myapp.service.CajaTattosService;
 import com.mycompany.myapp.service.dto.CajaTattosDTO;
+import com.mycompany.myapp.service.dto.RegistroHistoricoCajaDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -154,6 +157,24 @@ public class CajaTattosResource {
     public BigDecimal consultarValorDia() {
         log.debug("REST request to get valor vendido dia");
         return cajaTattosService.consultarValoresDiariosTattos();
+    }
+
+    @GetMapping("/registro-caja-fecha/{fechaInicio}/{fechaFin}")
+    public ResponseEntity<RegistroHistoricoCajaDTO> registroPorFecha(@PathVariable String fechaInicio, @PathVariable String fechaFin) {
+        log.debug("Rest to request cajaTatto per dates");
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        RegistroHistoricoCajaDTO rhct = null;
+
+        try {
+            Instant fechaI = format.parse(fechaInicio.substring(0, fechaInicio.indexOf("T"))).toInstant();
+            Instant fechaF = format.parse(fechaFin.substring(0, fechaFin.indexOf("T"))).toInstant();
+            rhct = cajaTattosService.registroCaja(fechaI, fechaF);
+        } catch (Exception e) {
+            rhct = null;
+        }
+
+        return ResponseEntity.ok().body(rhct);
     }
 
     /**

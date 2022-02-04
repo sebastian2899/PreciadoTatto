@@ -150,8 +150,8 @@ public class VentasResource {
     @GetMapping("/ventas/{id}")
     public ResponseEntity<VentasDTO> getVentas(@PathVariable Long id) {
         log.debug("REST request to get Ventas : {}", id);
-        Optional<VentasDTO> ventasDTO = ventasService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(ventasDTO);
+        VentasDTO ventasDTO = ventasService.findOne(id);
+        return ResponseEntity.ok().body(ventasDTO);
     }
 
     /**

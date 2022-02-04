@@ -14,4 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface CitaTattoRepository extends JpaRepository<CitaTatto, Long> {
     @Query("SELECT c.nombre FROM Cliente c WHERE c.id =:id")
     String nombreCliente(@Param("id") Long id);
+
+    @Query("SELECT c FROM CitaTatto c WHERE c.id=:id")
+    CitaTatto citaById(@Param("id") Long id);
 }

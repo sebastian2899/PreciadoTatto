@@ -150,8 +150,8 @@ public class ComprasResource {
     @GetMapping("/compras/{id}")
     public ResponseEntity<ComprasDTO> getCompras(@PathVariable Long id) {
         log.debug("REST request to get Compras : {}", id);
-        Optional<ComprasDTO> comprasDTO = comprasService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(comprasDTO);
+        ComprasDTO comprasDTO = comprasService.findOne(id);
+        return ResponseEntity.ok().body(comprasDTO);
     }
 
     /**

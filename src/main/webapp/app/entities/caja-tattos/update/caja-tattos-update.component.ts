@@ -40,8 +40,8 @@ export class CajaTattosUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ cajaTattos }) => {
       this.updateForm(cajaTattos);
     });
-
     this.valorDia();
+
     this.modal.open(this.content);
   }
 
@@ -50,20 +50,17 @@ export class CajaTattosUpdateComponent implements OnInit {
       const valorDia = res.body;
       this.editForm.get(['valorTattoDia'])?.setValue(valorDia);
       this.editForm.get(['diferencia'])?.setValue(valorDia);
+
+      if (valorDia === 0) {
+        this.saving = true;
+      } else {
+        this.saving = false;
+      }
     }),
       () => {
         const valorCaja = 0;
         this.editForm.get(['valorfinaldia'])!.setValue(valorCaja);
       };
-  }
-
-  validCaja(): void {
-    const valorDia = this.editForm.get(['valorTattoDia'])!.value;
-    if (valorDia === 0 || valorDia === undefined) {
-      this.validarCaja = true;
-    } else {
-      this.validarCaja = false;
-    }
   }
 
   calcularDiferencia(): void {

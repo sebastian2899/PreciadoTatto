@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICajaTattos } from '../caja-tattos.model';
 import { CajaTattosService } from '../service/caja-tattos.service';
 import { CajaTattosDeleteDialogComponent } from '../delete/caja-tattos-delete-dialog.component';
+import { RouteConfigLoadEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-caja-tattos',
@@ -13,8 +14,9 @@ import { CajaTattosDeleteDialogComponent } from '../delete/caja-tattos-delete-di
 export class CajaTattosComponent implements OnInit {
   cajaTattos?: ICajaTattos[];
   isLoading = false;
+  validCaja = true;
 
-  constructor(protected cajaTattosService: CajaTattosService, protected modalService: NgbModal) {}
+  constructor(protected router: Router, protected cajaTattosService: CajaTattosService, protected modalService: NgbModal) {}
 
   loadAll(): void {
     this.isLoading = true;
@@ -36,6 +38,10 @@ export class CajaTattosComponent implements OnInit {
 
   trackId(index: number, item: ICajaTattos): number {
     return item.id!;
+  }
+
+  consultarCajaFecha(): void {
+    this.router.navigate(['/caja-tattos/caja-fechas']);
   }
 
   delete(cajaTattos: ICajaTattos): void {

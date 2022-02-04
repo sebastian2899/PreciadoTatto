@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-abono-heading" data-cy="AbonoCreateUpdateHeading" jhiTranslate="preciadoTattoApp.abono.home.createOrEditLabel">
+        Create or edit a Abono
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label" jhiTranslate="preciadoTattoApp.abono.fechaAbono" for="field_fechaAbono">Fecha Abono</label>
+            <div class="d-flex">
+              <input
+                id="field_fechaAbono"
+                data-cy="fechaAbono"
+                type="datetime-local"
+                class="form-control"
+                name="fechaAbono"
+                formControlName="fechaAbono"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label class="form-control-label" jhiTranslate="preciadoTattoApp.abono.valorAbono" for="field_valorAbono">Valor Abono</label>
+            <input
+              type="number"
+              class="form-control"
+              name="valorAbono"
+              id="field_valorAbono"
+              data-cy="valorAbono"
+              formControlName="valorAbono"
+              (keyup)="restarAbono()"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="margin-left: 306px; margin-top: 21px" class="cold-md-4 form-group">
+            <label class="form-control-label" for="field_valorAbono">Valor Deuda</label>
+            <input type="number" readonly="true" name="deuda" id="deuda" data-cy="deuda" formControlName="deuda" />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving || desBoton"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

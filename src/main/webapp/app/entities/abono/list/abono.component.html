@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div><img class="imagen-table" src="content/images/fondoLogo2.png" alt="" /></div>
+        <div class="col-lg-7">
+          <div class="p-5">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 mb-4 aqua-text">Registro historico de abonos de la cita</h1>
+            </div>
+            <div class="text-center aqua-text">Preciado Tatto</div>
+          </div>
+
+          <jhi-alert-error></jhi-alert-error>
+
+          <jhi-alert></jhi-alert>
+
+          <div class="alert alert-aqua" id="no-result" *ngIf="abonos?.length === 0">
+            <span>Esta cíta no tiéne abónos registrádos aún</span>
+          </div>
+
+          <table class="table">
+            <thead class="thead-dark color-toggle">
+              <tr>
+                <th scope="col">Fecha del abono</th>
+                <th scope="col">Valor Abonado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let abono of abonos">
+                <td>{{ abono.fechaAbono | formatMediumDatetime }}</td>
+                <td>{{ abono.valorAbono }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <div class="text-center">
+            <button class="btn botones-aqua" (click)="regresar()">Volver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #mensajeInicio>
+  <div class="modal-header color-toggle">
+    <h4 class="modal-title text-black">Informacion</h4>
+  </div>
+  <div class="modal-body">
+    <div>
+      <p style="color: black">
+        En esta seccion prodra hacer un registro historico de los abonos de cada cita registrada.<br />
+        Podra ver el valor total de cada abono y su fecha correspondiente,<br />
+        cada registro de abono sera guardado en la caja diaria de tatuajes. (Solo Tattoos)
+      </p>
+    </div>
+  </div>
+  <div class="modal-footer color-toggle text-black">
+    <h4 class="text-black">Preciado Tattoo</h4>
+  </div>
+</ng-template>
+
+<!--
+  <div class="table-responsive" id="entities" *ngIf="abonos && abonos.length > 0">
+    <table class="table table-dark color-toggle" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.abono.fechaAbono">Fecha Abono</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.abono.idFactura">Id Cita</span></th>
+          <th scope="col"><span jhiTranslate="preciadoTattoApp.abono.valorAbono">Valor Abono</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let abono of abonos; trackBy: trackId" data-cy="entityTable">
+          <td>{{ abono.fechaAbono | formatMediumDatetime }}</td>
+          <td>{{ abono.idCita }}</td>
+          <td>{{ abono.valorAbono }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/abono', abono.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+-->

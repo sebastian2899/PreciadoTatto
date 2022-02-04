@@ -4,6 +4,7 @@ import com.mycompany.myapp.domain.CajaTattos;
 import com.mycompany.myapp.repository.CajaTattosRepository;
 import com.mycompany.myapp.service.CajaTattosService;
 import com.mycompany.myapp.service.dto.CajaTattosDTO;
+import com.mycompany.myapp.service.dto.RegistroHistoricoCajaDTO;
 import com.mycompany.myapp.service.mapper.CajaTattosMapper;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -91,12 +92,53 @@ public class CajaTattosServiceImpl implements CajaTattosService {
 
         BigDecimal valorTattosPagados = cajaTattosRepository.valorTattooDia(fecha);
 
+        BigDecimal valorAbonoDia = cajaTattosRepository.valorAbonoDia(fecha);
+
         if (valorTattosPagados == null) {
             valorTattosPagados = BigDecimal.ZERO;
         }
 
+        if (valorAbonoDia == null) {
+            valorAbonoDia = BigDecimal.ZERO;
+        }
+
+        BigDecimal totalDia = valorTattosPagados.add(valorAbonoDia);
+
         //BigDecimal valorTotalDia = valorTattosPagados.add(valorAbonoDiario);
 
-        return valorTattosPagados;
+        return totalDia;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RegistroHistoricoCajaDTO registroCaja(Instant fechaInciio, Instant fechaFin) {
+        RegistroHistoricoCajaDTO rhcd = new RegistroHistoricoCajaDTO();
+
+        List<CajaTattos> cajas = cajaTattosRepository.cajaTattoFecha(fechaInciio, fechaFin);
+
+        BigDecimal valorVendidoDia = BigDecimal.ZERO;
+        BigDecimal valorPagado = BigDecimal.ZERO;
+        BigDecimal diferencia = BigDecimal.ZERO;
+
+        //ANTES
+        /*for (CajaTattos cajaTattos : cajas) {
+			valorVendidoDia.add(cajaTattos.getValorTattoDia());
+			valorPagado.add(cajaTattos.getValorRegistrado());
+			diferencia.add(cajaTattos.getDiferencia());
+		}
+		*/
+
+        //DESPUES (funciona)
+        for (CajaTattos cajaTattos : cajas) {
+            valorVendidoDia = valorVendidoDia.add(cajaTattos.getValorTattoDia());
+            valorPagado = valorPagado.add(cajaTattos.getValorRegistrado());
+            diferencia = diferencia.add(cajaTattos.getDiferencia());
+        }
+
+        rhcd.setValorVendido(valorVendidoDia);
+        rhcd.setValorPagado(valorPagado);
+        rhcd.setDiferencia(diferencia);
+
+        return rhcd;
     }
 }

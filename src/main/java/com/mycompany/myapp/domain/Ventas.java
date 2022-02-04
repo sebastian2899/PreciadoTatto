@@ -1,8 +1,18 @@
 package com.mycompany.myapp.domain;
 
+import com.mycompany.myapp.service.dto.ProductoDTO;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
+import java.time.Instant;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,7 +33,7 @@ public class Ventas implements Serializable {
     private Long id;
 
     @Column(name = "fecha_creacion")
-    private String fechaCreacion;
+    private Instant fechaCreacion;
 
     @Column(name = "id_cliente")
     private Long idCliente;
@@ -40,6 +50,9 @@ public class Ventas implements Serializable {
     @Column(name = "estado")
     private String estado;
 
+    @Transient
+    List<ProductoDTO> productosSeleccionados;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -55,16 +68,24 @@ public class Ventas implements Serializable {
         this.id = id;
     }
 
-    public String getFechaCreacion() {
+    public Instant getFechaCreacion() {
         return this.fechaCreacion;
     }
 
-    public Ventas fechaCreacion(String fechaCreacion) {
+    public List<ProductoDTO> getProductosSeleccionados() {
+        return productosSeleccionados;
+    }
+
+    public void setProductosSeleccionados(List<ProductoDTO> productosSeleccionados) {
+        this.productosSeleccionados = productosSeleccionados;
+    }
+
+    public Ventas fechaCreacion(Instant fechaCreacion) {
         this.setFechaCreacion(fechaCreacion);
         return this;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(Instant fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

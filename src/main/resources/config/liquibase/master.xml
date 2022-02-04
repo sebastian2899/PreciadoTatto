@@ -22,8 +22,11 @@
     <include file="config/liquibase/changelog/20220127223638_added_entity_Compras.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220127223639_added_entity_Egreso.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220127223640_added_entity_Ventas.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220131021452_added_entity_ProductosVendidos.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220127223641_added_entity_CitaTatto.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220127223642_added_entity_CitaPerforacion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220131021943_added_entity_Abono.xml" relativeToChangelogFile="false"/>
+     <include file="config/liquibase/changelog/20220131021454_added_entity_ProductosComprados.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

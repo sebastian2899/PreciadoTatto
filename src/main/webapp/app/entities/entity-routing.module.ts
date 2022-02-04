@@ -49,6 +49,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'preciadoTattoApp.citaPerforacion.home.title' },
         loadChildren: () => import('./cita-perforacion/cita-perforacion.module').then(m => m.CitaPerforacionModule),
       },
+      {
+        path: 'abono',
+        data: { pageTitle: 'preciadoTattoApp.abono.home.title' },
+        loadChildren: () => import('./abono/abono.module').then(m => m.AbonoModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

@@ -3,6 +3,7 @@ package com.mycompany.myapp.service.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,6 +23,8 @@ public class ComprasDTO implements Serializable {
 
     private String estado;
 
+    private List<ProductoDTO> productosSeleccionados;
+
     public Long getId() {
         return id;
     }
@@ -32,6 +35,14 @@ public class ComprasDTO implements Serializable {
 
     public Instant getFechaCreacion() {
         return fechaCreacion;
+    }
+
+    public List<ProductoDTO> getProductosSeleccionados() {
+        return productosSeleccionados;
+    }
+
+    public void setProductosSeleccionados(List<ProductoDTO> productosSeleccionados) {
+        this.productosSeleccionados = productosSeleccionados;
     }
 
     public void setFechaCreacion(Instant fechaCreacion) {

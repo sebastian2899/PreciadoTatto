@@ -1,0 +1,24 @@
+{
+  "fields": [
+    {
+      "fieldName": "fechaAbono",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "idFactura",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "valorAbono",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "relationships": [],
+  "service": "serviceImpl",
+  "dto": "mapstruct",
+  "jpaMetamodelFiltering": false,
+  "readOnly": false,
+  "pagination": "no",
+  "name": "Abono",
+  "changelogDate": "20220131021943"
+}

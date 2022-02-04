@@ -43,7 +43,18 @@
     "clientPackageManager": "npm",
     "languages": ["es"],
     "enableGradleEnterprise": false,
-    "entities": ["Cliente", "Producto", "CajaIngresos", "CajaTattos", "Compras", "Egreso", "Ventas", "CitaTatto", "CitaPerforacion"],
-    "lastLiquibaseTimestamp": 1643323002000
+    "entities": [
+      "Cliente",
+      "Producto",
+      "CajaIngresos",
+      "CajaTattos",
+      "Compras",
+      "Egreso",
+      "Ventas",
+      "CitaTatto",
+      "CitaPerforacion",
+      "Abono"
+    ],
+    "lastLiquibaseTimestamp": 1643595583000
   }
 }

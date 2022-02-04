@@ -74,4 +74,11 @@ public class ProductoServiceImpl implements ProductoService {
         log.debug("Request to delete Producto : {}", id);
         productoRepository.deleteById(id);
     }
+
+    @Override
+    public List<ProductoDTO> aviableProducts() {
+        log.debug("Request to get all aviable Products");
+        List<Producto> productos = productoRepository.productosDisponibles();
+        return productoMapper.toDto(productos);
+    }
 }

@@ -6,15 +6,20 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICajaTattos, getCajaTattosIdentifier } from '../caja-tattos.model';
+import { ICajaFechasTattoos } from '../caja-fechas.model';
+import * as dayjs from 'dayjs';
+import { map } from 'rxjs/operators';
 
 export type EntityResponseType = HttpResponse<ICajaTattos>;
 export type EntityArrayResponseType = HttpResponse<ICajaTattos[]>;
 export type NumberType = HttpResponse<number>;
+export type EntityFechasType = HttpResponse<ICajaFechasTattoos>;
 
 @Injectable({ providedIn: 'root' })
 export class CajaTattosService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/caja-tattos');
   protected URLconsultarValorVendidoDia = this.applicationConfigService.getEndpointFor('api/consultarValorDia');
+  protected URLconsultarCajaFechas = this.applicationConfigService.getEndpointFor('api/registro-caja-fecha');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -40,6 +45,12 @@ export class CajaTattosService {
 
   valorDia(): Observable<NumberType> {
     return this.http.get<number>(this.URLconsultarValorVendidoDia, { observe: 'response' });
+  }
+
+  cajaPorFecha(fechaIni: string, fechaFin: string): Observable<EntityFechasType> {
+    return this.http
+      .get<ICajaFechasTattoos>(`${this.URLconsultarCajaFechas}/${fechaIni}/${fechaFin}`, { observe: 'response' })
+      .pipe(map((res: EntityFechasType) => res));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
@@ -69,5 +80,27 @@ export class CajaTattosService {
       return [...cajaTattosToAdd, ...cajaTattosCollection];
     }
     return cajaTattosCollection;
+  }
+
+  protected convertDateFromClient(cajaTattoo: ICajaTattos): ICajaTattos {
+    return Object.assign({}, cajaTattoo, {
+      fechaCreacion: cajaTattoo.fechaCreacion?.isValid() ? cajaTattoo.fechaCreacion.toJSON() : undefined,
+    });
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.fechaCreacion = res.body.fechaCreacion ? dayjs(res.body.fechaCreacion) : undefined;
+    }
+    return res;
+  }
+
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((cajaTattoo: ICajaTattos) => {
+        cajaTattoo.fechaCreacion = cajaTattoo.fechaCreacion ? dayjs(cajaTattoo.fechaCreacion) : undefined;
+      });
+    }
+    return res;
   }
 }

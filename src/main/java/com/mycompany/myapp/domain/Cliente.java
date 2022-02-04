@@ -1,7 +1,15 @@
 package com.mycompany.myapp.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,6 +35,9 @@ public class Cliente implements Serializable {
     @Column(name = "numero_telefono")
     private String numeroTelefono;
 
+    @Transient
+    private List<Ventas> ventasPendientes;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -36,6 +47,14 @@ public class Cliente implements Serializable {
     public Cliente id(Long id) {
         this.setId(id);
         return this;
+    }
+
+    public List<Ventas> getVentasPendientes() {
+        return ventasPendientes;
+    }
+
+    public void setVentasPendientes(List<Ventas> ventasPendientes) {
+        this.ventasPendientes = ventasPendientes;
     }
 
     public void setId(Long id) {

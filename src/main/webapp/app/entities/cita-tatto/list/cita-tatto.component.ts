@@ -6,6 +6,8 @@ import { ICitaTatto } from '../cita-tatto.model';
 import { CitaTattoService } from '../service/cita-tatto.service';
 import { CitaTattoDeleteDialogComponent } from '../delete/cita-tatto-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { Router } from '@angular/router';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
   selector: 'jhi-cita-tatto',
@@ -15,7 +17,13 @@ export class CitaTattoComponent implements OnInit {
   citaTattos?: ICitaTatto[];
   isLoading = false;
 
-  constructor(protected citaTattoService: CitaTattoService, protected dataUtils: DataUtils, protected modalService: NgbModal) {}
+  constructor(
+    private storage: StateStorageService,
+    protected router: Router,
+    protected citaTattoService: CitaTattoService,
+    protected dataUtils: DataUtils,
+    protected modalService: NgbModal
+  ) {}
 
   loadAll(): void {
     this.isLoading = true;
@@ -33,6 +41,16 @@ export class CitaTattoComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+  }
+
+  pasoParametroCita(idCita: number): void {
+    this.storage.pasoParametroCita(idCita);
+    this.router.navigate(['abono/new']);
+  }
+
+  pasoParametroVerAbono(idCita: number): void {
+    this.storage.pasoParametroCita(idCita);
+    this.router.navigate(['abono']);
   }
 
   trackId(index: number, item: ICitaTatto): number {

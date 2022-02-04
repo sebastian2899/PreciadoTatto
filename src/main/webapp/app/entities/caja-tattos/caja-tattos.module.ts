@@ -5,10 +5,17 @@ import { CajaTattosDetailComponent } from './detail/caja-tattos-detail.component
 import { CajaTattosUpdateComponent } from './update/caja-tattos-update.component';
 import { CajaTattosDeleteDialogComponent } from './delete/caja-tattos-delete-dialog.component';
 import { CajaTattosRoutingModule } from './route/caja-tattos-routing.module';
+import { CajaFechasComponent } from './caja-fechas/caja-fechas.component';
 
 @NgModule({
   imports: [SharedModule, CajaTattosRoutingModule],
-  declarations: [CajaTattosComponent, CajaTattosDetailComponent, CajaTattosUpdateComponent, CajaTattosDeleteDialogComponent],
+  declarations: [
+    CajaTattosComponent,
+    CajaTattosDetailComponent,
+    CajaTattosUpdateComponent,
+    CajaTattosDeleteDialogComponent,
+    CajaFechasComponent,
+  ],
   entryComponents: [CajaTattosDeleteDialogComponent],
 })
 export class CajaTattosModule {}

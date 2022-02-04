@@ -141,6 +141,12 @@ public class ProductoResource {
         return productoService.findAll();
     }
 
+    @GetMapping("/productosDisponibles")
+    public List<ProductoDTO> getAllProductosDisponibles() {
+        log.debug("REST request to get all Productos");
+        return productoService.aviableProducts();
+    }
+
     /**
      * {@code GET  /productos/:id} : get the "id" producto.
      *

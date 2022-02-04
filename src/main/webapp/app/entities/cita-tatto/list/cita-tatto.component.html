@@ -3,7 +3,7 @@
     <span class="aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.home.title">Cita Tattos</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn botones-aqua mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="preciadoTattoApp.citaTatto.home.refreshListLabel">Refresh List</span>
       </button>
@@ -11,7 +11,7 @@
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-cita-tatto"
+        class="btn botones-aqua jh-create-entity create-cita-tatto"
         [routerLink]="['/cita-tatto/new']"
       >
         <fa-icon icon="plus"></fa-icon>
@@ -73,7 +73,7 @@
               <button
                 type="submit"
                 [routerLink]="['/cita-tatto', citaTatto.id, 'view']"
-                class="btn btn-info btn-sm"
+                class="btn btn-info btn-sm text-black"
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
@@ -81,13 +81,24 @@
               </button>
 
               <button
+                *ngIf="citaTatto.deuda || citaTatto.deuda! > 0"
                 type="submit"
-                [routerLink]="['/cita-tatto', citaTatto.id, 'edit']"
-                class="btn btn-primary btn-sm"
+                (click)="pasoParametroCita(citaTatto.id!)"
+                class="btn btn-info btn-sm text-black"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <span class="d-none d-md-inline">Abonar</span>
+              </button>
+
+              <button
+                type="submit"
+                (click)="pasoParametroVerAbono(citaTatto.id!)"
+                class="btn btn-info btn-sm text-black"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Consultar Abonos</span>
               </button>
 
               <button type="submit" (click)="delete(citaTatto)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">

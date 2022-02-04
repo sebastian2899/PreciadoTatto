@@ -1,7 +1,9 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.CajaTattosDTO;
+import com.mycompany.myapp.service.dto.RegistroHistoricoCajaDTO;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +43,8 @@ public interface CajaTattosService {
     Optional<CajaTattosDTO> findOne(Long id);
 
     BigDecimal consultarValoresDiariosTattos();
+
+    RegistroHistoricoCajaDTO registroCaja(Instant fechaInciio, Instant fechaFin);
 
     /**
      * Delete the "id" cajaTattos.

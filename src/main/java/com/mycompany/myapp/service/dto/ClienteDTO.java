@@ -1,6 +1,8 @@
 package com.mycompany.myapp.service.dto;
 
+import com.mycompany.myapp.domain.Ventas;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,12 +16,22 @@ public class ClienteDTO implements Serializable {
 
     private String numeroTelefono;
 
+    private List<Ventas> ventasPendientes;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Ventas> getVentasPendientes() {
+        return ventasPendientes;
+    }
+
+    public void setVentasPendientes(List<Ventas> ventasPendientes) {
+        this.ventasPendientes = ventasPendientes;
     }
 
     public String getNombre() {

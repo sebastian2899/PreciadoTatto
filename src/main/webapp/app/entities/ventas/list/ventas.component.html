@@ -43,7 +43,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let ventas of ventas; trackBy: trackId" data-cy="entityTable">
-          <td class="text-black">{{ ventas.fechaCreacion }}</td>
+          <td class="text-black">{{ ventas.fechaCreacion | formatMediumDatetime }}</td>
           <td class="text-black">{{ ventas.idCliente }}</td>
           <td class="text-black">{{ ventas.valorVenta }}</td>
           <td class="text-black">{{ ventas.valorPagado }}</td>

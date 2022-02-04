@@ -37,7 +37,7 @@ public interface VentasService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<VentasDTO> findOne(Long id);
+    VentasDTO findOne(Long id);
 
     /**
      * Delete the "id" ventas.

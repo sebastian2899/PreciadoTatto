@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div><img class="imagen-table" src="content/images/fondoLogo2.png" alt="" /></div>
+        <div class="col-lg-7">
+          <div class="p-5">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 aqua-text mb-4">Consultar registro de caja tattos por fechas</h1>
+            </div>
+            <div class="text-center">
+              <div class="row">
+                <div class="col-md-5 form-group">
+                  <label class="form-control-label aqua-text" for="field_fechaInicio">Fecha inicio</label>
+                  <div class="d-flex">
+                    <input
+                      id="field_fechaInicio"
+                      data-cy="fechaInicio"
+                      type="datetime-local"
+                      class="form-control"
+                      name="fechaInicio"
+                      [(ngModel)]="fechaInicio"
+                      placeholder="YYYY"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-5 form-group">
+                  <label class="form-control-label aqua-text" for="field_fechaFin">Fecha fin</label>
+                  <div class="d-flex">
+                    <input
+                      id="field_fechaFin"
+                      data-cy="fechaFin"
+                      type="datetime-local"
+                      class="form-control"
+                      name="fechaFin"
+                      [(ngModel)]="fechaFin"
+                      placeholder="YYYY"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <br />
+                  <button
+                    [disabled]="isSaving"
+                    style="margin-top: 7px; height: 38px"
+                    id="jh-create-entity"
+                    class="btn botones-aqua text-black jh-create-entity create-proyecto alinear-filtrar"
+                    (click)="consultarCajaFechas()"
+                  >
+                    Filtrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Valor Vendido</th>
+                <th scope="col">Valor Registrado</th>
+                <th scope="col">Diferencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ cajaFechas!.valorVendido }}</td>
+                <td>{{ cajaFechas!.valorPagado }}</td>
+                <td>{{ cajaFechas!.diferencia }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <div class="text-center">
+            <button class="btn botones-aqua" (click)="previusState()">Volver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #mensajeInicio>
+  <div class="modal-header color-toggle">
+    <h4 class="modal-title text-black">Informacion</h4>
+  </div>
+  <div class="modal-body text-black">
+    <div>
+      <p style="color: black">
+        En esta seccion prodra hacer un registro historico de los tattoos filtrando por fechas.<br />
+        Podra ver el valor total de la caja en las fechas que se digiten, de la misma manera podra ver<br />
+        el valor que se pago en total y la deuda total por la cantidad total de la factura sumada en las fechas.
+      </p>
+    </div>
+  </div>
+  <div class="modal-footer color-toggle">
+    <h4 class="text-black">Asegurese de estar digitando un formato de fecha valido como se indica en los campos requeridos.</h4>
+  </div>
+</ng-template>
