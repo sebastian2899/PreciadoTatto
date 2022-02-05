@@ -43,7 +43,6 @@ export class VentasUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     fechaCreacion: [],
-    idCliente: [],
     valorVenta: [],
     valorPagado: [],
     valorDeuda: [],
@@ -272,7 +271,6 @@ export class VentasUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: ventas.id,
       fechaCreacion: ventas.fechaCreacion,
-      idCliente: ventas.idCliente,
       valorVenta: ventas.valorVenta,
       valorPagado: ventas.valorPagado,
       valorDeuda: ventas.valorDeuda,
@@ -285,7 +283,6 @@ export class VentasUpdateComponent implements OnInit {
       ...new Ventas(),
       id: this.editForm.get(['id'])!.value,
       fechaCreacion: this.editForm.get(['fechaCreacion'])!.value,
-      idCliente: this.editForm.get(['idCliente'])!.value,
       valorVenta: this.editForm.get(['valorVenta'])!.value,
       valorPagado: this.editForm.get(['valorPagado'])!.value,
       valorDeuda: this.editForm.get(['valorDeuda'])!.value,

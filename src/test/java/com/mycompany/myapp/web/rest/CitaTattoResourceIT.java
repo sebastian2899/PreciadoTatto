@@ -102,7 +102,6 @@ class CitaTattoResourceIT {
      */
     public static CitaTatto createEntity(EntityManager em) {
         CitaTatto citaTatto = new CitaTatto()
-            .idCliente(DEFAULT_ID_CLIENTE)
             .fechaCreacion(DEFAULT_FECHA_CREACION)
             .fechaCita(DEFAULT_FECHA_CITA)
             .hora(DEFAULT_HORA)
@@ -125,7 +124,6 @@ class CitaTattoResourceIT {
      */
     public static CitaTatto createUpdatedEntity(EntityManager em) {
         CitaTatto citaTatto = new CitaTatto()
-            .idCliente(UPDATED_ID_CLIENTE)
             .fechaCreacion(UPDATED_FECHA_CREACION)
             .fechaCita(UPDATED_FECHA_CITA)
             .hora(UPDATED_HORA)
@@ -159,7 +157,6 @@ class CitaTattoResourceIT {
         List<CitaTatto> citaTattoList = citaTattoRepository.findAll();
         assertThat(citaTattoList).hasSize(databaseSizeBeforeCreate + 1);
         CitaTatto testCitaTatto = citaTattoList.get(citaTattoList.size() - 1);
-        assertThat(testCitaTatto.getIdCliente()).isEqualTo(DEFAULT_ID_CLIENTE);
         assertThat(testCitaTatto.getFechaCreacion()).isEqualTo(DEFAULT_FECHA_CREACION);
         assertThat(testCitaTatto.getFechaCita()).isEqualTo(DEFAULT_FECHA_CITA);
         assertThat(testCitaTatto.getHora()).isEqualTo(DEFAULT_HORA);
@@ -266,7 +263,6 @@ class CitaTattoResourceIT {
         // Disconnect from session so that the updates on updatedCitaTatto are not directly saved in db
         em.detach(updatedCitaTatto);
         updatedCitaTatto
-            .idCliente(UPDATED_ID_CLIENTE)
             .fechaCreacion(UPDATED_FECHA_CREACION)
             .fechaCita(UPDATED_FECHA_CITA)
             .hora(UPDATED_HORA)
@@ -292,7 +288,6 @@ class CitaTattoResourceIT {
         List<CitaTatto> citaTattoList = citaTattoRepository.findAll();
         assertThat(citaTattoList).hasSize(databaseSizeBeforeUpdate);
         CitaTatto testCitaTatto = citaTattoList.get(citaTattoList.size() - 1);
-        assertThat(testCitaTatto.getIdCliente()).isEqualTo(UPDATED_ID_CLIENTE);
         assertThat(testCitaTatto.getFechaCreacion()).isEqualTo(UPDATED_FECHA_CREACION);
         assertThat(testCitaTatto.getFechaCita()).isEqualTo(UPDATED_FECHA_CITA);
         assertThat(testCitaTatto.getHora()).isEqualTo(UPDATED_HORA);
@@ -402,7 +397,6 @@ class CitaTattoResourceIT {
         List<CitaTatto> citaTattoList = citaTattoRepository.findAll();
         assertThat(citaTattoList).hasSize(databaseSizeBeforeUpdate);
         CitaTatto testCitaTatto = citaTattoList.get(citaTattoList.size() - 1);
-        assertThat(testCitaTatto.getIdCliente()).isEqualTo(DEFAULT_ID_CLIENTE);
         assertThat(testCitaTatto.getFechaCreacion()).isEqualTo(DEFAULT_FECHA_CREACION);
         assertThat(testCitaTatto.getFechaCita()).isEqualTo(UPDATED_FECHA_CITA);
         assertThat(testCitaTatto.getHora()).isEqualTo(DEFAULT_HORA);
@@ -429,7 +423,6 @@ class CitaTattoResourceIT {
         partialUpdatedCitaTatto.setId(citaTatto.getId());
 
         partialUpdatedCitaTatto
-            .idCliente(UPDATED_ID_CLIENTE)
             .fechaCreacion(UPDATED_FECHA_CREACION)
             .fechaCita(UPDATED_FECHA_CITA)
             .hora(UPDATED_HORA)
@@ -454,7 +447,6 @@ class CitaTattoResourceIT {
         List<CitaTatto> citaTattoList = citaTattoRepository.findAll();
         assertThat(citaTattoList).hasSize(databaseSizeBeforeUpdate);
         CitaTatto testCitaTatto = citaTattoList.get(citaTattoList.size() - 1);
-        assertThat(testCitaTatto.getIdCliente()).isEqualTo(UPDATED_ID_CLIENTE);
         assertThat(testCitaTatto.getFechaCreacion()).isEqualTo(UPDATED_FECHA_CREACION);
         assertThat(testCitaTatto.getFechaCita()).isEqualTo(UPDATED_FECHA_CITA);
         assertThat(testCitaTatto.getHora()).isEqualTo(UPDATED_HORA);

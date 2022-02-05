@@ -23,11 +23,11 @@ public class CitaTatto implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "id_cliente")
-    private Long idCliente;
-
     @Column(name = "fecha_creacion")
     private Instant fechaCreacion;
+
+    @Column(name = "info_cliente")
+    private String infoCliente;
 
     @Column(name = "fecha_cita")
     private Instant fechaCita;
@@ -73,6 +73,14 @@ public class CitaTatto implements Serializable {
         return nombreCliente;
     }
 
+    public String getInfoCliente() {
+        return infoCliente;
+    }
+
+    public void setInfoCliente(String infoCliente) {
+        this.infoCliente = infoCliente;
+    }
+
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
     }
@@ -84,19 +92,6 @@ public class CitaTatto implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getIdCliente() {
-        return this.idCliente;
-    }
-
-    public CitaTatto idCliente(Long idCliente) {
-        this.setIdCliente(idCliente);
-        return this;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
     }
 
     public Instant getFechaCreacion() {
@@ -266,7 +261,6 @@ public class CitaTatto implements Serializable {
     public String toString() {
         return "CitaTatto{" +
             "id=" + getId() +
-            ", idCliente=" + getIdCliente() +
             ", fechaCreacion='" + getFechaCreacion() + "'" +
             ", fechaCita='" + getFechaCita() + "'" +
             ", hora='" + getHora() + "'" +

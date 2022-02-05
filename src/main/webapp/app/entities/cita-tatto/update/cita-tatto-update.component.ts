@@ -28,9 +28,9 @@ export class CitaTattoUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    idCliente: [],
     fechaCreacion: [],
     fechaCita: [],
+    infoCliente: [],
     hora: [],
     emailCliente: [],
     fotoDiseno: [],
@@ -161,7 +161,6 @@ export class CitaTattoUpdateComponent implements OnInit {
   protected updateForm(citaTatto: ICitaTatto): void {
     this.editForm.patchValue({
       id: citaTatto.id,
-      idCliente: citaTatto.idCliente,
       fechaCreacion: citaTatto.fechaCreacion ? citaTatto.fechaCreacion.format(DATE_TIME_FORMAT) : null,
       fechaCita: citaTatto.fechaCita ? citaTatto.fechaCita.format(DATE_TIME_FORMAT) : null,
       hora: citaTatto.hora,
@@ -173,6 +172,7 @@ export class CitaTattoUpdateComponent implements OnInit {
       deuda: citaTatto.deuda,
       estado: citaTatto.estado,
       descripcion: citaTatto.descripcion,
+      infoCLiente: citaTatto.infoCliente,
     });
   }
 
@@ -180,7 +180,6 @@ export class CitaTattoUpdateComponent implements OnInit {
     return {
       ...new CitaTatto(),
       id: this.editForm.get(['id'])!.value,
-      idCliente: this.editForm.get(['idCliente'])!.value,
       fechaCreacion: this.editForm.get(['fechaCreacion'])!.value
         ? dayjs(this.editForm.get(['fechaCreacion'])!.value, DATE_TIME_FORMAT)
         : undefined,
@@ -194,6 +193,7 @@ export class CitaTattoUpdateComponent implements OnInit {
       deuda: this.editForm.get(['deuda'])!.value,
       estado: this.editForm.get(['estado'])!.value,
       descripcion: this.editForm.get(['descripcion'])!.value,
+      infoCliente: this.editForm.get(['infoCliente'])!.value,
     };
   }
 }

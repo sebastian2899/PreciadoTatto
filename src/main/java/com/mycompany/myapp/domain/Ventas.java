@@ -35,9 +35,6 @@ public class Ventas implements Serializable {
     @Column(name = "fecha_creacion")
     private Instant fechaCreacion;
 
-    @Column(name = "id_cliente")
-    private Long idCliente;
-
     @Column(name = "valor_venta", precision = 21, scale = 2)
     private BigDecimal valorVenta;
 
@@ -53,7 +50,18 @@ public class Ventas implements Serializable {
     @Transient
     List<ProductoDTO> productosSeleccionados;
 
+    @Transient
+    String nombreCliente;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
 
     public Long getId() {
         return this.id;
@@ -87,19 +95,6 @@ public class Ventas implements Serializable {
 
     public void setFechaCreacion(Instant fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
-    }
-
-    public Long getIdCliente() {
-        return this.idCliente;
-    }
-
-    public Ventas idCliente(Long idCliente) {
-        this.setIdCliente(idCliente);
-        return this;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
     }
 
     public BigDecimal getValorVenta() {
@@ -179,7 +174,6 @@ public class Ventas implements Serializable {
         return "Ventas{" +
             "id=" + getId() +
             ", fechaCreacion='" + getFechaCreacion() + "'" +
-            ", idCliente=" + getIdCliente() +
             ", valorVenta=" + getValorVenta() +
             ", valorPagado=" + getValorPagado() +
             ", valorDeuda=" + getValorDeuda() +

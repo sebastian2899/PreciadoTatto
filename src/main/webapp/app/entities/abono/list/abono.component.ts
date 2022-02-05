@@ -31,6 +31,7 @@ export class AbonoComponent implements OnInit {
       },
       () => {
         this.isLoading = false;
+        this.abonos = [];
       }
     );
 

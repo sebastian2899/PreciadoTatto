@@ -13,8 +13,6 @@ public class CitaTattoDTO implements Serializable {
 
     private Long id;
 
-    private Long idCliente;
-
     private Instant fechaCreacion;
 
     private Instant fechaCita;
@@ -22,6 +20,8 @@ public class CitaTattoDTO implements Serializable {
     private String hora;
 
     private String emailCliente;
+
+    private String infoCliente;
 
     @Lob
     private byte[] fotoDiseno;
@@ -55,12 +55,12 @@ public class CitaTattoDTO implements Serializable {
         this.id = id;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
+    public String getInfoCliente() {
+        return infoCliente;
     }
 
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
+    public void setInfoCliente(String infoCliente) {
+        this.infoCliente = infoCliente;
     }
 
     public Instant getFechaCreacion() {
@@ -177,7 +177,6 @@ public class CitaTattoDTO implements Serializable {
     public String toString() {
         return "CitaTattoDTO{" +
             "id=" + getId() +
-            ", idCliente=" + getIdCliente() +
             ", fechaCreacion='" + getFechaCreacion() + "'" +
             ", fechaCita='" + getFechaCita() + "'" +
             ", hora='" + getHora() + "'" +

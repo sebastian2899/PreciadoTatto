@@ -82,7 +82,6 @@ class VentasResourceIT {
     public static Ventas createEntity(EntityManager em) {
         Ventas ventas = new Ventas()
             .fechaCreacion(DEFAULT_FECHA_CREACION)
-            .idCliente(DEFAULT_ID_CLIENTE)
             .valorVenta(DEFAULT_VALOR_VENTA)
             .valorPagado(DEFAULT_VALOR_PAGADO)
             .valorDeuda(DEFAULT_VALOR_DEUDA)
@@ -99,7 +98,6 @@ class VentasResourceIT {
     public static Ventas createUpdatedEntity(EntityManager em) {
         Ventas ventas = new Ventas()
             .fechaCreacion(UPDATED_FECHA_CREACION)
-            .idCliente(UPDATED_ID_CLIENTE)
             .valorVenta(UPDATED_VALOR_VENTA)
             .valorPagado(UPDATED_VALOR_PAGADO)
             .valorDeuda(UPDATED_VALOR_DEUDA)
@@ -127,7 +125,6 @@ class VentasResourceIT {
         assertThat(ventasList).hasSize(databaseSizeBeforeCreate + 1);
         Ventas testVentas = ventasList.get(ventasList.size() - 1);
         assertThat(testVentas.getFechaCreacion()).isEqualTo(DEFAULT_FECHA_CREACION);
-        assertThat(testVentas.getIdCliente()).isEqualTo(DEFAULT_ID_CLIENTE);
         assertThat(testVentas.getValorVenta()).isEqualByComparingTo(DEFAULT_VALOR_VENTA);
         assertThat(testVentas.getValorPagado()).isEqualByComparingTo(DEFAULT_VALOR_PAGADO);
         assertThat(testVentas.getValorDeuda()).isEqualByComparingTo(DEFAULT_VALOR_DEUDA);
@@ -214,7 +211,6 @@ class VentasResourceIT {
         em.detach(updatedVentas);
         updatedVentas
             .fechaCreacion(UPDATED_FECHA_CREACION)
-            .idCliente(UPDATED_ID_CLIENTE)
             .valorVenta(UPDATED_VALOR_VENTA)
             .valorPagado(UPDATED_VALOR_PAGADO)
             .valorDeuda(UPDATED_VALOR_DEUDA)
@@ -234,7 +230,6 @@ class VentasResourceIT {
         assertThat(ventasList).hasSize(databaseSizeBeforeUpdate);
         Ventas testVentas = ventasList.get(ventasList.size() - 1);
         assertThat(testVentas.getFechaCreacion()).isEqualTo(UPDATED_FECHA_CREACION);
-        assertThat(testVentas.getIdCliente()).isEqualTo(UPDATED_ID_CLIENTE);
         assertThat(testVentas.getValorVenta()).isEqualTo(UPDATED_VALOR_VENTA);
         assertThat(testVentas.getValorPagado()).isEqualTo(UPDATED_VALOR_PAGADO);
         assertThat(testVentas.getValorDeuda()).isEqualTo(UPDATED_VALOR_DEUDA);
@@ -337,7 +332,6 @@ class VentasResourceIT {
         assertThat(ventasList).hasSize(databaseSizeBeforeUpdate);
         Ventas testVentas = ventasList.get(ventasList.size() - 1);
         assertThat(testVentas.getFechaCreacion()).isEqualTo(DEFAULT_FECHA_CREACION);
-        assertThat(testVentas.getIdCliente()).isEqualTo(DEFAULT_ID_CLIENTE);
         assertThat(testVentas.getValorVenta()).isEqualByComparingTo(UPDATED_VALOR_VENTA);
         assertThat(testVentas.getValorPagado()).isEqualByComparingTo(UPDATED_VALOR_PAGADO);
         assertThat(testVentas.getValorDeuda()).isEqualByComparingTo(UPDATED_VALOR_DEUDA);
@@ -358,7 +352,6 @@ class VentasResourceIT {
 
         partialUpdatedVentas
             .fechaCreacion(UPDATED_FECHA_CREACION)
-            .idCliente(UPDATED_ID_CLIENTE)
             .valorVenta(UPDATED_VALOR_VENTA)
             .valorPagado(UPDATED_VALOR_PAGADO)
             .valorDeuda(UPDATED_VALOR_DEUDA)
@@ -377,7 +370,6 @@ class VentasResourceIT {
         assertThat(ventasList).hasSize(databaseSizeBeforeUpdate);
         Ventas testVentas = ventasList.get(ventasList.size() - 1);
         assertThat(testVentas.getFechaCreacion()).isEqualTo(UPDATED_FECHA_CREACION);
-        assertThat(testVentas.getIdCliente()).isEqualTo(UPDATED_ID_CLIENTE);
         assertThat(testVentas.getValorVenta()).isEqualByComparingTo(UPDATED_VALOR_VENTA);
         assertThat(testVentas.getValorPagado()).isEqualByComparingTo(UPDATED_VALOR_PAGADO);
         assertThat(testVentas.getValorDeuda()).isEqualByComparingTo(UPDATED_VALOR_DEUDA);

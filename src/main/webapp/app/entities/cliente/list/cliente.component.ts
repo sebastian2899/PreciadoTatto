@@ -6,6 +6,7 @@ import { ICliente } from '../cliente.model';
 import { ClienteService } from '../service/cliente.service';
 import { ClienteDeleteDialogComponent } from '../delete/cliente-delete-dialog.component';
 import { Router } from '@angular/router';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
   selector: 'jhi-cliente',
@@ -15,7 +16,12 @@ export class ClienteComponent implements OnInit {
   clientes?: ICliente[];
   isLoading = false;
 
-  constructor(protected clienteService: ClienteService, protected modalService: NgbModal, protected route: Router) {}
+  constructor(
+    protected storage: StateStorageService,
+    protected clienteService: ClienteService,
+    protected modalService: NgbModal,
+    protected route: Router
+  ) {}
 
   loadAll(): void {
     this.isLoading = true;
@@ -37,10 +43,6 @@ export class ClienteComponent implements OnInit {
 
   trackId(index: number, item: ICliente): number {
     return item.id!;
-  }
-
-  agendarCita(): void {
-    this.route.navigate(['/cita-tatto/new']);
   }
 
   delete(cliente: ICliente): void {

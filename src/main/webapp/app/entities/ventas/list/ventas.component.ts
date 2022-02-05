@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IVentas } from '../ventas.model';
 import { VentasService } from '../service/ventas.service';
 import { VentasDeleteDialogComponent } from '../delete/ventas-delete-dialog.component';
+import { ClienteService } from 'app/entities/cliente/service/cliente.service';
+import { ICliente } from 'app/entities/cliente/cliente.model';
 
 @Component({
   selector: 'jhi-ventas',
@@ -13,8 +15,9 @@ import { VentasDeleteDialogComponent } from '../delete/ventas-delete-dialog.comp
 export class VentasComponent implements OnInit {
   ventas?: IVentas[];
   isLoading = false;
+  nombre?: string | null;
 
-  constructor(protected ventasService: VentasService, protected modalService: NgbModal) {}
+  constructor(protected ventasService: VentasService, protected modalService: NgbModal, protected clienteService: ClienteService) {}
 
   loadAll(): void {
     this.isLoading = true;

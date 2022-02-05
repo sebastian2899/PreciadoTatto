@@ -14,37 +14,21 @@
         <jhi-alert-error></jhi-alert-error>
         <jhi-alert></jhi-alert>
 
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label class="form-control-label text-black" for="cliente">Cliente</label>
-            <select type="text" class="form-control" name="cliente" id="field_idCliente" data-cy="idCliente" formControlName="idCliente">
-              <option [value]="cliente.id" *ngFor="let cliente of clientes">{{ cliente.nombre }}</option>
-            </select>
+        <div style="margin-left: 0px" class="row">
+          <div class="cold-md-8 form-group">
+            <label class="form-control-label text-black">Informacion del Cliente</label>
+            <input
+              type="text"
+              name="infoCliente"
+              id="infoCliente"
+              class="form-control"
+              data-cy="infoCliente"
+              formControlName="infoCliente"
+            />
           </div>
 
-          <div class="col-md-6 form-group">
-            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion" for="field_fechaCreacion"
-              >Fecha Creacion</label
-            >
-            <div class="d-flex">
-              <input
-                id="field_fechaCreacion"
-                data-cy="fechaCreacion"
-                type="datetime-local"
-                class="form-control"
-                name="fechaCreacion"
-                formControlName="fechaCreacion"
-                placeholder="YYYY-MM-DD HH:mm"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCita" for="field_fechaCita"
-              >Fecha Cita</label
-            >
+          <div class="col-md-5 form-group">
+            <label class="form-control-label text-black" for="field_fechaCita">Fecha de la Cita</label>
             <div class="d-flex">
               <input
                 id="field_fechaCita"
@@ -57,7 +41,9 @@
               />
             </div>
           </div>
+        </div>
 
+        <div class="row">
           <div class="col-md-6 form-group">
             <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.hora" for="field_hora">Hora</label>
             <input type="text" class="form-control" name="hora" id="field_hora" data-cy="hora" formControlName="hora" />
@@ -80,9 +66,7 @@
           </div>
 
           <div class="col-md-6 form-group">
-            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno" for="field_fotoDiseno"
-              >Foto Diseno</label
-            >
+            <label class="form-control-label text-black" for="field_fotoDiseno">Foto Diseño</label>
             <div>
               <img
                 [src]="'data:' + editForm.get('fotoDisenoContentType')!.value + ';base64,' + editForm.get('fotoDiseno')!.value"
@@ -203,6 +187,31 @@
               formControlName="descripcion"
             >
             </textarea>
+          </div>
+        </div>
+      </div>
+
+      <div dissable="true" class="row">
+        <div class="form-group" dissable="true" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div dissable="true" class="col-md-6 form-group">
+          <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion" for="field_fechaCreacion"
+            >Fecha Creacion</label
+          >
+          <div dissable="true" class="d-flex">
+            <input
+              dissable="true"
+              id="field_fechaCreacion"
+              data-cy="fechaCreacion"
+              type="datetime-local"
+              class="form-control"
+              name="fechaCreacion"
+              formControlName="fechaCreacion"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
           </div>
         </div>
       </div>

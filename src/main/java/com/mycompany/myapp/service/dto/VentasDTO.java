@@ -15,8 +15,6 @@ public class VentasDTO implements Serializable {
 
     private Instant fechaCreacion;
 
-    private Long idCliente;
-
     private BigDecimal valorVenta;
 
     private BigDecimal valorPagado;
@@ -49,14 +47,6 @@ public class VentasDTO implements Serializable {
 
     public void setFechaCreacion(Instant fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
-    }
-
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
     }
 
     public BigDecimal getValorVenta() {
@@ -118,7 +108,6 @@ public class VentasDTO implements Serializable {
         return "VentasDTO{" +
             "id=" + getId() +
             ", fechaCreacion='" + getFechaCreacion() + "'" +
-            ", idCliente=" + getIdCliente() +
             ", valorVenta=" + getValorVenta() +
             ", valorPagado=" + getValorPagado() +
             ", valorDeuda=" + getValorDeuda() +

@@ -6,6 +6,8 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IVentas, getVentasIdentifier } from '../ventas.model';
+import * as dayjs from 'dayjs';
+import { map } from 'rxjs/operators';
 
 export type EntityResponseType = HttpResponse<IVentas>;
 export type EntityArrayResponseType = HttpResponse<IVentas[]>;
@@ -29,12 +31,16 @@ export class VentasService {
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IVentas>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http
+      .get<IVentas>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<IVentas[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http
+      .get<IVentas[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
@@ -56,5 +62,27 @@ export class VentasService {
       return [...ventasToAdd, ...ventasCollection];
     }
     return ventasCollection;
+  }
+
+  protected convertDateFromClient(ventas: IVentas): IVentas {
+    return Object.assign({}, ventas, {
+      fechaCreacion: ventas.fechaCreacion?.isValid() ? ventas.fechaCreacion.toJSON() : undefined,
+    });
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.fechaCreacion = res.body.fechaCreacion ? dayjs(res.body.fechaCreacion) : undefined;
+    }
+    return res;
+  }
+
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((ventas: IVentas) => {
+        ventas.fechaCreacion = ventas.fechaCreacion ? dayjs(ventas.fechaCreacion) : undefined;
+      });
+    }
+    return res;
   }
 }

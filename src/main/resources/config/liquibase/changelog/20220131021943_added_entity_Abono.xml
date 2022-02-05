@@ -17,7 +17,7 @@
             <column name="fecha_abono" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
-            <column name="id_factura" type="bigint">
+            <column name="id_cita" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="valor_abono" type="decimal(21,2)">

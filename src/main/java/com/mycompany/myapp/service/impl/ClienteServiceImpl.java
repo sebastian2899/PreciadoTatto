@@ -66,11 +66,8 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional(readOnly = true)
     public Optional<ClienteDTO> findOne(Long id) {
         log.debug("Request to get Cliente : {}", id);
-        Cliente cliente = clienteRepository.getById(id);
 
-        cliente.setVentasPendientes(clienteRepository.ventasPendientes(id));
-
-        return Optional.ofNullable(clienteMapper.toDto(cliente));
+        return clienteRepository.findById(id).map(clienteMapper::toDto);
     }
 
     @Override

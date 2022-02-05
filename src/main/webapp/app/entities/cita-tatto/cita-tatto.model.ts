@@ -2,7 +2,6 @@ import * as dayjs from 'dayjs';
 
 export interface ICitaTatto {
   id?: number;
-  idCliente?: number | null;
   fechaCreacion?: dayjs.Dayjs | null;
   fechaCita?: dayjs.Dayjs | null;
   hora?: string | null;
@@ -15,12 +14,12 @@ export interface ICitaTatto {
   estado?: string | null;
   descripcion?: string | null;
   nombreCliente?: string | null;
+  infoCliente?: string | null;
 }
 
 export class CitaTatto implements ICitaTatto {
   constructor(
     public id?: number,
-    public idCliente?: number | null,
     public fechaCreacion?: dayjs.Dayjs | null,
     public fechaCita?: dayjs.Dayjs | null,
     public hora?: string | null,
@@ -33,7 +32,8 @@ export class CitaTatto implements ICitaTatto {
     public deuda?: number | null,
     public estado?: string | null,
     public descripcion?: string | null,
-    public nombreCliente?: string | null
+    public nombreCliente?: string | null,
+    public infoCliente?: string | null
   ) {}
 }
 

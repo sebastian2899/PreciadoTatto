@@ -33,7 +33,6 @@
       <thead>
         <tr>
           <th scope="col" class="text-black"><span jhiTranslate="preciadoTattoApp.ventas.fechaCreacion">Fecha Creacion</span></th>
-          <th scope="col" class="text-black"><span jhiTranslate="preciadoTattoApp.ventas.idCliente">Id Cliente</span></th>
           <th scope="col" class="text-black"><span jhiTranslate="preciadoTattoApp.ventas.valorVenta">Valor Venta</span></th>
           <th scope="col" class="text-black"><span jhiTranslate="preciadoTattoApp.ventas.valorPagado">Valor Pagado</span></th>
           <th scope="col" class="text-black"><span jhiTranslate="preciadoTattoApp.ventas.valorDeuda">Valor Deuda</span></th>
@@ -44,7 +43,6 @@
       <tbody>
         <tr *ngFor="let ventas of ventas; trackBy: trackId" data-cy="entityTable">
           <td class="text-black">{{ ventas.fechaCreacion | formatMediumDatetime }}</td>
-          <td class="text-black">{{ ventas.idCliente }}</td>
           <td class="text-black">{{ ventas.valorVenta }}</td>
           <td class="text-black">{{ ventas.valorPagado }}</td>
           <td class="text-black">{{ ventas.valorDeuda }}</td>

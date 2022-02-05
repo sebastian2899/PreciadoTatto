@@ -7,6 +7,8 @@ export class StateStorageService {
 
   private citaKey = 'citaKey';
 
+  private idClientecitaKey = 'idClienteCita';
+
   constructor(private sessionStorageService: SessionStorageService) {}
 
   storeUrl(url: string): void {

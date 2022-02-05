@@ -6,8 +6,10 @@ import com.mycompany.myapp.service.CitaTattoService;
 import com.mycompany.myapp.service.dto.CitaTattoDTO;
 import com.mycompany.myapp.service.mapper.CitaTattoMapper;
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -64,17 +66,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     public List<CitaTattoDTO> findAll() {
         log.debug("Request to get all CitaTattos");
 
-        List<CitaTatto> citas = citaTattoRepository.findAll();
-
-        for (CitaTatto citaTatto : citas) {
-            citaTatto.setNombreCliente(nombreCliente(citaTatto.getIdCliente()));
-        }
-
-        return citaTattoMapper.toDto(citas);
-    }
-
-    private String nombreCliente(Long id) {
-        return citaTattoRepository.nombreCliente(id);
+        return citaTattoRepository.findAll().stream().map(citaTattoMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
@@ -82,10 +74,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     public Optional<CitaTattoDTO> findOne(Long id) {
         log.debug("Request to get CitaTatto : {}", id);
 
-        CitaTatto cita = citaTattoRepository.getById(id);
-        cita.setNombreCliente(nombreCliente(id));
-
-        return Optional.ofNullable(citaTattoMapper.toDto(cita));
+        return citaTattoRepository.findById(id).map(citaTattoMapper::toDto);
     }
 
     @Override

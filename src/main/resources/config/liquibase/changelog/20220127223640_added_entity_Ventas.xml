@@ -17,9 +17,6 @@
             <column name="fecha_creacion" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
-            <column name="id_cliente" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="valor_venta" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>

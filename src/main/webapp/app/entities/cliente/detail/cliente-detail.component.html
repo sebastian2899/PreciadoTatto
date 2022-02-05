@@ -34,6 +34,7 @@
               <th scope="col">Valor Pagado</th>
               <th scope="col">Valor Deuda</th>
               <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -43,7 +44,7 @@
               <td>{{ venta.valorDeuda }}</td>
               <td>{{ venta.estado }}</td>
               <td>
-                <button type="submit" [routerLink]="['/ventas', venta.id, '/view']" class="btn botones-aqua btn-sm text-black">
+                <button type="submit" [routerLink]="['/ventas', venta.id, 'view']" class="btn botones-aqua btn-sm text-black">
                   Detalle
                 </button>
               </td>

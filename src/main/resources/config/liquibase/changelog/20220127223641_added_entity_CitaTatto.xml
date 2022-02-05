@@ -14,9 +14,6 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="id_cliente" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="fecha_creacion" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
@@ -48,6 +45,9 @@
                 <constraints nullable="true" />
             </column>
             <column name="descripcion" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+             <column name="info_cliente" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

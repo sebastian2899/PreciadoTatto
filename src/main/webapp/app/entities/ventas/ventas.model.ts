@@ -4,7 +4,6 @@ import { IProducto } from '../producto/producto.model';
 export interface IVentas {
   id?: number;
   fechaCreacion?: dayjs.Dayjs | null;
-  idCliente?: number | null;
   valorVenta?: number | null;
   valorPagado?: number | null;
   valorDeuda?: number | null;
@@ -16,7 +15,6 @@ export class Ventas implements IVentas {
   constructor(
     public id?: number,
     public fechaCreacion?: dayjs.Dayjs | null,
-    public idCliente?: number | null,
     public valorVenta?: number | null,
     public valorPagado?: number | null,
     public valorDeuda?: number | null,
