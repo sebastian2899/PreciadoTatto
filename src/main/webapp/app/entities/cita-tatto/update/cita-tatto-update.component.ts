@@ -25,6 +25,7 @@ export class CitaTattoUpdateComponent implements OnInit {
   clientes: ICliente[] = [];
   updateCita = false;
   saving = true;
+  titulo?: string | undefined;
 
   editForm = this.fb.group({
     id: [],
@@ -57,11 +58,13 @@ export class CitaTattoUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ citaTatto }) => {
       if (citaTatto.id === undefined) {
+        this.titulo = 'Agendar Cita Tattoo';
         const today = dayjs().startOf('day');
         citaTatto.fechaCreacion = today;
         citaTatto.fechaCita = today;
         this.updateCita = false;
       } else {
+        this.titulo = 'Actalizar Cita Tattoo';
         this.updateCita = true;
       }
 

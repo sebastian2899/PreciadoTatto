@@ -50,18 +50,7 @@ public class Ventas implements Serializable {
     @Transient
     List<ProductoDTO> productosSeleccionados;
 
-    @Transient
-    String nombreCliente;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
-
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
 
     public Long getId() {
         return this.id;

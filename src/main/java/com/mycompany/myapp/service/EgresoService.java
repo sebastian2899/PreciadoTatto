@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.EgresoDTO;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,8 @@ public interface EgresoService {
      */
     List<EgresoDTO> findAll();
 
+    List<EgresoDTO> egresosDiarios();
+
     /**
      * Get the "id" egreso.
      *
@@ -45,4 +48,6 @@ public interface EgresoService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    BigDecimal valorEgresoDia();
 }

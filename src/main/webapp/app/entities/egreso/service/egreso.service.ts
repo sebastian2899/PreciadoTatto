@@ -11,10 +11,13 @@ import { IEgreso, getEgresoIdentifier } from '../egreso.model';
 
 export type EntityResponseType = HttpResponse<IEgreso>;
 export type EntityArrayResponseType = HttpResponse<IEgreso[]>;
+export type NumberType = HttpResponse<number>;
 
 @Injectable({ providedIn: 'root' })
 export class EgresoService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/egresos');
+  protected resourceUrlEgreso = this.applicationConfigService.getEndpointFor('api/egresos-dia');
+  protected egresoDia = this.applicationConfigService.getEndpointFor('api/egresos-diarios');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -45,10 +48,21 @@ export class EgresoService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  egresosDia(): Observable<NumberType> {
+    return this.http.get<number>(this.egresoDia, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
       .get<IEgreso[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryDia(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IEgreso[]>(this.resourceUrlEgreso, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

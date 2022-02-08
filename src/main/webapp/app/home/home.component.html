@@ -41,7 +41,8 @@
 
     <p style="background: #2c2c2c" class="lead aqua-text" jhiTranslate="home.subtitle">This is your homepage</p>
 
-    <div [ngSwitch]="account !== null" style="margin-bottom: 45px">
+    <div [ngSwitch]="account !== null">
+      <!--
       <div class="alert-back" *ngSwitchCase="true">
         <span
           class="text-black"
@@ -52,7 +53,7 @@
           >You are logged in as user "{{ account.login }}".</span
         >
       </div>
-
+      -->
       <div class="alert-back" *ngSwitchCase="false">
         <span class="text-black" jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
         <a class="alert-back text-black" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a
@@ -69,6 +70,95 @@
         >
       </div>
     </div>
+
+    <div [ngSwitch]="account !== null" style="display: flex; justify-content: space-between">
+      <div *ngSwitchCase="true">
+        <div class="list-group">
+          <span style="background-color: rgb(22, 181, 173); text-align: center" class="text-black">Citas Tattos del dia de hoy</span>
+          <span *ngIf="citasTatto?.length === 0" style="background-color: rgb(8, 38, 36); text-align: center"
+            >No hay citas registradas para hoy.</span
+          >
+          <table *ngIf="citasTatto && citasTatto.length > 0" class="table table-dark table-striped">
+            <thead>
+              <th scope="col">Cliente</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Deuda</th>
+              <th scope="col">Opciones</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let citaTatto of citasTatto">
+                <td>{{ citaTatto.infoCliente }}</td>
+                <td>{{ citaTatto.hora }}</td>
+                <td>{{ citaTatto.valorTatto }}</td>
+                <td>{{ citaTatto.deuda }}</td>
+                <td class="text-right">
+                  <div class="btn-group">
+                    <button
+                      type="submit"
+                      [routerLink]="['/cita-tatto', citaTatto.id, 'view']"
+                      class="btn btn-info btn-sm"
+                      data-cy="entityDetailsButton"
+                    >
+                      <fa-icon icon="eye"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="true">
+        <div class="list-group">
+          <span style="background-color: rgb(22, 181, 173); text-align: center" class="text-black">Citas Perforaciones del dia de hoy</span>
+          <span *ngIf="citasPerfo?.length === 0" style="background-color: rgb(8, 38, 36); text-align: center"
+            >No hay citas registradas para el dia de hoy</span
+          >
+          <table *ngIf="citasPerfo && citasPerfo.length > 0" class="table table-dark table-striped">
+            <thead>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Opciones</th>
+            </thead>
+            <tbody>
+              <td>Sebas</td>
+              <td>Sebas</td>
+              <td>Sebas</td>
+              <td class="text-right">
+                <div class="btn-group">
+                  <button type="submit" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </button>
+                </div>
+              </td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!--
+  <div class="d-flex justify-content-end">
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active">
+          Cras justo odio
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+        
+      </div>
+      -->
 
     <!--
           <div class="col-md-9">

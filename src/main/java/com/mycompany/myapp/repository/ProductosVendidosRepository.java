@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ProductosVendidosRepository extends JpaRepository<ProductosVendidos, Long> {
-    @Query("SELECT pv FROM ProductosVendidos pv WHERE pv.idVenta=idVenta")
+    @Query("SELECT pv FROM ProductosVendidos pv WHERE pv.idVenta=:idVenta")
     List<ProductosVendidos> productosVendidosPorVenta(@Param("idVenta") Long idVenta);
 
     @Query("SELECT p FROM Producto p WHERE p.id=:id")

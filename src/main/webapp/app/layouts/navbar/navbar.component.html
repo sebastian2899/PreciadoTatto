@@ -3,10 +3,65 @@
   data-cy="navbar"
   class="navbar navbar-dark navbar-expand-md"
 >
-  <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
+  <a class="navbar-brand logo" style="margin-right: -405px" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
     <span jhiTranslate="global.title" style="color: aqua" class="navbar-title">PreciadoTatto</span>
   </a>
+
+  <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
+    <ul class="navbar-nav ml-auto">
+      <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+          <span>
+            <fa-icon style="color: rgb(0, 203, 248)" icon="home"></fa-icon>
+            <span class="aqua-text" jhiTranslate="global.menu.home">Home</span>
+          </span>
+        </a>
+      </li>
+
+      <li
+        *ngSwitchCase="true"
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+          <span>
+            <fa-icon style="color: rgb(7, 212, 226)" icon="pencil-alt"></fa-icon>
+            <span style="color: rgb(8, 204, 238)">Registro de cajas</span>
+          </span>
+        </a>
+        <ul class="dropdown-menu color-toggle" ngbDropdownMenu aria-labelledby="entity-menu">
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="caja-tattos"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black">Caja Tattoos</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="caja-ingresos"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black">Caja General</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
   <a
     class="navbar-toggler d-lg-none"
     href="javascript:void(0);"
@@ -21,14 +76,57 @@
   </a>
   <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+      <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="egreso" (click)="collapseNavbar()">
           <span>
-            <fa-icon style="color: black" icon="home"></fa-icon>
-            <span class="color-textos-black" jhiTranslate="global.menu.home">Home</span>
+            <fa-icon style="color: black" icon="pencil-alt"></fa-icon>
+            <span class="color-textos-black">Registrar Egreso</span>
           </span>
         </a>
       </li>
+
+      <li
+        *ngSwitchCase="true"
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+          <span>
+            <fa-icon style="color: black" icon="pencil-alt"></fa-icon>
+            <span style="color: black">Agendar Cita</span>
+          </span>
+        </a>
+        <ul class="dropdown-menu color-toggle" ngbDropdownMenu aria-labelledby="entity-menu">
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="cita-tatto/new"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black">Cita Tattoo</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item color-item"
+              routerLink="cita-perforacion/new"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span class="color-textos-black" jhiTranslate="global.menu.entities.citaPerforacion">Producto</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
         *ngSwitchCase="true"
@@ -45,7 +143,7 @@
           </span>
         </a>
         <ul class="dropdown-menu color-toggle" ngbDropdownMenu aria-labelledby="entity-menu">
-          <li>
+          <!--<li>
             <a
               class="dropdown-item color-item"
               routerLink="cliente"
@@ -57,6 +155,7 @@
               <span class="color-textos-black" jhiTranslate="global.menu.entities.cliente">Cliente</span>
             </a>
           </li>
+        -->
           <li>
             <a
               class="dropdown-item color-item"

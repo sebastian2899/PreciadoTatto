@@ -60,17 +60,10 @@ public class CitaTatto implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Transient
-    private String nombreCliente;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
         return this.id;
-    }
-
-    public String getNombreCliente() {
-        return nombreCliente;
     }
 
     public String getInfoCliente() {
@@ -79,10 +72,6 @@ public class CitaTatto implements Serializable {
 
     public void setInfoCliente(String infoCliente) {
         this.infoCliente = infoCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
     }
 
     public CitaTatto id(Long id) {

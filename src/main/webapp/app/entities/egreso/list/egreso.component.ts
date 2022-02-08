@@ -13,13 +13,14 @@ import { EgresoDeleteDialogComponent } from '../delete/egreso-delete-dialog.comp
 export class EgresoComponent implements OnInit {
   egresos?: IEgreso[];
   isLoading = false;
+  egresoDia?: number | null;
 
   constructor(protected egresoService: EgresoService, protected modalService: NgbModal) {}
 
   loadAll(): void {
     this.isLoading = true;
 
-    this.egresoService.query().subscribe(
+    this.egresoService.queryDia().subscribe(
       (res: HttpResponse<IEgreso[]>) => {
         this.isLoading = false;
         this.egresos = res.body ?? [];
@@ -30,8 +31,20 @@ export class EgresoComponent implements OnInit {
     );
   }
 
+  egresoDiario(): void {
+    this.egresoService.egresosDia().subscribe(
+      (res: HttpResponse<number>) => {
+        this.egresoDia = res.body;
+      },
+      () => {
+        this.egresoDia = 0;
+      }
+    );
+  }
+
   ngOnInit(): void {
     this.loadAll();
+    this.egresoDiario();
   }
 
   trackId(index: number, item: IEgreso): number {

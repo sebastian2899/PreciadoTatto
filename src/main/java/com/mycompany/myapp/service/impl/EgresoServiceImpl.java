@@ -5,6 +5,9 @@ import com.mycompany.myapp.repository.EgresoRepository;
 import com.mycompany.myapp.service.EgresoService;
 import com.mycompany.myapp.service.dto.EgresoDTO;
 import com.mycompany.myapp.service.mapper.EgresoMapper;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +59,20 @@ public class EgresoServiceImpl implements EgresoService {
     }
 
     @Override
+    public BigDecimal valorEgresoDia() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf.format(new Date());
+
+        BigDecimal valorEgresoDia = egresoRepository.valorEgresoDiario(fecha);
+
+        if (valorEgresoDia == null) {
+            valorEgresoDia = BigDecimal.ZERO;
+        }
+
+        return valorEgresoDia;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<EgresoDTO> findAll() {
         log.debug("Request to get all Egresos");
@@ -73,5 +90,17 @@ public class EgresoServiceImpl implements EgresoService {
     public void delete(Long id) {
         log.debug("Request to delete Egreso : {}", id);
         egresoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<EgresoDTO> egresosDiarios() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = format.format(new Date());
+
+        return egresoRepository
+            .listaEgresoDiario(fecha)
+            .stream()
+            .map(egresoMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 }
