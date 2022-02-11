@@ -5,10 +5,11 @@ import { EgresoDetailComponent } from './detail/egreso-detail.component';
 import { EgresoUpdateComponent } from './update/egreso-update.component';
 import { EgresoDeleteDialogComponent } from './delete/egreso-delete-dialog.component';
 import { EgresoRoutingModule } from './route/egreso-routing.module';
+import { EgresoMesComponent } from './egreso-mes/egreso-mes.component';
 
 @NgModule({
   imports: [SharedModule, EgresoRoutingModule],
-  declarations: [EgresoComponent, EgresoDetailComponent, EgresoUpdateComponent, EgresoDeleteDialogComponent],
+  declarations: [EgresoComponent, EgresoDetailComponent, EgresoUpdateComponent, EgresoDeleteDialogComponent, EgresoMesComponent],
   entryComponents: [EgresoDeleteDialogComponent],
 })
 export class EgresoModule {}

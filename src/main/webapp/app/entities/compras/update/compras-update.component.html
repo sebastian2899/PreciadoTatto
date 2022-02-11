@@ -1,17 +1,13 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-compras-heading"
-        data-cy="ComprasCreateUpdateHeading"
-        class="text-black"
-        jhiTranslate="preciadoTattoApp.compras.home.createOrEditLabel"
-      >
-        Create or edit a Compras
+      <h2 id="jhi-compras-heading" data-cy="ComprasCreateUpdateHeading" class="text-black">
+        {{ titulo }}
       </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
 
         <div class="row">
           <div class="col-md-6 form-group">
@@ -32,12 +28,54 @@
           </div>
         </div>
 
+        <div class="row" style="margin-left: 0px">
+          <div class="cold-md-4 form-group">
+            <label class="form-control-label text-black" for="field_producto">Producto</label>
+            <select name="producto" class="form-control" type="text" id="producto" data-cy="producto" formControlName="producto">
+              <option [value]="producto.id" *ngFor="let producto of productos">{{ producto.nombre }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-2 form-group">
+            <label class="form-control-label text-black" for="cantidad">cantidad</label>
+            <input type="number" class="form-control" name="cantidad" id="cantidad" data-cy="cantidad" formControlName="cantidad" />
+          </div>
+
+          <div class="col-md-2 form-group" style="margin-top: 30px; margin-left: -10px">
+            <button type="button" (click)="agregarProducto()" class="btn btn-dark aqua-text">SELECCIONAR</button>
+          </div>
+
+          <table class="table" *ngIf="productosSeleccionados.length > 0">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad Actual</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad a Ingresada</th>
+                <th scope="col">Total Compra</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producto of productosSeleccionados">
+                <td class="text-black">{{ producto.nombre }}</td>
+                <td class="text-black">{{ producto.cantidadDisponible }}</td>
+                <td class="text-black">{{ producto.precio }}</td>
+                <td class="text-black text-center">{{ producto.cantidad }}</td>
+                <td class="text-black">{{ producto.valorTotal }}</td>
+                <td><button (click)="eliminarProducto(producto)" class="btn btn-danger">Eliminar</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div class="row">
           <div class="col-md-6 form-group">
             <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.compras.valorCompra" for="field_valorCompra"
               >Valor Compra</label
             >
             <input
+              readonly="true"
               type="number"
               class="form-control"
               name="valorCompra"
@@ -58,6 +96,7 @@
               id="field_valorPagado"
               data-cy="valorPagado"
               formControlName="valorPagado"
+              (keyup)="restarValores()"
             />
           </div>
         </div>
@@ -68,6 +107,7 @@
               >Valor Deuda</label
             >
             <input
+              readonly="true"
               type="number"
               class="form-control"
               name="valorDeuda"
@@ -79,13 +119,21 @@
 
           <div class="col-md-6 form-group">
             <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.compras.estado" for="field_estado">Estado</label>
-            <input type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
+            <input
+              readonly="true"
+              type="text"
+              class="form-control"
+              name="estado"
+              id="field_estado"
+              data-cy="estado"
+              formControlName="estado"
+            />
           </div>
         </div>
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-dark aqua-text" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
@@ -93,8 +141,8 @@
           type="submit"
           id="save-entity"
           data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+          [disabled]="editForm.invalid || isSaving || productosSeleccionados.length === 0"
+          class="btn btn-dark aqua-text"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>

@@ -47,4 +47,10 @@ public interface ProductoService {
     void delete(Long id);
 
     List<ProductoDTO> aviableProducts();
+
+    Long totalProductos();
+
+    Long ventasHoy();
+
+    Long comprasHoy();
 }

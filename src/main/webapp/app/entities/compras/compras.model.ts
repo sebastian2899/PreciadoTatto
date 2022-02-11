@@ -1,4 +1,5 @@
 import * as dayjs from 'dayjs';
+import { IProducto } from '../producto/producto.model';
 
 export interface ICompras {
   id?: number;
@@ -7,6 +8,9 @@ export interface ICompras {
   valorPagado?: number | null;
   valorDeuda?: number | null;
   estado?: string | null;
+  productosSeleccionados?: IProducto[] | null;
+  cantidadDisponible?: number | null;
+  totalCompra?: number | null;
 }
 
 export class Compras implements ICompras {
@@ -16,7 +20,10 @@ export class Compras implements ICompras {
     public valorCompra?: number | null,
     public valorPagado?: number | null,
     public valorDeuda?: number | null,
-    public estado?: string | null
+    public estado?: string | null,
+    public productosSeleccionados?: IProducto[] | null,
+    public cantidadDisponible?: number | null,
+    public totalCompra?: number | null
   ) {}
 }
 

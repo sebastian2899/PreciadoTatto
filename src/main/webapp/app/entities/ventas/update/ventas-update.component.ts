@@ -139,23 +139,26 @@ export class VentasUpdateComponent implements OnInit {
         if (cantidadForm > this.cantidad || (cant! > this.cantidad ? (resp = true) : (resp = false)) || this.cantidad === 0) {
           if (resp) {
             this.eliminarProductoSeleccionado(producto!);
-          }
-          this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
+            this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
+            que se esta seleccionando ${String(cant)} y solo hay ${String(this.productoValores.cantidad)} productos
+            disponibles.`;
+            this.modal.open(this.content2);
+          } else {
+            this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
             que se esta seleccionando ${String(cantidadForm)} y solo hay ${String(this.productoValores.cantidad)} productos
             disponibles.`;
-          this.modal.open(this.content2);
-          this.modalCantidad = true;
-          this.validarCantidad = true;
-        } else {
-          if (!producto) {
-            this.modalCantidad = false;
-            this.alert.addAlert({
-              type: 'info',
-              message: 'Cantidad disponible.',
-            });
-            this.modalCantidad = false;
-            this.validarCantidad = false;
+            this.modal.open(this.content2);
+            this.modalCantidad = true;
+            this.validarCantidad = true;
           }
+        } else {
+          this.modalCantidad = false;
+          this.alert.addAlert({
+            type: 'info',
+            message: 'Cantidad disponible.',
+          });
+          this.modalCantidad = false;
+          this.validarCantidad = false;
         }
       }
     });
@@ -165,6 +168,13 @@ export class VentasUpdateComponent implements OnInit {
     const index = this.productosSeleccionados.indexOf(producto);
     if (index >= 0) {
       this.productosSeleccionados.splice(index, 1);
+
+      const valorVenta = this.editForm.get(['valorVenta'])!.value;
+      const valorRestar = producto.valorTotal!;
+      const valorNew = valorVenta - valorRestar;
+
+      this.editForm.get(['valorVenta'])?.setValue(valorNew);
+      this.editForm.get(['valorDeuda'])?.setValue(valorNew);
     }
   }
 
@@ -229,23 +239,19 @@ export class VentasUpdateComponent implements OnInit {
     const valorVenta = this.editForm.get(['valorVenta'])!.value;
     const valorPagado = this.editForm.get(['valorPagado'])!.value;
 
-    if (valorVenta && valorPagado) {
-      const valorDeuda = valorVenta - valorPagado;
-      this.editForm.get(['valorDeuda'])?.setValue(valorDeuda);
-      this.editForm.get(['estado'])?.setValue('Deuda');
-
-      if (valorPagado > valorVenta) {
-        this.validarVenta = true;
-        this.modal.open(this.content3);
-        this.editForm.get(['valorDeuda'])?.setValue(null);
-        this.editForm.get(['estado'])?.setValue('Pagada');
-        this.editForm.get(['valorPagado'])?.setValue(null);
-      } else if (valorDeuda === 0) {
-        this.editForm.get(['valorDeuda'])?.setValue(0);
-        this.editForm.get(['estado'])?.setValue('Pagada');
-        this.validarVenta = false;
-      }
+    if (valorPagado > valorVenta) {
+      this.validarVenta = true;
+      this.modal.open(this.content3);
+      this.editForm.get(['valorPagado'])?.setValue(0);
+      this.editForm.get(['valorDeuda'])?.setValue(valorVenta);
     }
+
+    const valorDeuda = valorVenta - valorPagado;
+    let mensaje = null;
+    this.editForm.get(['valorDeuda'])?.setValue(valorDeuda);
+
+    valorDeuda === 0 ? (mensaje = 'Pagada') : (mensaje = 'Deuda');
+    this.editForm.get(['estado'])?.setValue(mensaje);
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IVentas>>): void {

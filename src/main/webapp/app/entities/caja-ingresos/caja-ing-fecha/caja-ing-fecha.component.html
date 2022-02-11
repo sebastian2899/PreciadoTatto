@@ -7,7 +7,7 @@
         <div class="col-lg-7">
           <div class="p-5">
             <div class="text-center">
-              <h1 class="h4 text-gray-900 aqua-text mb-4">Consultar registro de caja tattos por fechas</h1>
+              <h1 class="h4 text-gray-900 aqua-text mb-4">Consultar registro ingresos por fechas</h1>
             </div>
             <div class="text-center">
               <div class="row">
@@ -57,7 +57,7 @@
             </div>
           </div>
 
-          <table *ngIf="cajaFechas" class="table">
+          <table class="table" *ngIf="valoresIngresos">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">Valor Vendido</th>
@@ -67,9 +67,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{ cajaFechas.valorVendido }}</td>
-                <td>{{ cajaFechas.valorPagado }}</td>
-                <td>{{ cajaFechas.diferencia }}</td>
+                <td>{{ valoresIngresos.valorVendido }}</td>
+                <td>{{ valoresIngresos.valorPagado }}</td>
+                <td>{{ valoresIngresos.diferencia }}</td>
               </tr>
             </tbody>
           </table>
@@ -90,7 +90,7 @@
   <div class="modal-body text-black">
     <div>
       <p class="aqua-text">
-        En esta seccion prodra hacer un registro historico de los tattoos filtrando por fechas.<br />
+        En esta seccion prodra hacer un registro historico de los ingresos filtrando por fechas.<br />
         Podra ver el valor total de la caja en las fechas que se digiten. Tambien podra ver el valor que se pago en total y la deuda total
         por la cantidad total de la factura sumada en las fechas.
       </p>

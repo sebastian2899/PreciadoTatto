@@ -19,6 +19,23 @@ Main page styles
   background-size: contain;
 }
 
+.infoVenta {
+  padding: 10px;
+  background-color: #2c2c2c;
+  margin-top: 100px;
+}
+
+.btn-black {
+  background-color: black;
+  color: aqua;
+  border-radius: 100%;
+}
+
+.btn-black:hover {
+  background-color: aqua;
+  color: black;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),

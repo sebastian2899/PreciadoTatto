@@ -9,11 +9,15 @@ import { IProducto, getProductoIdentifier } from '../producto.model';
 
 export type EntityResponseType = HttpResponse<IProducto>;
 export type EntityArrayResponseType = HttpResponse<IProducto[]>;
+export type NumberType = HttpResponse<number>;
 
 @Injectable({ providedIn: 'root' })
 export class ProductoService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/productos');
   protected productosDisp = this.applicationConfigService.getEndpointFor('api/productosDisponibles');
+  protected totalProduc = this.applicationConfigService.getEndpointFor('api/totalProductos');
+  protected totalVent = this.applicationConfigService.getEndpointFor('api/totalVentas');
+  protected totalCompr = this.applicationConfigService.getEndpointFor('api/totalCompras');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -33,6 +37,18 @@ export class ProductoService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IProducto>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  totalProducto(): Observable<NumberType> {
+    return this.http.get<number>(this.totalProduc, { observe: 'response' });
+  }
+
+  totalVentas(): Observable<NumberType> {
+    return this.http.get<number>(this.totalVent, { observe: 'response' });
+  }
+
+  totalCompras(): Observable<NumberType> {
+    return this.http.get<number>(this.totalCompr, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

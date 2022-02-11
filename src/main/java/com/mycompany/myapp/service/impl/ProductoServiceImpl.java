@@ -1,14 +1,20 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.config.Constants;
 import com.mycompany.myapp.domain.Producto;
 import com.mycompany.myapp.repository.ProductoRepository;
 import com.mycompany.myapp.service.ProductoService;
 import com.mycompany.myapp.service.dto.ProductoDTO;
 import com.mycompany.myapp.service.mapper.ProductoMapper;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,6 +32,9 @@ public class ProductoServiceImpl implements ProductoService {
     private final ProductoRepository productoRepository;
 
     private final ProductoMapper productoMapper;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, ProductoMapper productoMapper) {
         this.productoRepository = productoRepository;
@@ -73,6 +82,35 @@ public class ProductoServiceImpl implements ProductoService {
     public void delete(Long id) {
         log.debug("Request to delete Producto : {}", id);
         productoRepository.deleteById(id);
+    }
+
+    @Override
+    public Long totalProductos() {
+        log.debug("Request to get count");
+
+        Query q = entityManager.createQuery(Constants.TOTAL_PRODUCTOS);
+
+        return (Long) q.getSingleResult();
+    }
+
+    @Override
+    public Long ventasHoy() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = format.format(new Date());
+
+        Query q = entityManager.createQuery(Constants.TOTAL_VENTAS_HOY).setParameter("fecha", fecha);
+
+        return (Long) q.getSingleResult();
+    }
+
+    @Override
+    public Long comprasHoy() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = format.format(new Date());
+
+        Query q = entityManager.createQuery(Constants.TOTAL_COMPRAS_HOY).setParameter("fecha", fecha);
+
+        return (Long) q.getSingleResult();
     }
 
     @Override

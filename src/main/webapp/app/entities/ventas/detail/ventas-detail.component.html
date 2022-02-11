@@ -54,11 +54,11 @@
         </table>
       </div>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <button type="submit" (click)="previousState()" class="btn btn-dark aqua-text" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/ventas', ventas.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/ventas', ventas.id, 'edit']" class="btn btn-dark aqua-text">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

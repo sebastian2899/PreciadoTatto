@@ -12,6 +12,8 @@ public class CitaPerforacionDTO implements Serializable {
 
     private Long id;
 
+    private Instant fechaCreacionInicial;
+
     private Instant fechaCreacion;
 
     private Instant fechaCita;
@@ -26,7 +28,7 @@ public class CitaPerforacionDTO implements Serializable {
 
     private BigDecimal valorDeuda;
 
-    private BigDecimal estado;
+    private String estado;
 
     public Long getId() {
         return id;
@@ -92,11 +94,11 @@ public class CitaPerforacionDTO implements Serializable {
         this.valorDeuda = valorDeuda;
     }
 
-    public BigDecimal getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(BigDecimal estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -119,6 +121,14 @@ public class CitaPerforacionDTO implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(this.id);
+    }
+
+    public Instant getFechaCreacionInicial() {
+        return fechaCreacionInicial;
+    }
+
+    public void setFechaCreacionInicial(Instant fechaCreacionIncial) {
+        this.fechaCreacionInicial = fechaCreacionIncial;
     }
 
     // prettier-ignore

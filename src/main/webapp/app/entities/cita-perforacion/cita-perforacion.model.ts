@@ -2,6 +2,7 @@ import * as dayjs from 'dayjs';
 
 export interface ICitaPerforacion {
   id?: number;
+  fechaCreacionInicial?: dayjs.Dayjs | null;
   fechaCreacion?: dayjs.Dayjs | null;
   fechaCita?: dayjs.Dayjs | null;
   hora?: string | null;
@@ -9,7 +10,7 @@ export interface ICitaPerforacion {
   valorPerforacion?: number | null;
   valorPagado?: number | null;
   valorDeuda?: number | null;
-  estado?: number | null;
+  estado?: string | null;
 }
 
 export class CitaPerforacion implements ICitaPerforacion {
@@ -22,7 +23,7 @@ export class CitaPerforacion implements ICitaPerforacion {
     public valorPerforacion?: number | null,
     public valorPagado?: number | null,
     public valorDeuda?: number | null,
-    public estado?: number | null
+    public estado?: string | null
   ) {}
 }
 

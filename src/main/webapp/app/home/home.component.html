@@ -71,6 +71,12 @@
       </div>
     </div>
 
+    <div [ngSwitch]="account !== null">
+      <div *ngSwitchCase="true" class="d-flex justify-content-center">
+        <button (click)="refrescar()" class="btn btn-dark aqua-text">Refrescar Pantalla</button>
+      </div>
+    </div>
+
     <div [ngSwitch]="account !== null" style="display: flex; justify-content: space-between">
       <div *ngSwitchCase="true">
         <div class="list-group">
@@ -97,7 +103,7 @@
                     <button
                       type="submit"
                       [routerLink]="['/cita-tatto', citaTatto.id, 'view']"
-                      class="btn btn-info btn-sm"
+                      class="btn btn-dark aqua-text btn-sm"
                       data-cy="entityDetailsButton"
                     >
                       <fa-icon icon="eye"></fa-icon>
@@ -108,6 +114,7 @@
               </tr>
             </tbody>
           </table>
+          <button [routerLink]="['/cita-tatto']" class="btn btn-dark p-2 aqua-text">Ver citas</button>
         </div>
       </div>
 
@@ -120,72 +127,76 @@
           <table *ngIf="citasPerfo && citasPerfo.length > 0" class="table table-dark table-striped">
             <thead>
               <th>Cliente</th>
-              <th>Fecha</th>
               <th>Hora</th>
+              <th>Valor</th>
+              <th>Deuda</th>
               <th>Opciones</th>
             </thead>
             <tbody>
-              <td>Sebas</td>
-              <td>Sebas</td>
-              <td>Sebas</td>
-              <td class="text-right">
-                <div class="btn-group">
-                  <button type="submit" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                    <fa-icon icon="eye"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                  </button>
-                </div>
-              </td>
+              <tr *ngFor="let cita of citasPerfo">
+                <td>{{ cita.nombreCliente }}</td>
+                <td>{{ cita.hora }}</td>
+                <td>{{ cita.valorPerforacion }}</td>
+                <td>{{ cita.valorDeuda }}</td>
+                <td class="text-right">
+                  <div class="btn-group">
+                    <button
+                      type="submit"
+                      [routerLink]="['/cita-perforacion', cita.id, 'view']"
+                      class="btn btn-info btn-sm"
+                      data-cy="entityDetailsButton"
+                    >
+                      <fa-icon icon="eye"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
+          <button [routerLink]="['/cita-perforacion']" class="btn btn-dark p-2 aqua-text">Ver citas</button>
         </div>
       </div>
     </div>
 
-    <!--
-  <div class="d-flex justify-content-end">
-      <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">
-          Cras justo odio
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-        
-      </div>
-      -->
-
-    <!--
-          <div class="col-md-9">
-      <div [ngSwitch]="account !== null">
-        <div *ngSwitchCase="false" style="margin-left: 374px">
-          <p style="padding: 14px" class="alert-back text-black">
-            En esta pagina podra realizar inventario,cuentas y registros, tendra acceso a creacion,eliminacion y edicion de cada una de<br />
-            las entidades en las cuales realizara sus registros diarios, Recuerde iniciar sesion como administrados (admin)
-          </p>
-          <button class="botones-aqua" (click)="login()">Inicie sesion aqui</button>
+    <div [ngSwitch]="account !== null">
+      <div *ngSwitchCase="true" class="container-fluid infoVenta">
+        <div *ngSwitchCase="true" class="d-flex justify-content-around">
+          <button [routerLink]="['/producto/new']" class="btn btn-black">Registrar Producto</button>
+          <button [routerLink]="['/ventas/new']" class="btn btn-black">Realizar Venta</button>
+          <button [routerLink]="['/compras/new']" class="btn btn-black">Realizar Compra</button>
         </div>
-
-        <div *ngSwitchCase="true" style="margin-left: 374px">
-          <p style="padding: 14px" class="alert-back text-black">
-            En esta pagina podra realizar inventario,cuentas y registros, tendra acceso a creacion,eliminacion y edicion de cada una de<br />
-            las entidades en las cuales realizara sus registros diarios, recuerde registrar una caja diaria, para tener un historial de sus
-            ingresos
-          </p>
-        </div>
+        <ol class="list-group list-group-numbered my-3">
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div *ngSwitchCase="true" class="ms-2 me-auto">
+              <div *ngSwitchCase="true" class="fw-bold aqua-text">Productos</div>
+              Haga click en el boton para ir al registor total de productos disponibles
+            </div>
+            <span class="badge bg-primary rounded-pill">
+              <button [routerLink]="['/producto/']" class="btn btn-black">IR</button>
+              {{ totalProducts }}</span
+            >
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold aqua-text">Ventas</div>
+              Haga click en el boton para ir al registro total de ventas realizadas.
+            </div>
+            <span class="badge bg-primary rounded-pill">
+              <button [routerLink]="['/ventas/']" class="btn btn-black">IR</button>{{ totalVenta }}</span
+            >
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold aqua-text">Compras</div>
+              Haga click en el boton para ir a la lista total de compras registradas.
+            </div>
+            <span class="badge bg-primary rounded-pill">
+              <button [routerLink]="['/compras/']" class="btn btn-black">IR</button>{{ totalCompra }}</span
+            >
+          </li>
+        </ol>
       </div>
     </div>
-    <p>
-      <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github"
-        >GitHub</a
-      >!
-    </p>
-    -->
   </div>
 </div>

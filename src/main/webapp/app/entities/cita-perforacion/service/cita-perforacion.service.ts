@@ -15,6 +15,7 @@ export type EntityArrayResponseType = HttpResponse<ICitaPerforacion[]>;
 @Injectable({ providedIn: 'root' })
 export class CitaPerforacionService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/cita-perforacions');
+  protected resourceUrlDay = this.applicationConfigService.getEndpointFor('api/cita-perforacions-day');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -56,6 +57,13 @@ export class CitaPerforacionService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+  queryDay(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<ICitaPerforacion[]>(this.resourceUrlDay, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
@@ -85,6 +93,7 @@ export class CitaPerforacionService {
   protected convertDateFromClient(citaPerforacion: ICitaPerforacion): ICitaPerforacion {
     return Object.assign({}, citaPerforacion, {
       fechaCreacion: citaPerforacion.fechaCreacion?.isValid() ? citaPerforacion.fechaCreacion.toJSON() : undefined,
+      fechaCreacionInicial: citaPerforacion.fechaCreacionInicial?.isValid() ? citaPerforacion.fechaCreacionInicial.toJSON() : undefined,
       fechaCita: citaPerforacion.fechaCita?.isValid() ? citaPerforacion.fechaCita.toJSON() : undefined,
     });
   }
@@ -92,6 +101,7 @@ export class CitaPerforacionService {
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
       res.body.fechaCreacion = res.body.fechaCreacion ? dayjs(res.body.fechaCreacion) : undefined;
+      res.body.fechaCreacionInicial = res.body.fechaCreacionInicial ? dayjs(res.body.fechaCreacionInicial) : undefined;
       res.body.fechaCita = res.body.fechaCita ? dayjs(res.body.fechaCita) : undefined;
     }
     return res;
@@ -101,6 +111,9 @@ export class CitaPerforacionService {
     if (res.body) {
       res.body.forEach((citaPerforacion: ICitaPerforacion) => {
         citaPerforacion.fechaCreacion = citaPerforacion.fechaCreacion ? dayjs(citaPerforacion.fechaCreacion) : undefined;
+        citaPerforacion.fechaCreacionInicial = citaPerforacion.fechaCreacionInicial
+          ? dayjs(citaPerforacion.fechaCreacionInicial)
+          : undefined;
         citaPerforacion.fechaCita = citaPerforacion.fechaCita ? dayjs(citaPerforacion.fechaCita) : undefined;
       });
     }

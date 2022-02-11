@@ -1,17 +1,13 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-caja-ingresos-heading"
-        data-cy="CajaIngresosCreateUpdateHeading"
-        jhiTranslate="preciadoTattoApp.cajaIngresos.home.createOrEditLabel"
-        class="text-black"
-      >
-        Create or edit a Caja Ingresos
+      <h2 id="jhi-caja-ingresos-heading" data-cy="CajaIngresosCreateUpdateHeading" class="text-black">
+        {{ titulo }}
       </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
 
         <div class="row">
           <div class="col-md-6 form-group">
@@ -22,6 +18,7 @@
               >Valor Vendido Dia</label
             >
             <input
+              readonly="true"
               type="number"
               class="form-control"
               name="valorVendidoDia"
@@ -39,6 +36,7 @@
               >Valor Registrado Dia</label
             >
             <input
+              (keyup)="calcularDiferencia()"
               type="number"
               class="form-control"
               name="valorRegistradoDia"
@@ -55,6 +53,7 @@
               >Diferencia</label
             >
             <input
+              readonly="true"
               type="number"
               class="form-control"
               name="diferencia"
@@ -67,7 +66,7 @@
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-dark aqua-text" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
@@ -76,7 +75,7 @@
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+          class="btn btn-dark aqua-text"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
@@ -84,3 +83,20 @@
     </form>
   </div>
 </div>
+
+<ng-template #mensajeInicio>
+  <div class="modal-header color-toggle">
+    <h4 class="modal-title text-black">Advertencia</h4>
+  </div>
+  <div class="modal-body">
+    <div>
+      <p>
+        Para crear una caja de ingresos generales, debe exisitr una venta previa <br />
+        o una perforacion registrada.
+      </p>
+    </div>
+  </div>
+  <div class="modal-footer color-toggle">
+    <h4 class="text-black"><span>Preciado</span> <span class="text-black">Tattoo</span></h4>
+  </div>
+</ng-template>

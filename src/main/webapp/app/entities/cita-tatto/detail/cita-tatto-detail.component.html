@@ -12,9 +12,9 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details color-toggle">
-        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.idCliente">Id Cliente</span></dt>
+        <dt><span class="text-black">Cliente</span></dt>
         <dd>
-          <span class="text-black">{{ citaTatto.nombreCliente }}</span>
+          <span class="text-black">{{ citaTatto.infoCliente }}</span>
         </dd>
         <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion">Fecha Creacion</span></dt>
         <dd>
@@ -53,7 +53,19 @@
         <dd>
           <span class="text-black">{{ citaTatto.valorPagado }}</span>
         </dd>
-        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.deuda">Deuda</span></dt>
+        <dt style="margin-left: 10px">
+          <span class="text-black" jhiTranslate="preciadoTattoApp.citaTatto.deuda">Deuda</span>
+          <div class="btn-group">
+            <button
+              *ngIf="citaTatto.deuda! > 0"
+              (click)="parametroHacerAbono(citaTatto.id!)"
+              type="button"
+              class="btn btn-dark aqua-text btn-sm"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Abonar</span>
+            </button>
+          </div>
+        </dt>
         <dd>
           <span class="text-black">{{ citaTatto.deuda }}</span>
         </dd>
@@ -67,12 +79,15 @@
         </dd>
       </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <button type="submit" (click)="previousState()" class="btn btn-dark aqua-text" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/cita-tatto', citaTatto.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/cita-tatto', citaTatto.id, 'edit']" class="btn btn-dark aqua-text">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+      <button (click)="parametroVerAbono(citaTatto.id!)" type="button" class="btn btn-dark aqua-text">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Consultar Abonos</span>
       </button>
     </div>
   </div>

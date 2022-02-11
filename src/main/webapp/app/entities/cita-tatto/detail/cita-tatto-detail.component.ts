@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ICitaTatto } from '../cita-tatto.model';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
   selector: 'jhi-cita-tatto-detail',
@@ -11,7 +12,12 @@ import { DataUtils } from 'app/core/util/data-util.service';
 export class CitaTattoDetailComponent implements OnInit {
   citaTatto: ICitaTatto | null = null;
 
-  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute) {}
+  constructor(
+    protected dataUtils: DataUtils,
+    protected activatedRoute: ActivatedRoute,
+    protected storage: StateStorageService,
+    protected router: Router
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ citaTatto }) => {
@@ -29,5 +35,15 @@ export class CitaTattoDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  parametroVerAbono(idCita: number): void {
+    this.storage.pasoParametroCita(idCita);
+    this.router.navigate(['/abono']);
+  }
+
+  parametroHacerAbono(idCita: number): void {
+    this.storage.pasoParametroCita(idCita);
+    this.router.navigate(['/abono/new']);
   }
 }

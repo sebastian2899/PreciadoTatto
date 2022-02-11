@@ -14,4 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     @Query("SELECT p FROM Producto p WHERE p.cantidad > 0")
     List<Producto> productosDisponibles();
+
+    @Query("SELECT COUNT(p.id) FROM Producto p")
+    int productosTotales();
 }

@@ -142,6 +142,12 @@ public class CitaPerforacionResource {
         return citaPerforacionService.findAll();
     }
 
+    @GetMapping("/cita-perforacions-day")
+    public List<CitaPerforacionDTO> getAllCitaPerforacionsDay() {
+        log.debug("REST request to get all CitaPerforacions");
+        return citaPerforacionService.findCitasToday();
+    }
+
     /**
      * {@code GET  /cita-perforacions/:id} : get the "id" citaPerforacion.
      *

@@ -44,11 +44,9 @@
             <input type="text" class="form-control" name="hora" id="field_hora" data-cy="hora" formControlName="hora" />
           </div>
           <div class="col-md-4 form-group">
-            <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.emailCliente" for="field_emailCliente"
-              >Email Cliente</label
-            >
+            <label class="form-control-label text-black" for="field_emailCliente">Email Cliente (Opcional)</label>
             <input
-              type="text"
+              type="email"
               class="form-control"
               name="emailCliente"
               id="field_emailCliente"
@@ -113,6 +111,8 @@
               >Valor Tatto</label
             >
             <input
+              [readOnly]="updateCita"
+              (keyup)="calcularValores()"
               type="number"
               class="form-control"
               name="valorTatto"
@@ -185,12 +185,7 @@
         </div>
       </div>
 
-      <div [hidden]="editForm.get('id')!.value == null" class="row">
-        <div class="form-group" dissable="true" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
+      <div class="row">
         <div dissable="true" class="col-md-6 form-group">
           <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion" for="field_fechaCreacion"
             >Fecha Creacion</label
@@ -211,7 +206,7 @@
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-dark aqua-text" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
@@ -220,7 +215,7 @@
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving || saving"
-          class="btn btn-primary"
+          class="btn btn-dark aqua-text"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>

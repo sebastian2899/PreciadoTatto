@@ -18,6 +18,7 @@ export class EgresoService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/egresos');
   protected resourceUrlEgreso = this.applicationConfigService.getEndpointFor('api/egresos-dia');
   protected egresoDia = this.applicationConfigService.getEndpointFor('api/egresos-diarios');
+  protected egresoMes = this.applicationConfigService.getEndpointFor('api/egresosMensual');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -46,6 +47,10 @@ export class EgresoService {
     return this.http
       .get<IEgreso>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  agresoMes(fechaInicio: string, fechaFin: string): Observable<NumberType> {
+    return this.http.get<number>(`${this.egresoMes}/${fechaInicio}/${fechaFin}`, { observe: 'response' });
   }
 
   egresosDia(): Observable<NumberType> {

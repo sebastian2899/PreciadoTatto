@@ -56,9 +56,6 @@ class CitaPerforacionResourceIT {
     private static final BigDecimal DEFAULT_VALOR_DEUDA = new BigDecimal(1);
     private static final BigDecimal UPDATED_VALOR_DEUDA = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_ESTADO = new BigDecimal(1);
-    private static final BigDecimal UPDATED_ESTADO = new BigDecimal(2);
-
     private static final String ENTITY_API_URL = "/api/cita-perforacions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -93,8 +90,7 @@ class CitaPerforacionResourceIT {
             .nombreCliente(DEFAULT_NOMBRE_CLIENTE)
             .valorPerforacion(DEFAULT_VALOR_PERFORACION)
             .valorPagado(DEFAULT_VALOR_PAGADO)
-            .valorDeuda(DEFAULT_VALOR_DEUDA)
-            .estado(DEFAULT_ESTADO);
+            .valorDeuda(DEFAULT_VALOR_DEUDA);
         return citaPerforacion;
     }
 
@@ -112,8 +108,7 @@ class CitaPerforacionResourceIT {
             .nombreCliente(UPDATED_NOMBRE_CLIENTE)
             .valorPerforacion(UPDATED_VALOR_PERFORACION)
             .valorPagado(UPDATED_VALOR_PAGADO)
-            .valorDeuda(UPDATED_VALOR_DEUDA)
-            .estado(UPDATED_ESTADO);
+            .valorDeuda(UPDATED_VALOR_DEUDA);
         return citaPerforacion;
     }
 
@@ -145,7 +140,6 @@ class CitaPerforacionResourceIT {
         assertThat(testCitaPerforacion.getValorPerforacion()).isEqualByComparingTo(DEFAULT_VALOR_PERFORACION);
         assertThat(testCitaPerforacion.getValorPagado()).isEqualByComparingTo(DEFAULT_VALOR_PAGADO);
         assertThat(testCitaPerforacion.getValorDeuda()).isEqualByComparingTo(DEFAULT_VALOR_DEUDA);
-        assertThat(testCitaPerforacion.getEstado()).isEqualByComparingTo(DEFAULT_ESTADO);
     }
 
     @Test
@@ -187,8 +181,7 @@ class CitaPerforacionResourceIT {
             .andExpect(jsonPath("$.[*].nombreCliente").value(hasItem(DEFAULT_NOMBRE_CLIENTE)))
             .andExpect(jsonPath("$.[*].valorPerforacion").value(hasItem(sameNumber(DEFAULT_VALOR_PERFORACION))))
             .andExpect(jsonPath("$.[*].valorPagado").value(hasItem(sameNumber(DEFAULT_VALOR_PAGADO))))
-            .andExpect(jsonPath("$.[*].valorDeuda").value(hasItem(sameNumber(DEFAULT_VALOR_DEUDA))))
-            .andExpect(jsonPath("$.[*].estado").value(hasItem(sameNumber(DEFAULT_ESTADO))));
+            .andExpect(jsonPath("$.[*].valorDeuda").value(hasItem(sameNumber(DEFAULT_VALOR_DEUDA))));
     }
 
     @Test
@@ -209,8 +202,7 @@ class CitaPerforacionResourceIT {
             .andExpect(jsonPath("$.nombreCliente").value(DEFAULT_NOMBRE_CLIENTE))
             .andExpect(jsonPath("$.valorPerforacion").value(sameNumber(DEFAULT_VALOR_PERFORACION)))
             .andExpect(jsonPath("$.valorPagado").value(sameNumber(DEFAULT_VALOR_PAGADO)))
-            .andExpect(jsonPath("$.valorDeuda").value(sameNumber(DEFAULT_VALOR_DEUDA)))
-            .andExpect(jsonPath("$.estado").value(sameNumber(DEFAULT_ESTADO)));
+            .andExpect(jsonPath("$.valorDeuda").value(sameNumber(DEFAULT_VALOR_DEUDA)));
     }
 
     @Test
@@ -239,8 +231,7 @@ class CitaPerforacionResourceIT {
             .nombreCliente(UPDATED_NOMBRE_CLIENTE)
             .valorPerforacion(UPDATED_VALOR_PERFORACION)
             .valorPagado(UPDATED_VALOR_PAGADO)
-            .valorDeuda(UPDATED_VALOR_DEUDA)
-            .estado(UPDATED_ESTADO);
+            .valorDeuda(UPDATED_VALOR_DEUDA);
         CitaPerforacionDTO citaPerforacionDTO = citaPerforacionMapper.toDto(updatedCitaPerforacion);
 
         restCitaPerforacionMockMvc
@@ -262,7 +253,6 @@ class CitaPerforacionResourceIT {
         assertThat(testCitaPerforacion.getValorPerforacion()).isEqualTo(UPDATED_VALOR_PERFORACION);
         assertThat(testCitaPerforacion.getValorPagado()).isEqualTo(UPDATED_VALOR_PAGADO);
         assertThat(testCitaPerforacion.getValorDeuda()).isEqualTo(UPDATED_VALOR_DEUDA);
-        assertThat(testCitaPerforacion.getEstado()).isEqualTo(UPDATED_ESTADO);
     }
 
     @Test
@@ -365,7 +355,6 @@ class CitaPerforacionResourceIT {
         assertThat(testCitaPerforacion.getValorPerforacion()).isEqualByComparingTo(UPDATED_VALOR_PERFORACION);
         assertThat(testCitaPerforacion.getValorPagado()).isEqualByComparingTo(DEFAULT_VALOR_PAGADO);
         assertThat(testCitaPerforacion.getValorDeuda()).isEqualByComparingTo(DEFAULT_VALOR_DEUDA);
-        assertThat(testCitaPerforacion.getEstado()).isEqualByComparingTo(DEFAULT_ESTADO);
     }
 
     @Test
@@ -387,9 +376,7 @@ class CitaPerforacionResourceIT {
             .nombreCliente(UPDATED_NOMBRE_CLIENTE)
             .valorPerforacion(UPDATED_VALOR_PERFORACION)
             .valorPagado(UPDATED_VALOR_PAGADO)
-            .valorDeuda(UPDATED_VALOR_DEUDA)
-            .estado(UPDATED_ESTADO);
-
+            .valorDeuda(UPDATED_VALOR_DEUDA);
         restCitaPerforacionMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCitaPerforacion.getId())
@@ -409,7 +396,6 @@ class CitaPerforacionResourceIT {
         assertThat(testCitaPerforacion.getValorPerforacion()).isEqualByComparingTo(UPDATED_VALOR_PERFORACION);
         assertThat(testCitaPerforacion.getValorPagado()).isEqualByComparingTo(UPDATED_VALOR_PAGADO);
         assertThat(testCitaPerforacion.getValorDeuda()).isEqualByComparingTo(UPDATED_VALOR_DEUDA);
-        assertThat(testCitaPerforacion.getEstado()).isEqualByComparingTo(UPDATED_ESTADO);
     }
 
     @Test

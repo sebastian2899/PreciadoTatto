@@ -6,6 +6,7 @@ import { EgresoComponent } from '../list/egreso.component';
 import { EgresoDetailComponent } from '../detail/egreso-detail.component';
 import { EgresoUpdateComponent } from '../update/egreso-update.component';
 import { EgresoRoutingResolveService } from './egreso-routing-resolve.service';
+import { EgresoMesComponent } from '../egreso-mes/egreso-mes.component';
 
 const egresoRoute: Routes = [
   {
@@ -32,6 +33,14 @@ const egresoRoute: Routes = [
   {
     path: ':id/edit',
     component: EgresoUpdateComponent,
+    resolve: {
+      egreso: EgresoRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':egreso-mes',
+    component: EgresoMesComponent,
     resolve: {
       egreso: EgresoRoutingResolveService,
     },

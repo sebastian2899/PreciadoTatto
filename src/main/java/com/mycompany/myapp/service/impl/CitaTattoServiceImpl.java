@@ -1,15 +1,23 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.config.Constants;
+import com.mycompany.myapp.config.EmailUtil;
+import com.mycompany.myapp.domain.Abono;
 import com.mycompany.myapp.domain.CitaTatto;
+import com.mycompany.myapp.repository.AbonoRepository;
 import com.mycompany.myapp.repository.CitaTattoRepository;
 import com.mycompany.myapp.service.CitaTattoService;
 import com.mycompany.myapp.service.dto.CitaTattoDTO;
 import com.mycompany.myapp.service.mapper.CitaTattoMapper;
 import java.math.BigDecimal;
-import java.util.LinkedList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import org.attoparser.dom.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,11 +34,17 @@ public class CitaTattoServiceImpl implements CitaTattoService {
 
     private final CitaTattoRepository citaTattoRepository;
 
+    private final AbonoRepository abonoRepository;
+
     private final CitaTattoMapper citaTattoMapper;
 
-    public CitaTattoServiceImpl(CitaTattoRepository citaTattoRepository, CitaTattoMapper citaTattoMapper) {
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public CitaTattoServiceImpl(AbonoRepository abonoRepository, CitaTattoRepository citaTattoRepository, CitaTattoMapper citaTattoMapper) {
         this.citaTattoRepository = citaTattoRepository;
         this.citaTattoMapper = citaTattoMapper;
+        this.abonoRepository = abonoRepository;
     }
 
     @Override
@@ -43,7 +57,86 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         }
 
         citaTatto = citaTattoRepository.save(citaTatto);
+        if (citaTattoDTO.getId() != null) {
+            enviarCorreoActualizacion(citaTatto);
+        } else {
+            enviarCorreoConfirmacion(citaTatto);
+        }
+
+        Abono abono = null;
+
+        if (citaTatto.getValorPagado() != null) {
+            abono = new Abono();
+            abono.setIdCita(citaTatto.getId());
+            abono.setFechaAbono(citaTatto.getFechaCreacion());
+            abono.setValorAbono(citaTatto.getValorPagado());
+
+            this.abonoRepository.save(abono);
+        }
+
         return citaTattoMapper.toDto(citaTatto);
+    }
+
+    private void enviarCorreoConfirmacion(CitaTatto citaTattoo) {
+        if (citaTattoo.getEmailCliente() != null && !citaTattoo.getEmailCliente().isEmpty()) {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            String html = "";
+            String mensaje =
+                "<html><head><title>Confirmacion Correo</title></head>" +
+                "<body style='background-color:black;'><p style='color:aqua;'>Buen dia " +
+                citaTattoo.getInfoCliente() +
+                ".<br/>" +
+                "Su cita a sido agendada con exito para el dia " +
+                format.format(Date.from(citaTattoo.getFechaCita())) +
+                " a las " +
+                citaTattoo.getHora() +
+                ".</p>" +
+                "<p style='color:aqua;'>Recuerde llegar 10-15 minutos antes para la toma de medidas." +
+                "<br/>Muchas Gracias.<br/><br/><br/>Preciado Tattoo.</p></body></html>";
+
+            try {
+                log.debug("Request to send mail to client: " + citaTattoo.getEmailCliente());
+                EmailUtil.sendArchivoTLS(null, citaTattoo.getEmailCliente().trim(), "Confirmacion Cita Tattoo", mensaje);
+                log.debug("Send email to: " + citaTattoo.getEmailCliente());
+            } catch (Exception e) {
+                log.debug("Error enviando notificacion ", e);
+                log.debug("Error enviando notificacion ", e.getMessage());
+                log.error("Error enviando notificacion ", e);
+                log.error("Error enviando notificacion ", e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void enviarCorreoActualizacion(CitaTatto citaTattoo) {
+        if (citaTattoo.getEmailCliente() != null && !citaTattoo.getEmailCliente().isEmpty()) {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            String html = "";
+            String mensaje =
+                "<html><head><title>Confirmacion Correo</title></head>" +
+                "<body style='background-color:black;'><p style='color:aqua;'>Buen dia " +
+                citaTattoo.getInfoCliente() +
+                ".<br/>" +
+                "Su cita a sido Actualizada con exito para el dia " +
+                format.format(Date.from(citaTattoo.getFechaCita())) +
+                " a las " +
+                citaTattoo.getHora() +
+                ".</p>" +
+                "<p style='color:aqua;'>Recuerde llegar 10-15 minutos antes para la toma de medidas." +
+                "<br/>Muchas Gracias.<br/><br/><br/>Preciado Tattoo.</p></body></html>";
+
+            try {
+                log.debug("Request to send mail to client: " + citaTattoo.getEmailCliente());
+                EmailUtil.sendArchivoTLS(null, citaTattoo.getEmailCliente().trim(), "Confirmacion Cita Tattoo", mensaje);
+                log.debug("Send email to: " + citaTattoo.getEmailCliente());
+            } catch (Exception e) {
+                log.debug("Error enviando notificacion ", e);
+                log.debug("Error enviando notificacion ", e.getMessage());
+                log.error("Error enviando notificacion ", e);
+                log.error("Error enviando notificacion ", e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -66,7 +159,22 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     public List<CitaTattoDTO> findAll() {
         log.debug("Request to get all CitaTattos");
 
-        return citaTattoRepository.findAll().stream().map(citaTattoMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        Query q = entityManager.createQuery(Constants.ORDENAR_CITAS_PORfECHA);
+
+        List<CitaTattoDTO> citas = q.getResultList();
+
+        return citas;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CitaTattoDTO> citaDia() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaHoy = format.format(new Date());
+
+        List<CitaTatto> citaDia = citaTattoRepository.citaDia(fechaHoy);
+
+        return citaTattoMapper.toDto(citaDia);
     }
 
     @Override
@@ -80,6 +188,11 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete CitaTatto : {}", id);
+
+        Query q = entityManager.createQuery("DELETE FROM Abono WHERE idCita = :idCita").setParameter("idCita", id);
+
+        q.executeUpdate();
+
         citaTattoRepository.deleteById(id);
     }
 }

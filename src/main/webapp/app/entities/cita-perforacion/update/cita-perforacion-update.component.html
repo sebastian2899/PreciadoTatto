@@ -12,8 +12,10 @@
 
       <div>
         <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
 
         <div class="row">
+          <!--
           <div class="col-md-6 form-group">
             <label
               class="form-control-label text-black"
@@ -32,8 +34,9 @@
                 placeholder="YYYY-MM-DD HH:mm"
               />
             </div>
+            
           </div>
-
+        -->
           <div class="col-md-6 form-group">
             <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCita" for="field_fechaCita"
               >Fecha Cita</label
@@ -85,6 +88,7 @@
               >Valor Perforacion</label
             >
             <input
+              (keyup)="calcularValores()"
               type="number"
               class="form-control"
               name="valorPerforacion"
@@ -99,6 +103,7 @@
               >Valor Pagado</label
             >
             <input
+              (keyup)="calcularValores()"
               type="number"
               class="form-control"
               name="valorPagado"
@@ -115,6 +120,7 @@
               >Valor Deuda</label
             >
             <input
+              readonly="true"
               type="number"
               class="form-control"
               name="valorDeuda"
@@ -128,13 +134,21 @@
             <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.estado" for="field_estado"
               >Estado</label
             >
-            <input type="number" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
+            <input
+              readonly="true"
+              type="text"
+              class="form-control"
+              name="estado"
+              id="field_estado"
+              data-cy="estado"
+              formControlName="estado"
+            />
           </div>
         </div>
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-dark aqua-text" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
@@ -143,7 +157,7 @@
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
+          class="btn btn-dark aqua-text"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>

@@ -3,7 +3,7 @@
     <span class="aqua-text" jhiTranslate="preciadoTattoApp.citaTatto.home.title">Cita Tattos</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn botones-aqua mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="preciadoTattoApp.citaTatto.home.refreshListLabel">Refresh List</span>
       </button>
@@ -11,7 +11,7 @@
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn botones-aqua jh-create-entity create-cita-tatto"
+        class="btn btn-dark aqua-text jh-create-entity create-cita-tatto"
         [routerLink]="['/cita-tatto/new']"
       >
         <fa-icon icon="plus"></fa-icon>
@@ -32,28 +32,28 @@
     <table class="table table-dark color-toggle" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.idCliente">Cliente</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion">Fecha Creacion</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCita">Fecha Cita</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.hora">Hora</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.emailCliente">Email Cliente</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno">Foto Diseno</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorTatto">Valor Tatto</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorPagado">Valor Pagado</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.deuda">Deuda</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.estado">Estado</span></th>
-          <th scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.descripcion">Descripcion</span></th>
-          <th scope="col"></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.idCliente">Cliente</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion">Fecha Creacion</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCita">Fecha Cita</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.hora">Hora</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.emailCliente">Email Cliente</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno">Foto Diseno</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorTatto">Valor Tatto</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorPagado">Valor Pagado</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.deuda">Deuda</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.estado">Estado</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.descripcion">Descripcion</span></th>
+          <th class="text-black" scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let citaTatto of citaTattos; trackBy: trackId" data-cy="entityTable">
-          <td>{{ citaTatto.nombreCliente }}</td>
-          <td>{{ citaTatto.fechaCreacion | formatMediumDatetime }}</td>
-          <td>{{ citaTatto.fechaCita | formatMediumDatetime }}</td>
-          <td>{{ citaTatto.hora }}</td>
-          <td>{{ citaTatto.emailCliente }}</td>
-          <td>
+        <tr *ngFor="let citaTatto of citaTattos | paginate: { itemsPerPage: 5, currentPage: pA }; trackBy: trackId" data-cy="entityTable">
+          <td class="text-black">{{ citaTatto.infoCliente }}</td>
+          <td class="text-black">{{ citaTatto.fechaCreacion | formatMediumDatetime }}</td>
+          <td class="text-black">{{ citaTatto.fechaCita | formatMediumDatetime }}</td>
+          <td class="text-black">{{ citaTatto.hora }}</td>
+          <td class="text-black">{{ citaTatto.emailCliente }}</td>
+          <td class="text-black">
             <a *ngIf="citaTatto.fotoDiseno" (click)="openFile(citaTatto.fotoDiseno, citaTatto.fotoDisenoContentType)">
               <img
                 [src]="'data:' + citaTatto.fotoDisenoContentType + ';base64,' + citaTatto.fotoDiseno"
@@ -63,17 +63,17 @@
             </a>
             <span *ngIf="citaTatto.fotoDiseno">{{ citaTatto.fotoDisenoContentType }}, {{ byteSize(citaTatto.fotoDiseno) }}</span>
           </td>
-          <td>{{ citaTatto.valorTatto }}</td>
-          <td>{{ citaTatto.valorPagado }}</td>
-          <td>{{ citaTatto.deuda }}</td>
-          <td>{{ citaTatto.estado }}</td>
-          <td>{{ citaTatto.descripcion }}</td>
+          <td class="text-black">{{ citaTatto.valorTatto }}</td>
+          <td class="text-black">{{ citaTatto.valorPagado }}</td>
+          <td class="text-black">{{ citaTatto.deuda }}</td>
+          <td class="text-black">{{ citaTatto.estado }}</td>
+          <td class="text-black">{{ citaTatto.descripcion }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button
                 type="submit"
                 [routerLink]="['/cita-tatto', citaTatto.id, 'view']"
-                class="btn btn-info btn-sm text-black"
+                class="btn btn-dark aqua-text btn-sm text-black"
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
@@ -84,7 +84,7 @@
                 *ngIf="citaTatto.deuda || citaTatto.deuda! > 0"
                 type="submit"
                 (click)="pasoParametroCita(citaTatto.id!)"
-                class="btn btn-info btn-sm text-black"
+                class="btn btn-dark aqua-text btn-sm text-black"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
@@ -94,14 +94,14 @@
               <button
                 type="submit"
                 (click)="pasoParametroVerAbono(citaTatto.id!)"
-                class="btn btn-info btn-sm text-black"
+                class="btn btn-dark aqua-text btn-sm text-black"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline">Consultar Abonos</span>
               </button>
 
-              <button type="submit" (click)="delete(citaTatto)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(citaTatto)" class="btn btn-dark aqua-text btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
@@ -110,5 +110,6 @@
         </tr>
       </tbody>
     </table>
+    <pagination-controls style="text-align: center" (pageChange)="pA = $event"></pagination-controls>
   </div>
 </div>

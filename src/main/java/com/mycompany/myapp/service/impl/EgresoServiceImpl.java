@@ -7,6 +7,7 @@ import com.mycompany.myapp.service.dto.EgresoDTO;
 import com.mycompany.myapp.service.mapper.EgresoMapper;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -90,6 +91,16 @@ public class EgresoServiceImpl implements EgresoService {
     public void delete(Long id) {
         log.debug("Request to delete Egreso : {}", id);
         egresoRepository.deleteById(id);
+    }
+
+    @Override
+    public BigDecimal egresoMensual(Instant fechaInicio, Instant fechaFin) {
+        log.debug("Request to get egreso monthly");
+
+        BigDecimal egresoMensual = BigDecimal.ZERO;
+        egresoMensual = egresoRepository.egresoMensual(fechaInicio, fechaFin);
+
+        return egresoMensual;
     }
 
     @Override

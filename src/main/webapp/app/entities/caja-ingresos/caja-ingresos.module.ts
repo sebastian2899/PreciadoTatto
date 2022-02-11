@@ -5,10 +5,17 @@ import { CajaIngresosDetailComponent } from './detail/caja-ingresos-detail.compo
 import { CajaIngresosUpdateComponent } from './update/caja-ingresos-update.component';
 import { CajaIngresosDeleteDialogComponent } from './delete/caja-ingresos-delete-dialog.component';
 import { CajaIngresosRoutingModule } from './route/caja-ingresos-routing.module';
+import { CajaIngFechaComponent } from './caja-ing-fecha/caja-ing-fecha.component';
 
 @NgModule({
   imports: [SharedModule, CajaIngresosRoutingModule],
-  declarations: [CajaIngresosComponent, CajaIngresosDetailComponent, CajaIngresosUpdateComponent, CajaIngresosDeleteDialogComponent],
+  declarations: [
+    CajaIngresosComponent,
+    CajaIngresosDetailComponent,
+    CajaIngresosUpdateComponent,
+    CajaIngresosDeleteDialogComponent,
+    CajaIngFechaComponent,
+  ],
   entryComponents: [CajaIngresosDeleteDialogComponent],
 })
 export class CajaIngresosModule {}

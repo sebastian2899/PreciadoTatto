@@ -16,6 +16,7 @@ import { StateStorageService } from 'app/core/auth/state-storage.service';
 export class CitaTattoComponent implements OnInit {
   citaTattos?: ICitaTatto[];
   isLoading = false;
+  pA = 1;
 
   constructor(
     private storage: StateStorageService,

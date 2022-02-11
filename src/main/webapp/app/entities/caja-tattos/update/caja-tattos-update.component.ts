@@ -10,6 +10,7 @@ import { CajaTattosService } from '../service/caja-tattos.service';
 import { ICliente } from 'app/entities/cliente/cliente.model';
 import { AlertService } from 'app/core/util/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NullTemplateVisitor } from '@angular/compiler';
 
 @Component({
   selector: 'jhi-caja-tattos-update',
@@ -51,11 +52,7 @@ export class CajaTattosUpdateComponent implements OnInit {
       this.editForm.get(['valorTattoDia'])?.setValue(valorDia);
       this.editForm.get(['diferencia'])?.setValue(valorDia);
 
-      if (valorDia === 0) {
-        this.saving = true;
-      } else {
-        this.saving = false;
-      }
+      valorDia === 0 ? (this.saving = true) : (this.saving = false);
     }),
       () => {
         const valorCaja = 0;
@@ -76,11 +73,9 @@ export class CajaTattosUpdateComponent implements OnInit {
         type: 'danger',
         message: 'El valor a registrar no debe ni deberia ser mayor al valor registrado durante el dia',
       });
-      this.editForm.get(['valorRegistrado'])?.setValue(0);
-      this.editForm.get(['diferencia'])?.setValue(0);
-      this.saving = true;
+      this.editForm.get(['valorRegistrado'])?.setValue(null);
+      this.editForm.get(['diferencia'])?.setValue(valorDia);
     } else {
-      this.saving = false;
       const diferencia = valorDia - valorRegistrado;
       this.editForm.get(['diferencia'])?.setValue(diferencia);
     }

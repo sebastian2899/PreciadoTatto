@@ -6,13 +6,18 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICajaIngresos, getCajaIngresosIdentifier } from '../caja-ingresos.model';
+import { ICajaFechaIngresos } from '../caja-fechas.';
 
 export type EntityResponseType = HttpResponse<ICajaIngresos>;
 export type EntityArrayResponseType = HttpResponse<ICajaIngresos[]>;
+export type NumberType = HttpResponse<number>;
+export type CajaFechasType = HttpResponse<ICajaFechaIngresos>;
 
 @Injectable({ providedIn: 'root' })
 export class CajaIngresosService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/caja-ingresos');
+  protected valorcajaDia = this.applicationConfigService.getEndpointFor('api/caja-ingresosDia');
+  protected cajaFechas = this.applicationConfigService.getEndpointFor('api/cajaIngresosFecha');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -36,9 +41,17 @@ export class CajaIngresosService {
     return this.http.get<ICajaIngresos>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  cajaDia(): Observable<NumberType> {
+    return this.http.get<number>(this.valorcajaDia, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ICajaIngresos[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  cajaIngFechas(fechaInicio: string, fechaFin: string): Observable<CajaFechasType> {
+    return this.http.get<ICajaFechaIngresos>(`${this.cajaFechas}/${fechaInicio}/${fechaFin}`, { observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

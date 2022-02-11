@@ -3,7 +3,7 @@
     <span class="aqua-text" jhiTranslate="preciadoTattoApp.producto.home.title">Productos</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="preciadoTattoApp.producto.home.refreshListLabel">Refresh List</span>
       </button>
@@ -11,7 +11,7 @@
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-producto"
+        class="btn btn-dark aqua-text jh-create-entity create-producto"
         [routerLink]="['/producto/new']"
       >
         <fa-icon icon="plus"></fa-icon>
@@ -32,7 +32,6 @@
     <table class="table table-dark color-toggle" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th class="text-black" scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.producto.foto">Foto</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.producto.nombre">Nombre</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.producto.precio">Precio</span></th>
@@ -58,7 +57,7 @@
               <button
                 type="submit"
                 [routerLink]="['/producto', producto.id, 'view']"
-                class="btn btn-info btn-sm"
+                class="btn btn-dark aqua-text btn-sm"
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
@@ -68,14 +67,14 @@
               <button
                 type="submit"
                 [routerLink]="['/producto', producto.id, 'edit']"
-                class="btn btn-primary btn-sm"
+                class="btn btn-dark aqua-text btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(producto)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(producto)" class="btn btn-dark aqua-text btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

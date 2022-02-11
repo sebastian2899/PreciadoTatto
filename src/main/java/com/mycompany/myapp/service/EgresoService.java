@@ -2,6 +2,7 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.EgresoDTO;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,4 +51,6 @@ public interface EgresoService {
     void delete(Long id);
 
     BigDecimal valorEgresoDia();
+
+    BigDecimal egresoMensual(Instant fechaInicio, Instant fechaFin);
 }

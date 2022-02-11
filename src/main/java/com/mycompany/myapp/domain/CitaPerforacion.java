@@ -26,6 +26,9 @@ public class CitaPerforacion implements Serializable {
     @Column(name = "fecha_creacion")
     private Instant fechaCreacion;
 
+    @Column(name = "fecha_creacion_inicial")
+    private Instant fechaCreacionInicial;
+
     @Column(name = "fecha_cita")
     private Instant fechaCita;
 
@@ -44,10 +47,18 @@ public class CitaPerforacion implements Serializable {
     @Column(name = "valor_deuda", precision = 21, scale = 2)
     private BigDecimal valorDeuda;
 
-    @Column(name = "estado", precision = 21, scale = 2)
-    private BigDecimal estado;
+    @Column(name = "estado")
+    private String estado;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Instant getFechaCreacionInicial() {
+        return fechaCreacionInicial;
+    }
+
+    public void setFechaCreacionInicial(Instant fechaCreacionInicial) {
+        this.fechaCreacionInicial = fechaCreacionInicial;
+    }
 
     public Long getId() {
         return this.id;
@@ -153,20 +164,15 @@ public class CitaPerforacion implements Serializable {
         this.valorDeuda = valorDeuda;
     }
 
-    public BigDecimal getEstado() {
-        return this.estado;
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public String getEstado() {
+        return estado;
     }
 
-    public CitaPerforacion estado(BigDecimal estado) {
-        this.setEstado(estado);
-        return this;
-    }
-
-    public void setEstado(BigDecimal estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -199,5 +205,10 @@ public class CitaPerforacion implements Serializable {
             ", valorDeuda=" + getValorDeuda() +
             ", estado=" + getEstado() +
             "}";
+    }
+
+    public CitaPerforacion estado(String defaultEstado) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

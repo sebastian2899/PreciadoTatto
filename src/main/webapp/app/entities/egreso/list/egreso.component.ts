@@ -42,6 +42,20 @@ export class EgresoComponent implements OnInit {
     );
   }
 
+  loadAll2(): void {
+    this.isLoading = true;
+
+    this.egresoService.query().subscribe(
+      (res: HttpResponse<IEgreso[]>) => {
+        this.isLoading = false;
+        this.egresos = res.body ?? [];
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
+  }
+
   ngOnInit(): void {
     this.loadAll();
     this.egresoDiario();

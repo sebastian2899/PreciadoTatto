@@ -18,6 +18,12 @@ Navbar
 
 .navbar {
   padding: 0.2rem 1rem;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  margin-top: -58px;
+  background: linear-gradient(45deg, rgb(0, 0, 0), rgb(0, 0, 0), rgb(47, 195, 221), rgba(0, 255, 255, 0.83));
+
   .dropdown-item.active,
   .dropdown-item.active:focus,
   .dropdown-item.active:hover {

@@ -141,6 +141,12 @@ public class CitaTattoResource {
         return citaTattoService.findAll();
     }
 
+    @GetMapping("/cita-tattos-dia")
+    public List<CitaTattoDTO> getAllCitaTattosDia() {
+        log.debug("REST request to get all CitaTattos Day");
+        return citaTattoService.citaDia();
+    }
+
     /**
      * {@code GET  /cita-tattos/:id} : get the "id" citaTatto.
      *

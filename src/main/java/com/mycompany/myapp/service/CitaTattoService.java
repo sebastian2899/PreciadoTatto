@@ -45,4 +45,6 @@ public interface CitaTattoService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<CitaTattoDTO> citaDia();
 }

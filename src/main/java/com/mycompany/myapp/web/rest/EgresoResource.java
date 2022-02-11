@@ -7,6 +7,9 @@ import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -160,6 +163,24 @@ public class EgresoResource {
     public BigDecimal getEgresosDayly() {
         log.debug("REST request to get Dayly Egresos");
         return egresoService.valorEgresoDia();
+    }
+
+    @GetMapping("/egresosMensual/{fechaInicio}/{fechaFin}")
+    public BigDecimal getEgresosMonthly(@PathVariable String fechaInicio, @PathVariable String fechaFin) {
+        log.debug("REST request to get monthly Egresos");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        BigDecimal valorMensual = BigDecimal.ZERO;
+
+        try {
+            Instant fechaIni = format.parse(fechaInicio.substring(0, fechaInicio.indexOf("T"))).toInstant();
+            Instant fechaF = format.parse(fechaFin.substring(0, fechaFin.indexOf("T"))).toInstant();
+            valorMensual = egresoService.egresoMensual(fechaIni, fechaF);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            valorMensual = null;
+        }
+
+        return valorMensual;
     }
 
     /**

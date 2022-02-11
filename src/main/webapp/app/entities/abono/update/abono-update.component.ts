@@ -42,7 +42,7 @@ export class AbonoUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ citaTatto }) => {
       this.idCita = this.storage.getParametroCita();
       const today = dayjs().startOf('day');
-      const fecha = dayjs(today.toString(), DATE_TIME_FORMAT).format(DATE_TIME_FORMAT);
+      const fecha = dayjs(today, DATE_TIME_FORMAT).format(DATE_TIME_FORMAT);
       this.editForm.get(['fechaAbono'])?.setValue(fecha);
       this.editForm.get(['idCita'])?.setValue(this.idCita);
 

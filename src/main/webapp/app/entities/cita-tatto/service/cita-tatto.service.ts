@@ -15,6 +15,7 @@ export type EntityArrayResponseType = HttpResponse<ICitaTatto[]>;
 @Injectable({ providedIn: 'root' })
 export class CitaTattoService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/cita-tattos');
+  protected resourceUrlCitaDia = this.applicationConfigService.getEndpointFor('api/cita-tattos-dia');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -49,6 +50,13 @@ export class CitaTattoService {
     const options = createRequestOption(req);
     return this.http
       .get<ICitaTatto[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryDay(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<ICitaTatto[]>(this.resourceUrlCitaDia, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

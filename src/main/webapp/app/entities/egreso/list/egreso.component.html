@@ -5,17 +5,21 @@
     <div style="text-align: center" class="d-flex justify-content-center">
       <b>Total</b><span style="color: aqua" class="ml-2 badge badge-dark">{{ egresoDia | currency: '$' }} </span>
     </div>
-
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="preciadoTattoApp.egreso.home.refreshListLabel">Refresh List</span>
+      <button class="btn btn-dark aqua-text mr-2" (click)="loadAll2()" [disabled]="isLoading">
+        <fa-icon icon="eye" [spin]="isLoading"></fa-icon>
+        <span>Egresos Totales</span>
+      </button>
+
+      <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="eye" [spin]="isLoading"></fa-icon>
+        <span>Egresos de hoy</span>
       </button>
 
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-egreso"
+        class="btn btn-dark aqua-text jh-create-entity create-egreso"
         [routerLink]="['/egreso/new']"
       >
         <fa-icon icon="plus"></fa-icon>
@@ -23,6 +27,10 @@
       </button>
     </div>
   </h2>
+
+  <div class="d-flex justify-content-center">
+    <button [routerLink]="['/egreso/egreso-mes']" class="btn btn-dark aqua-text mb-2">Consultar egresos mensuales</button>
+  </div>
 
   <jhi-alert-error></jhi-alert-error>
 

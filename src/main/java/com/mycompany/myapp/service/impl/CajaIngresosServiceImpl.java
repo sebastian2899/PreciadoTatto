@@ -4,8 +4,12 @@ import com.mycompany.myapp.domain.CajaIngresos;
 import com.mycompany.myapp.repository.CajaIngresosRepository;
 import com.mycompany.myapp.service.CajaIngresosService;
 import com.mycompany.myapp.service.dto.CajaIngresosDTO;
+import com.mycompany.myapp.service.dto.RegistroHistoricoCajaDTO;
 import com.mycompany.myapp.service.mapper.CajaIngresosMapper;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -73,6 +77,55 @@ public class CajaIngresosServiceImpl implements CajaIngresosService {
     public Optional<CajaIngresosDTO> findOne(Long id) {
         log.debug("Request to get CajaIngresos : {}", id);
         return cajaIngresosRepository.findById(id).map(cajaIngresosMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public BigDecimal valoresDia() {
+        log.debug("Request to get price of cita perfo");
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaActual = format.format(new Date());
+
+        BigDecimal valorPerfo = cajaIngresosRepository.valorCitas(fechaActual);
+
+        if (valorPerfo == null) {
+            valorPerfo = BigDecimal.ZERO;
+        }
+
+        BigDecimal valorVenta = cajaIngresosRepository.valorVentaDia(fechaActual);
+
+        if (valorVenta == null) {
+            valorVenta = BigDecimal.ZERO;
+        }
+
+        BigDecimal valorTotal = valorPerfo.add(valorVenta);
+
+        return valorTotal;
+    }
+
+    @Override
+    public RegistroHistoricoCajaDTO cajaIngresosFecha(Instant fechaInicio, Instant fechaFin) {
+        log.debug("Request to get CajaIngresos for Dates");
+
+        List<CajaIngresos> cajaFechas = cajaIngresosRepository.cajaFechas(fechaInicio, fechaFin);
+        RegistroHistoricoCajaDTO rhcd = new RegistroHistoricoCajaDTO();
+
+        BigDecimal valorVendido = BigDecimal.ZERO;
+        BigDecimal valorPagado = BigDecimal.ZERO;
+        BigDecimal diferencia = BigDecimal.ZERO;
+
+        for (CajaIngresos caja : cajaFechas) {
+            valorVendido = valorVendido.add(caja.getValorVendidoDia());
+            valorPagado = valorPagado.add(caja.getValorVendidoDia());
+            diferencia = diferencia.add(caja.getDiferencia());
+        }
+
+        rhcd.setValorPagado(valorPagado);
+        rhcd.setValorVendido(valorVendido);
+        rhcd.setDiferencia(diferencia);
+
+        return rhcd;
     }
 
     @Override

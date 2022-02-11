@@ -3,7 +3,7 @@
     <span class="aqua-text" jhiTranslate="preciadoTattoApp.compras.home.title">Compras</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="preciadoTattoApp.compras.home.refreshListLabel">Refresh List</span>
       </button>
@@ -11,7 +11,7 @@
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-compras"
+        class="btn btn-dark aqua-text jh-create-entity create-compras"
         [routerLink]="['/compras/new']"
       >
         <fa-icon icon="plus"></fa-icon>
@@ -52,7 +52,7 @@
               <button
                 type="submit"
                 [routerLink]="['/compras', compras.id, 'view']"
-                class="btn btn-info btn-sm"
+                class="btn btn-dark aqua-text btn-sm"
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
@@ -62,14 +62,14 @@
               <button
                 type="submit"
                 [routerLink]="['/compras', compras.id, 'edit']"
-                class="btn btn-primary btn-sm"
+                class="btn btn-dark aqua-text btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(compras)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(compras)" class="btn btn-dark aqua-text btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

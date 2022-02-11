@@ -14,7 +14,7 @@
       <dl class="row-md jh-entity-details color-toggle">
         <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCreacion">Fecha Creacion</span></dt>
         <dd>
-          <span class="text-black">{{ citaPerforacion.fechaCreacion | formatMediumDatetime }}</span>
+          <span class="text-black">{{ citaPerforacion.fechaCreacionInicial | formatMediumDatetime }}</span>
         </dd>
         <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCita">Fecha Cita</span></dt>
         <dd>
@@ -22,7 +22,7 @@
         </dd>
         <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.hora">Hora</span></dt>
         <dd>
-          <span>{{ citaPerforacion.hora }}</span>
+          <span class="text-black">{{ citaPerforacion.hora }}</span>
         </dd>
         <dt><span class="text-black" jhiTranslate="preciadoTattoApp.citaPerforacion.nombreCliente">Nombre Cliente</span></dt>
         <dd>
@@ -46,11 +46,11 @@
         </dd>
       </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <button type="submit" (click)="previousState()" class="btn btn-dark aqua-text" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/cita-perforacion', citaPerforacion.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/cita-perforacion', citaPerforacion.id, 'edit']" class="btn btn-dark aqua-text">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

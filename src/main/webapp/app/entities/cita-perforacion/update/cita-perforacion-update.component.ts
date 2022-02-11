@@ -10,6 +10,7 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { ICitaPerforacion, CitaPerforacion } from '../cita-perforacion.model';
 import { CitaPerforacionService } from '../service/cita-perforacion.service';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-cita-perforacion-update',
@@ -33,7 +34,8 @@ export class CitaPerforacionUpdateComponent implements OnInit {
   constructor(
     protected citaPerforacionService: CitaPerforacionService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    private alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +61,33 @@ export class CitaPerforacionUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.citaPerforacionService.update(citaPerforacion));
     } else {
       this.subscribeToSaveResponse(this.citaPerforacionService.create(citaPerforacion));
+    }
+  }
+
+  calcularValores(): void {
+    const valorPerfo = this.editForm.get(['valorPerforacion'])!.value;
+    const valorPagado = this.editForm.get(['valorPagado'])!.value;
+
+    this.editForm.get(['valorDeuda'])?.setValue(valorPerfo);
+    this.editForm.get(['estado'])?.setValue('Deuda');
+
+    if (valorPagado) {
+      if (valorPagado > valorPerfo) {
+        this.alert.addAlert({
+          type: 'danger',
+          message: 'El valor a pagar en el sistema no debe ser mayor al valor de la perforacion.',
+        });
+        this.editForm.get(['valorPagado'])?.setValue(0);
+        this.editForm.get(['valorDeuda'])?.setValue(valorPerfo);
+      }
+
+      const deuda = valorPerfo - valorPagado;
+      this.editForm.get(['valorDeuda'])?.setValue(deuda);
+
+      let estado = null;
+      deuda === 0 ? (estado = 'Pagado') : (estado = 'Deuda');
+
+      this.editForm.get(['estado'])?.setValue(estado);
     }
   }
 

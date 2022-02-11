@@ -7,7 +7,7 @@
         <div class="col-lg-7">
           <div class="p-5">
             <div class="text-center">
-              <h1 class="h4 text-gray-900 aqua-text mb-4">Consultar registro de caja tattos por fechas</h1>
+              <h1 class="h4 text-gray-900 aqua-text mb-4">Consultar Egreso Mensual</h1>
             </div>
             <div class="text-center">
               <div class="row">
@@ -45,10 +45,10 @@
                   <br />
                   <button
                     [disabled]="isSaving"
-                    style="margin-top: 7px; height: 38px; background-color: black"
+                    style="margin-top: 4px; height: 38px"
                     id="jh-create-entity"
-                    class="btn aqua-text jh-create-entity create-proyecto alinear-filtrar"
-                    (click)="consultarCajaFechas()"
+                    class="btn botones-aqua text-black jh-create-entity create-proyecto alinear-filtrar"
+                    (click)="consultarEgresoMes()"
                   >
                     Filtrar
                   </button>
@@ -56,26 +56,18 @@
               </div>
             </div>
           </div>
+          <div *ngIf="egresoTotal">
+            <div class="d-flex justify-content-center">
+              <span class="aqua-text">VALOR TOTAL</span>
+            </div>
+            <div class="d-flex justify-content-center">
+              <span class="aqua-text">{{ egresoTotal | currency: '$' }}</span>
+            </div>
+          </div>
 
-          <table *ngIf="cajaFechas" class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Valor Vendido</th>
-                <th scope="col">Valor Registrado</th>
-                <th scope="col">Diferencia</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ cajaFechas.valorVendido }}</td>
-                <td>{{ cajaFechas.valorPagado }}</td>
-                <td>{{ cajaFechas.diferencia }}</td>
-              </tr>
-            </tbody>
-          </table>
           <hr />
           <div class="text-center">
-            <button style="background-color: black" class="btn aqua-text" (click)="previusState()">Volver</button>
+            <button class="btn botones-aqua" (click)="previusState()">Volver</button>
           </div>
         </div>
       </div>
@@ -90,9 +82,8 @@
   <div class="modal-body text-black">
     <div>
       <p class="aqua-text">
-        En esta seccion prodra hacer un registro historico de los tattoos filtrando por fechas.<br />
-        Podra ver el valor total de la caja en las fechas que se digiten. Tambien podra ver el valor que se pago en total y la deuda total
-        por la cantidad total de la factura sumada en las fechas.
+        En esta seccion prodra hacer un registro mensual de los egresos.<br />
+        Podra ver el valor total del egreso en las fechas que se digiten.
       </p>
     </div>
   </div>

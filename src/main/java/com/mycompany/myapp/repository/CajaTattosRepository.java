@@ -15,9 +15,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface CajaTattosRepository extends JpaRepository<CajaTattos, Long> {
-    @Query("SELECT SUM(c.valorPagado) FROM CitaTatto c WHERE TO_CHAR(c.fechaCreacion, 'dd/MM/yyyy')=:fechaCreacion")
-    BigDecimal valorTattooDia(@Param("fechaCreacion") String fechaCreacion);
-
     @Query("SELECT SUM(a.valorAbono) FROM Abono a WHERE TO_CHAR(a.fechaAbono, 'dd/MM/yyyy')=:fechaAbono")
     BigDecimal valorAbonoDia(@Param("fechaAbono") String fechaAbono);
 

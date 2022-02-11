@@ -12,7 +12,7 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details color-toggle">
-        <dt><span jhiTranslate="preciadoTattoApp.producto.foto">Foto</span></dt>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.producto.foto">Foto</span></dt>
         <dd>
           <div *ngIf="producto.foto" class="text-black">
             <a class="text-black" (click)="openFile(producto.foto, producto.fotoContentType)">
@@ -39,11 +39,11 @@
         </dd>
       </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+      <button type="submit" (click)="previousState()" class="btn btn-dark aqua-text" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/producto', producto.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/producto', producto.id, 'edit']" class="btn btn-dark aqua-text">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

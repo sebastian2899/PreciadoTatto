@@ -3,9 +3,14 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.repository.CajaIngresosRepository;
 import com.mycompany.myapp.service.CajaIngresosService;
 import com.mycompany.myapp.service.dto.CajaIngresosDTO;
+import com.mycompany.myapp.service.dto.RegistroHistoricoCajaDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,7 +18,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -139,6 +152,28 @@ public class CajaIngresosResource {
     public List<CajaIngresosDTO> getAllCajaIngresos() {
         log.debug("REST request to get all CajaIngresos");
         return cajaIngresosService.findAll();
+    }
+
+    @GetMapping("cajaIngresosFecha/{fechaInicio}/{fechaFin}")
+    public RegistroHistoricoCajaDTO cajaIngresoFechas(@PathVariable String fechaInicio, @PathVariable String fechaFin) {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        RegistroHistoricoCajaDTO rhcd = null;
+
+        try {
+            Instant fechaIni = format.parse(fechaInicio.substring(0, fechaInicio.indexOf("T"))).toInstant();
+            Instant fechaF = format.parse(fechaFin.substring(0, fechaFin.indexOf("T"))).toInstant();
+            rhcd = cajaIngresosService.cajaIngresosFecha(fechaIni, fechaF);
+        } catch (ParseException e) {
+            rhcd = null;
+        }
+
+        return rhcd;
+    }
+
+    @GetMapping("/caja-ingresosDia")
+    public BigDecimal valorCajaDia() {
+        log.debug("REST request to get all CajaIngresos");
+        return cajaIngresosService.valoresDia();
     }
 
     /**

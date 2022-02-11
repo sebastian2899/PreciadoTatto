@@ -90,19 +90,13 @@ public class CajaTattosServiceImpl implements CajaTattosService {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String fecha = format.format(new Date());
 
-        BigDecimal valorTattosPagados = cajaTattosRepository.valorTattooDia(fecha);
-
         BigDecimal valorAbonoDia = cajaTattosRepository.valorAbonoDia(fecha);
-
-        if (valorTattosPagados == null) {
-            valorTattosPagados = BigDecimal.ZERO;
-        }
 
         if (valorAbonoDia == null) {
             valorAbonoDia = BigDecimal.ZERO;
         }
 
-        BigDecimal totalDia = valorTattosPagados.add(valorAbonoDia);
+        BigDecimal totalDia = valorAbonoDia;
 
         //BigDecimal valorTotalDia = valorTattosPagados.add(valorAbonoDiario);
 

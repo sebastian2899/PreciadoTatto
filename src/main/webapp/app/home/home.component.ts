@@ -10,6 +10,7 @@ import { CitaPerforacionService } from 'app/entities/cita-perforacion/service/ci
 import { ICitaTatto } from 'app/entities/cita-tatto/cita-tatto.model';
 import { HttpResponse } from '@angular/common/http';
 import { ICitaPerforacion } from 'app/entities/cita-perforacion/cita-perforacion.model';
+import { ProductoService } from 'app/entities/producto/service/producto.service';
 
 @Component({
   selector: 'jhi-home',
@@ -20,6 +21,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   citasTatto?: ICitaTatto[] = [];
   citasPerfo?: ICitaPerforacion[] = [];
+  totalProducts?: number | null;
+  totalVenta?: number | null;
+  totalCompra?: number | null;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -27,7 +31,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private router: Router,
     private citaTattoService: CitaTattoService,
-    private citaPerfoService: CitaPerforacionService
+    private citaPerfoService: CitaPerforacionService,
+    private productoService: ProductoService
   ) {}
 
   ngOnInit(): void {
@@ -39,15 +44,59 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.account) {
       this.consultarTattos();
       this.consultarPerfos();
+      this.totalProductos();
+      this.totalVentas();
+      this.totalComp();
     }
+  }
+
+  refrescar(): void {
+    this.consultarTattos();
+    this.consultarPerfos();
+    this.totalProductos();
+    this.totalVentas();
+    this.totalComp();
   }
 
   login(): void {
     this.router.navigate(['/login']);
   }
 
+  totalProductos(): void {
+    this.productoService.totalProducto().subscribe(
+      (res: HttpResponse<number>) => {
+        this.totalProducts = res.body;
+      },
+      () => {
+        this.totalProducts = 0;
+      }
+    );
+  }
+
+  totalComp(): void {
+    this.productoService.totalCompras().subscribe(
+      (res: HttpResponse<number>) => {
+        this.totalCompra = res.body;
+      },
+      () => {
+        this.totalCompra = 0;
+      }
+    );
+  }
+
+  totalVentas(): void {
+    this.productoService.totalVentas().subscribe(
+      (res: HttpResponse<number>) => {
+        this.totalVenta = res.body;
+      },
+      () => {
+        this.totalVenta = 0;
+      }
+    );
+  }
+
   consultarTattos(): void {
-    this.citaTattoService.query().subscribe(
+    this.citaTattoService.queryDay().subscribe(
       (res: HttpResponse<ICitaTatto[]>) => {
         this.citasTatto = res.body ?? [];
       },
@@ -58,7 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   consultarPerfos(): void {
-    this.citaPerfoService.query().subscribe(
+    this.citaPerfoService.queryDay().subscribe(
       (res: HttpResponse<ICitaPerforacion[]>) => {
         this.citasPerfo = res.body ?? [];
       },

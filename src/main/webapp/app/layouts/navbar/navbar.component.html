@@ -1,11 +1,8 @@
-<nav
-  style="background: linear-gradient(45deg, rgb(19, 18, 18), black, rgba(0, 255, 255, 0.83))"
-  data-cy="navbar"
-  class="navbar navbar-dark navbar-expand-md"
->
+<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md">
   <a class="navbar-brand logo" style="margin-right: -405px" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
-    <span jhiTranslate="global.title" style="color: aqua" class="navbar-title">PreciadoTatto</span>
+    <span style="color: aqua" class="navbar-title">Preciado</span>
+    <span class="navbar-title">Tatto</span>
   </a>
 
   <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">

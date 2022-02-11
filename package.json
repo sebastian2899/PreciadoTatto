@@ -95,6 +95,7 @@
     "bootswatch": "4.6.0",
     "dayjs": "1.10.7",
     "ngx-infinite-scroll": "10.0.1",
+    "ngx-pagination": "^5.1.1",
     "ngx-webstorage": "8.0.0",
     "npm-check-updates": "^12.2.1",
     "rxjs": "6.6.7",

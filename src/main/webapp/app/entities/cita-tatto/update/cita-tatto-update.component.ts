@@ -66,10 +66,10 @@ export class CitaTattoUpdateComponent implements OnInit {
       } else {
         this.titulo = 'Actalizar Cita Tattoo';
         this.updateCita = true;
+        this.saving = false;
       }
 
       this.updateForm(citaTatto);
-      this.consultarClientes();
     });
   }
 
@@ -101,31 +101,18 @@ export class CitaTattoUpdateComponent implements OnInit {
   calcularValores(): void {
     const valorTatto = this.editForm.get(['valorTatto'])!.value;
     const valorPagado = this.editForm.get(['valorPagado'])!.value;
+    this.editForm.get(['deuda'])?.setValue(valorTatto);
+    this.editForm.get(['estado'])?.setValue('Deuda');
 
-    if (valorPagado === 0 || valorPagado === null) {
-      this.editForm.get(['deuda'])?.setValue(0);
-    } else {
-      const valorDeuda = valorTatto - valorPagado;
+    const valorDeuda = valorTatto - valorPagado;
+    if (valorTatto && valorPagado) {
       this.editForm.get(['deuda'])?.setValue(valorDeuda);
       if (valorDeuda === 0) {
         this.editForm.get(['estado'])?.setValue('Pagada');
-      } else {
-        this.editForm.get(['estado'])?.setValue('Deuda');
       }
     }
 
     this.saving = false;
-  }
-
-  consultarClientes(): void {
-    this.clienteService.query().subscribe(
-      (res: HttpResponse<ICliente[]>) => {
-        this.clientes = res.body ?? [];
-      },
-      () => {
-        this.clientes = [];
-      }
-    );
   }
 
   previousState(): void {
@@ -175,7 +162,7 @@ export class CitaTattoUpdateComponent implements OnInit {
       deuda: citaTatto.deuda,
       estado: citaTatto.estado,
       descripcion: citaTatto.descripcion,
-      infoCLiente: citaTatto.infoCliente,
+      infoCliente: citaTatto.infoCliente,
     });
   }
 

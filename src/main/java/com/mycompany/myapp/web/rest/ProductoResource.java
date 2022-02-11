@@ -147,6 +147,24 @@ public class ProductoResource {
         return productoService.aviableProducts();
     }
 
+    @GetMapping("/totalProductos")
+    public Long getAllProductoss() {
+        log.debug("REST request to get all Productos");
+        return productoService.totalProductos();
+    }
+
+    @GetMapping("/totalVentas")
+    public Long getDaylyVentas() {
+        log.debug("REST request to get all Productos");
+        return productoService.ventasHoy();
+    }
+
+    @GetMapping("/totalCompras")
+    public Long getDaylyCompras() {
+        log.debug("REST request to get all Productos");
+        return productoService.comprasHoy();
+    }
+
     /**
      * {@code GET  /productos/:id} : get the "id" producto.
      *

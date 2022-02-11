@@ -1,6 +1,9 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.CajaIngresosDTO;
+import com.mycompany.myapp.service.dto.RegistroHistoricoCajaDTO;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,4 +48,8 @@ public interface CajaIngresosService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    BigDecimal valoresDia();
+
+    RegistroHistoricoCajaDTO cajaIngresosFecha(Instant fechaInicio, Instant fechaFin);
 }

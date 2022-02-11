@@ -3,7 +3,7 @@
     <span class="aqua-text" jhiTranslate="preciadoTattoApp.cajaIngresos.home.title">Caja Ingresos</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="preciadoTattoApp.cajaIngresos.home.refreshListLabel">Refresh List</span>
       </button>
@@ -11,7 +11,7 @@
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-caja-ingresos"
+        class="btn btn-dark aqua-text jh-create-entity create-caja-ingresos"
         [routerLink]="['/caja-ingresos/new']"
       >
         <fa-icon icon="plus"></fa-icon>
@@ -23,6 +23,12 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
+  <div class="d-flex justify-content-center mb-2">
+    <button [routerLink]="['/caja-ingresos/caja-ing-fecha']" class="btn btn-dark aqua-text mr-2">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span>Consultar Caja mensual</span>
+    </button>
+  </div>
 
   <div class="alert-back" id="no-result" *ngIf="cajaIngresos?.length === 0">
     <span style="color: #000" jhiTranslate="preciadoTattoApp.cajaIngresos.home.notFound">No cajaIngresos found</span>
@@ -52,7 +58,7 @@
               <button
                 type="submit"
                 [routerLink]="['/caja-ingresos', cajaIngresos.id, 'view']"
-                class="btn btn-info btn-sm"
+                class="btn btn-dark aqua-text btn-sm"
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
@@ -62,14 +68,14 @@
               <button
                 type="submit"
                 [routerLink]="['/caja-ingresos', cajaIngresos.id, 'edit']"
-                class="btn btn-primary btn-sm"
+                class="btn btn-dark aqua-text btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(cajaIngresos)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(cajaIngresos)" class="btn btn-dark aqua-text btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
