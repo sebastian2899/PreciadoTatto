@@ -18,5 +18,17 @@ public final class Constants {
     public static final String TOTAL_VENTAS_HOY = "SELECT COUNT(*) FROM Ventas v WHERE TO_CHAR(v.fechaCreacion,'dd/MM/yyyy') = :fecha";
     public static final String TOTAL_COMPRAS_HOY = "SELECT COUNT(*) FROM Compras c WHERE TO_CHAR(c.fechaCreacion,'dd/MM/yyyy') = :fecha";
 
+    public static final String CONSULTAR_PRODUCTOS_VENTAS = "SELECT COUNT(*) FROM ProductosVendidos p WHERE p.productoId = :productoId";
+
+    public static final String PRODUCTO_BASE = "SELECT p FROM Producto p WHERE p.id IS NOT NULL";
+    public static final String PRODUCTO_NOMBRE = " AND UPPER(p.nombre) LIKE :nombre";
+
+    public static final String CITA_TATTO_BASE = "SELECT c FROM CitaTatto c WHERE c.id IS NOT NULL";
+    public static final String CITA_TATTO_NOMBRE = " AND UPPER(c.infoCliente) LIKE :nombre";
+
+    public static final String CITA_PERFORACION_BASE = "SELECT c FROM CitaPerforacion c WHERE c.id IS NOT NULL";
+    public static final String CITA_PERFORACION_NOMBRE = " AND UPPER(c.nombreCliente) LIKE :nombre";
+    public static final String CITA_PERFORACION_HORA = " AND (c.hora)=:hora";
+
     private Constants() {}
 }

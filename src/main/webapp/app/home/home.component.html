@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <div [ngSwitch]="account !== null">
+    <div [ngSwitch]="account !== null" style="margin-bottom: 10px">
       <div *ngSwitchCase="true" class="d-flex justify-content-center">
         <button (click)="refrescar()" class="btn btn-dark aqua-text">Refrescar Pantalla</button>
       </div>
@@ -114,7 +114,7 @@
               </tr>
             </tbody>
           </table>
-          <button [routerLink]="['/cita-tatto']" class="btn btn-dark p-2 aqua-text">Ver citas</button>
+          <button [routerLink]="['/cita-tatto/new']" class="btn btn-dark p-2 aqua-text">Agendar Nueva Cita</button>
         </div>
       </div>
 
@@ -154,12 +154,52 @@
               </tr>
             </tbody>
           </table>
-          <button [routerLink]="['/cita-perforacion']" class="btn btn-dark p-2 aqua-text">Ver citas</button>
+          <button [routerLink]="['/cita-perforacion/new']" class="btn btn-dark p-2 aqua-text">Agendar Nueva Cita</button>
         </div>
       </div>
     </div>
 
-    <div [ngSwitch]="account !== null">
+    <div
+      [ngSwitch]="account !== null"
+      class="home-linear"
+      style="border-radius: 20px; margin-top: 10px; display: flex; justify-content: space-evenly; padding: 20px"
+    >
+      <div *ngSwitchCase="true" style="border-radius: 2%" class="col-md-5 color-toggle">
+        <h3 class="text-black">Cajas</h3>
+        <h6 style="color: red">IMPORTANTE</h6>
+        <span class="text-black" style="padding: 5px"
+          >Recuerde crear una caja diaria, ya sea caja general o caja de tatuajes para tener un registro diario y mensual de sus ganancias,
+          tenga siempre en cuenta si se ha vendido o si ha realizado tatuajes o perforaciones en el día, ya que de lo contrario no podrá
+          crear una caja sin ventas ni citas previas.
+        </span>
+        <br />
+        <div style="margin: 20px 0px 10px 0px; display: flex; justify-content: space-around">
+          <button [routerLink]="['/caja-tattos/new']" class="btn btn-dark aqua-text">
+            <span><fa-icon style="color: black" icon="pencil-alt"></fa-icon>Crear caja tatto</span>
+          </button>
+          <button [routerLink]="['/caja-ingresos/new']" class="btn btn-dark aqua-text">
+            <span><fa-icon style="color: black" icon="pencil-alt"></fa-icon>Crear Caja General</span>
+          </button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="true" style="border-radius: 2%" class="col-md-5 color-toggle">
+        <h4 class="text-black">EGRESOS</h4>
+        <span class="text-black">
+          En los egresos, podrá crear un gasto o gastos del día, tendrá la opción de filtrar sus egresos mensuales para tener el regsitro y
+          la contabilidad mensual, por defecto tendrá la lista y el total de los egresos que se realizan durante el día, tendrá igual la
+          opción de ver todos sus egresos creados.
+        </span>
+        <div style="margin: 20px 0px 10px 0px" class="d-flex justify-content-center">
+          <button [routerLink]="['/egreso/new']" class="btn btn-dark aqua-text">
+            <span><fa-icon style="color: black" icon="pencil-alt"></fa-icon></span>
+            Crear Egreso
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div [ngSwitch]="account !== null" style="margin-top: -50px">
       <div *ngSwitchCase="true" class="container-fluid infoVenta">
         <div *ngSwitchCase="true" class="d-flex justify-content-around">
           <button [routerLink]="['/producto/new']" class="btn btn-black">Registrar Producto</button>

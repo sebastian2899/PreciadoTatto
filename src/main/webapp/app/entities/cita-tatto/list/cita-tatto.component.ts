@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ICitaTatto } from '../cita-tatto.model';
+import { CitaTatto, ICitaTatto } from '../cita-tatto.model';
 import { CitaTattoService } from '../service/cita-tatto.service';
 import { CitaTattoDeleteDialogComponent } from '../delete/cita-tatto-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
@@ -17,6 +17,8 @@ export class CitaTattoComponent implements OnInit {
   citaTattos?: ICitaTatto[];
   isLoading = false;
   pA = 1;
+  nombreCliente = '';
+  citaTatto?: ICitaTatto | null;
 
   constructor(
     private storage: StateStorageService,
@@ -27,9 +29,25 @@ export class CitaTattoComponent implements OnInit {
   ) {}
 
   loadAll(): void {
-    this.isLoading = true;
+    this.citaTatto = new CitaTatto();
 
-    this.citaTattoService.query().subscribe(
+    this.citaTattoService.citasPorFiltro(this.citaTatto).subscribe(
+      (res: HttpResponse<ICitaTatto[]>) => {
+        this.isLoading = false;
+        this.citaTattos = res.body ?? [];
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
+  }
+
+  consultarCitaFiltro(): void {
+    this.isLoading = true;
+    this.citaTatto = new CitaTatto();
+    this.citaTatto.infoCliente = this.nombreCliente;
+
+    this.citaTattoService.citasPorFiltro(this.citaTatto).subscribe(
       (res: HttpResponse<ICitaTatto[]>) => {
         this.isLoading = false;
         this.citaTattos = res.body ?? [];

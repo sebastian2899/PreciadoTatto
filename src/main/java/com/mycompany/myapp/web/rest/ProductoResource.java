@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.Producto;
 import com.mycompany.myapp.repository.ProductoRepository;
 import com.mycompany.myapp.service.ProductoService;
 import com.mycompany.myapp.service.dto.ProductoDTO;
@@ -13,7 +14,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -141,6 +151,15 @@ public class ProductoResource {
         return productoService.findAll();
     }
 
+    @PostMapping("/productosFiltro")
+    public ResponseEntity<List<ProductoDTO>> getAllProductosFiltro(@RequestBody ProductoDTO producto) throws URISyntaxException {
+        log.debug("REST request to get all Productos Filtro");
+
+        List<ProductoDTO> productos = productoService.productosPorFiltro(producto);
+
+        return ResponseEntity.ok().body(productos);
+    }
+
     @GetMapping("/productosDisponibles")
     public List<ProductoDTO> getAllProductosDisponibles() {
         log.debug("REST request to get all Productos");
@@ -151,6 +170,12 @@ public class ProductoResource {
     public Long getAllProductoss() {
         log.debug("REST request to get all Productos");
         return productoService.totalProductos();
+    }
+
+    @GetMapping("/productosPorVentas/{id}")
+    public boolean getSoldProducts(@PathVariable Long id) {
+        log.debug("REST request to get sold Productos");
+        return productoService.productosPorVentas(id);
     }
 
     @GetMapping("/totalVentas")

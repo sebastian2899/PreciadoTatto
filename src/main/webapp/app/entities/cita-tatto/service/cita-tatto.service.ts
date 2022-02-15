@@ -16,6 +16,7 @@ export type EntityArrayResponseType = HttpResponse<ICitaTatto[]>;
 export class CitaTattoService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/cita-tattos');
   protected resourceUrlCitaDia = this.applicationConfigService.getEndpointFor('api/cita-tattos-dia');
+  protected citaPorFiltros = this.applicationConfigService.getEndpointFor('api/citaTattoFiltro');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -24,6 +25,13 @@ export class CitaTattoService {
     return this.http
       .post<ICitaTatto>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  citasPorFiltro(res2: any): Observable<EntityArrayResponseType> {
+    const copy = this.convertDateArrayFromServer(res2);
+    return this.http
+      .post<ICitaTatto[]>(this.citaPorFiltros, copy, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   update(citaTatto: ICitaTatto): Observable<EntityResponseType> {

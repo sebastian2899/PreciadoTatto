@@ -6,10 +6,13 @@ import com.mycompany.myapp.repository.CitaPerforacionRepository;
 import com.mycompany.myapp.service.CitaPerforacionService;
 import com.mycompany.myapp.service.dto.CitaPerforacionDTO;
 import com.mycompany.myapp.service.mapper.CitaPerforacionMapper;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -45,6 +48,13 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
         log.debug("Request to save CitaPerforacion : {}", citaPerforacionDTO);
         CitaPerforacion citaPerforacion = citaPerforacionMapper.toEntity(citaPerforacionDTO);
         citaPerforacion.setFechaCreacionInicial(Instant.now());
+
+        citaPerforacion.setEstado("Deuda");
+
+        if (citaPerforacionDTO.getValorDeuda().equals(BigDecimal.ZERO)) {
+            citaPerforacion.setEstado("Pagada");
+        }
+
         if (citaPerforacion.getValorPagado() == null && citaPerforacion.getId() == null) {
             citaPerforacion.setFechaCreacion(null);
         } else {
@@ -93,6 +103,36 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
         List<CitaPerforacion> citasHoy = citaPerforacionRepository.citasHoy(fecha);
 
         return citaPerforacionMapper.toDto(citasHoy);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CitaPerforacionDTO> citasPerfoPorFiltro(CitaPerforacionDTO citaPerfo) {
+        log.debug("Request to get all citas per filters");
+
+        StringBuilder sb = new StringBuilder();
+        Map<String, Object> filtros = new HashMap<>();
+
+        sb.append(Constants.CITA_PERFORACION_BASE);
+
+        if (citaPerfo.getNombreCliente() != null && !citaPerfo.getNombreCliente().isEmpty()) {
+            sb.append(Constants.CITA_PERFORACION_NOMBRE);
+            filtros.put("nombre", "%" + citaPerfo.getNombreCliente().toUpperCase() + "%");
+        }
+        if (citaPerfo.getHora() != null && !citaPerfo.getHora().isEmpty()) {
+            sb.append(Constants.CITA_PERFORACION_HORA);
+            filtros.put("hora", citaPerfo.getHora());
+        }
+
+        Query q = entityManager.createQuery(sb.toString());
+
+        for (Map.Entry<String, Object> entry : filtros.entrySet()) {
+            q.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        List<CitaPerforacion> citas = q.getResultList();
+
+        return citaPerforacionMapper.toDto(citas);
     }
 
     @Override

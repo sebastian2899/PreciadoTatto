@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.CitaTatto;
 import com.mycompany.myapp.repository.CitaTattoRepository;
 import com.mycompany.myapp.service.CitaTattoService;
 import com.mycompany.myapp.service.dto.CitaTattoDTO;
@@ -13,7 +14,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -58,6 +67,15 @@ public class CitaTattoResource {
             .created(new URI("/api/cita-tattos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @PostMapping("/citaTattoFiltro")
+    public ResponseEntity<List<CitaTattoDTO>> citasPorFiltro(@RequestBody CitaTattoDTO citaTatto) {
+        log.debug("REST request to get citas tattos per filter");
+
+        List<CitaTattoDTO> citas = citaTattoService.citasPorFiltro(citaTatto);
+
+        return ResponseEntity.ok().body(citas);
     }
 
     /**

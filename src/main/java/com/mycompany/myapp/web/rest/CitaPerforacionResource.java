@@ -61,6 +61,15 @@ public class CitaPerforacionResource {
             .body(result);
     }
 
+    @PostMapping("citaPerfoFiltro")
+    public ResponseEntity<List<CitaPerforacionDTO>> citasPorFiltro(@RequestBody CitaPerforacionDTO citaPerfo) throws URISyntaxException {
+        log.debug("REST request to get all citas per filtro");
+
+        List<CitaPerforacionDTO> citas = citaPerforacionService.citasPerfoPorFiltro(citaPerfo);
+
+        return ResponseEntity.ok().body(citas);
+    }
+
     /**
      * {@code PUT  /cita-perforacions/:id} : Updates an existing citaPerforacion.
      *

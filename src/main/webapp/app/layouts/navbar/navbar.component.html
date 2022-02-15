@@ -1,5 +1,5 @@
 <nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md">
-  <a class="navbar-brand logo" style="margin-right: -405px" routerLink="/" (click)="collapseNavbar()">
+  <a class="navbar-brand logo" style="margin-right: -305px" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
     <span style="color: aqua" class="navbar-title">Preciado</span>
     <span class="navbar-title">Tatto</span>
@@ -26,8 +26,8 @@
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
           <span>
-            <fa-icon style="color: rgb(7, 212, 226)" icon="pencil-alt"></fa-icon>
-            <span style="color: rgb(8, 204, 238)">Registro de cajas</span>
+            <fa-icon style="color: rgb(7, 212, 226)" icon="th-list"></fa-icon>
+            <span style="color: rgb(8, 204, 238)">Administracion de cajas</span>
           </span>
         </a>
         <ul class="dropdown-menu color-toggle" ngbDropdownMenu aria-labelledby="entity-menu">
@@ -76,8 +76,8 @@
       <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="egreso" (click)="collapseNavbar()">
           <span>
-            <fa-icon style="color: black" icon="pencil-alt"></fa-icon>
-            <span class="color-textos-black">Registrar Egreso</span>
+            <fa-icon style="color: black" icon="th-list"></fa-icon>
+            <span class="color-textos-black">Administracion de Egresos</span>
           </span>
         </a>
       </li>
@@ -92,15 +92,15 @@
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
           <span>
-            <fa-icon style="color: black" icon="pencil-alt"></fa-icon>
-            <span style="color: black">Agendar Cita</span>
+            <fa-icon style="color: black" icon="th-list"></fa-icon>
+            <span style="color: black">Administracion de citas</span>
           </span>
         </a>
         <ul class="dropdown-menu color-toggle" ngbDropdownMenu aria-labelledby="entity-menu">
           <li>
             <a
               class="dropdown-item color-item"
-              routerLink="cita-tatto/new"
+              routerLink="cita-tatto"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"
@@ -112,7 +112,7 @@
           <li>
             <a
               class="dropdown-item color-item"
-              routerLink="cita-perforacion/new"
+              routerLink="cita-perforacion"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"

@@ -2,6 +2,42 @@
   <h2 id="page-heading" data-cy="CitaPerforacionHeading">
     <span class="aqua-text" jhiTranslate="preciadoTattoApp.citaPerforacion.home.title">Cita Perforacions</span>
 
+    <div class="row">
+      <div class="col-md-3 form-group">
+        <label style="font-size: 13px" class="form-control-label aqua-text" for="field_nombre">Nombre del cliente</label>
+        <input
+          placeholder="Buscar Por Nombre"
+          (keyup)="consultarCitaPorFiltro()"
+          type="text"
+          class="form-control"
+          name="nombre"
+          rarid="field_nombre"
+          data-cy="nombre"
+          [(ngModel)]="nombreCliente"
+        />
+      </div>
+
+      <div class="col-md-1 form-group">
+        <label style="font-size: 13px" class="form-control-label aqua-text" for="field_nombre">Hora</label>
+        <input
+          placeholder="Hora"
+          (keyup)="consultarCitaPorFiltro()"
+          type="text"
+          class="form-control"
+          name="hora"
+          rarid="field_hora"
+          data-cy="hora"
+          [(ngModel)]="hora"
+        />
+      </div>
+
+      <div class="col-md-3">
+        <button style="margin-top: 45px" id="jh-create-entity" class="btn btn-dark aqua-text" (click)="consultarCitaPorFiltro()">
+          <span> Filtrar </span>
+        </button>
+      </div>
+    </div>
+
     <div class="d-flex justify-content-end">
       <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
@@ -32,10 +68,9 @@
     <table class="table table-dark color-toggle" aria-describedby="page-heading">
       <thead>
         <tr>
-          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCreacion">Fecha Creacion</span></th>
-          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCita">Fecha Cita</span></th>
-          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.hora">Hora</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.nombreCliente">Nombre Cliente</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.fechaCreacion">Fecha Creacion</span></th>
+          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaPerforacion.hora">Hora</span></th>
           <th class="text-black" scope="col">
             <span jhiTranslate="preciadoTattoApp.citaPerforacion.valorPerforacion">Valor Perforacion</span>
           </th>
@@ -47,10 +82,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let citaPerforacion of citaPerforacions; trackBy: trackId" data-cy="entityTable">
-          <td class="text-black">{{ citaPerforacion.fechaCreacionInicial | formatMediumDatetime }}</td>
-          <td class="text-black">{{ citaPerforacion.fechaCita | formatMediumDatetime }}</td>
-          <td class="text-black">{{ citaPerforacion.hora }}</td>
           <td class="text-black">{{ citaPerforacion.nombreCliente }}</td>
+          <td class="text-black">{{ citaPerforacion.fechaCreacionInicial | formatMediumDatetime }}</td>
+          <td class="text-black">{{ citaPerforacion.hora }}</td>
           <td class="text-black">{{ citaPerforacion.valorPerforacion }}</td>
           <td class="text-black">{{ citaPerforacion.valorPagado }}</td>
           <td class="text-black">{{ citaPerforacion.valorDeuda }}</td>

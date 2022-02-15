@@ -152,13 +152,28 @@ Custom alerts for notification
 }
 
 .alert-back {
-  background: linear-gradient(45deg, rgb(183, 230, 237), rgb(17, 187, 206), aqua);
+  background: linear-gradient(45deg, rgb(0, 208, 255), rgb(30, 143, 230), rgb(23, 164, 174));
+}
+
+.home-linear {
+  background: linear-gradient(45deg, #2c2c2c, #2c4a55b8);
 }
 
 .imagen-table {
   padding: 28px;
   width: 347px;
   height: 497px;
+}
+
+.btn-black {
+  background-color: black;
+  color: aqua;
+  border-radius: 50%;
+}
+
+.btn-black:hover {
+  background-color: aqua;
+  color: black;
 }
 
 .aqua-text {

@@ -8,8 +8,10 @@ import com.mycompany.myapp.service.dto.ProductoDTO;
 import com.mycompany.myapp.service.mapper.ProductoMapper;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -114,9 +116,47 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    public List<ProductoDTO> productosPorFiltro(ProductoDTO producto) {
+        log.debug("Request to get products for filters");
+        StringBuilder sb = new StringBuilder();
+        Map<String, Object> filtros = new HashMap<>();
+
+        sb.append(Constants.PRODUCTO_BASE);
+        if (producto.getNombre() != null && !producto.getNombre().isEmpty()) {
+            sb.append(Constants.PRODUCTO_NOMBRE);
+            filtros.put("nombre", "%" + producto.getNombre().toUpperCase() + "%");
+        }
+
+        Query q = entityManager.createQuery(sb.toString());
+        for (Map.Entry<String, Object> entry : filtros.entrySet()) {
+            q.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        List<Producto> productos = q.getResultList();
+
+        return productoMapper.toDto(productos);
+    }
+
+    @Override
     public List<ProductoDTO> aviableProducts() {
         log.debug("Request to get all aviable Products");
         List<Producto> productos = productoRepository.productosDisponibles();
         return productoMapper.toDto(productos);
+    }
+
+    @Override
+    public boolean productosPorVentas(Long id) {
+        log.debug("Request to get sold productos");
+        boolean resp = true;
+
+        Query q = entityManager.createQuery(Constants.CONSULTAR_PRODUCTOS_VENTAS).setParameter("productoId", id);
+
+        Long productosVentas = (Long) q.getSingleResult();
+
+        if (productosVentas == null || productosVentas == 0) {
+            resp = false;
+        }
+
+        return resp;
     }
 }

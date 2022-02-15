@@ -16,6 +16,7 @@ export type EntityArrayResponseType = HttpResponse<ICitaPerforacion[]>;
 export class CitaPerforacionService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/cita-perforacions');
   protected resourceUrlDay = this.applicationConfigService.getEndpointFor('api/cita-perforacions-day');
+  protected citasPorFiltros = this.applicationConfigService.getEndpointFor('api/citaPerfoFiltro');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -24,6 +25,13 @@ export class CitaPerforacionService {
     return this.http
       .post<ICitaPerforacion>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  cirasPorFiltro(resp2: any): Observable<EntityArrayResponseType> {
+    const copy = this.convertDateArrayFromServer(resp2);
+    return this.http
+      .post<ICitaPerforacion[]>(this.citasPorFiltros, copy, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   update(citaPerforacion: ICitaPerforacion): Observable<EntityResponseType> {

@@ -40,17 +40,20 @@
           </label>
         </div>
 
-        <button type="submit" class="botones-aqua" jhiTranslate="login.form.button" data-cy="submit">Sign in</button>
+        <button type="submit" style="margin: 0px 0px 5px 300px" class="btn btn-black" jhiTranslate="login.form.button" data-cy="submit">
+          Sign in
+        </button>
       </form>
-      <div class="mt-3 alert alert-back">
-        <a class="text-black" routerLink="/account/reset/request" jhiTranslate="login.password.forgot" data-cy="forgetYourPasswordSelector"
+
+      <div style="background-color: rgb(31, 30, 30)">
+        <a class="aqua-text" routerLink="/account/reset/request" jhiTranslate="login.password.forgot" data-cy="forgetYourPasswordSelector"
           >Did you forget your password?</a
         >
-      </div>
 
-      <div class="alert-back">
-        <span class="text-black" jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>
-        <a class="botones-aqua" routerLink="/account/register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+        <div>
+          <span class="aqua-text" jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>
+          <a routerLink="/account/register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+        </div>
       </div>
     </div>
   </div>

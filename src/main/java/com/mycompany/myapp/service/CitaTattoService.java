@@ -47,4 +47,6 @@ public interface CitaTattoService {
     void delete(Long id);
 
     List<CitaTattoDTO> citaDia();
+
+    List<CitaTattoDTO> citasPorFiltro(CitaTattoDTO citaTatto);
 }

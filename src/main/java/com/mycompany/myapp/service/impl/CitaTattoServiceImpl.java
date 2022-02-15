@@ -11,13 +11,15 @@ import com.mycompany.myapp.service.dto.CitaTattoDTO;
 import com.mycompany.myapp.service.mapper.CitaTattoMapper;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.attoparser.dom.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     public CitaTattoDTO save(CitaTattoDTO citaTattoDTO) {
         log.debug("Request to save CitaTatto : {}", citaTattoDTO);
         CitaTatto citaTatto = citaTattoMapper.toEntity(citaTattoDTO);
+        citaTatto.setFechaCreacion(Instant.now());
 
         if (citaTatto.getDeuda().equals(BigDecimal.ZERO)) {
             citaTatto.estado("Pagada");
@@ -175,6 +178,29 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         List<CitaTatto> citaDia = citaTattoRepository.citaDia(fechaHoy);
 
         return citaTattoMapper.toDto(citaDia);
+    }
+
+    @Override
+    public List<CitaTattoDTO> citasPorFiltro(CitaTattoDTO citaTatto) {
+        log.debug("Request to get all citas per filters");
+
+        StringBuilder sb = new StringBuilder();
+        Map<String, Object> filtros = new HashMap<>();
+
+        sb.append(Constants.CITA_TATTO_BASE);
+        if (citaTatto.getInfoCliente() != null && !citaTatto.getInfoCliente().isEmpty()) {
+            sb.append(Constants.CITA_TATTO_NOMBRE);
+            filtros.put("nombre", "%" + citaTatto.getInfoCliente().toUpperCase() + "%");
+        }
+
+        Query q = entityManager.createQuery(sb.toString());
+        for (Map.Entry<String, Object> entry : filtros.entrySet()) {
+            q.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        List<CitaTatto> citas = q.getResultList();
+
+        return citaTattoMapper.toDto(citas);
     }
 
     @Override

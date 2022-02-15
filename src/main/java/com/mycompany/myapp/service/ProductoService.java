@@ -48,9 +48,13 @@ public interface ProductoService {
 
     List<ProductoDTO> aviableProducts();
 
+    boolean productosPorVentas(Long id);
+
     Long totalProductos();
 
     Long ventasHoy();
 
     Long comprasHoy();
+
+    List<ProductoDTO> productosPorFiltro(ProductoDTO producto);
 }

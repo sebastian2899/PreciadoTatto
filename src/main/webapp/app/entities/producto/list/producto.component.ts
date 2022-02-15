@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IProducto } from '../producto.model';
+import { IProducto, Producto } from '../producto.model';
 import { ProductoService } from '../service/producto.service';
 import { ProductoDeleteDialogComponent } from '../delete/producto-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
@@ -12,15 +12,19 @@ import { DataUtils } from 'app/core/util/data-util.service';
   templateUrl: './producto.component.html',
 })
 export class ProductoComponent implements OnInit {
+  @ViewChild('mensajeValidacion', { static: true }) content: ElementRef | undefined;
+
   productos?: IProducto[];
+  producto?: IProducto;
   isLoading = false;
+  mensaje?: string | null;
+  productoNombre = '';
 
   constructor(protected productoService: ProductoService, protected dataUtils: DataUtils, protected modalService: NgbModal) {}
 
   loadAll(): void {
-    this.isLoading = true;
-
-    this.productoService.query().subscribe(
+    this.producto = new Producto();
+    this.productoService.productosFiltro(this.producto).subscribe(
       (res: HttpResponse<IProducto[]>) => {
         this.isLoading = false;
         this.productos = res.body ?? [];
@@ -31,8 +35,38 @@ export class ProductoComponent implements OnInit {
     );
   }
 
+  productosPorFiltro(): void {
+    this.producto = new Producto();
+    this.isLoading = true;
+    this.producto.nombre = this.productoNombre;
+    this.productoService.productosFiltro(this.producto).subscribe(
+      (res: HttpResponse<IProducto[]>) => {
+        this.productos = res.body ?? [];
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
+  }
+
   ngOnInit(): void {
     this.loadAll();
+  }
+
+  validarEliminacion(producto: IProducto): void {
+    const id = producto.id;
+    const nombre = producto.nombre;
+    let resp = null;
+    this.productoService.productosPorVenta(id!).subscribe((res: HttpResponse<boolean>) => {
+      resp = res.body;
+      if (resp) {
+        this.mensaje = `No se puede eliminar el producto ${String(nombre)}, ya que este producto esta relacionado con ventas ya creadas.`;
+        this.modalService.open(this.content);
+      } else {
+        this.delete(producto);
+      }
+    });
   }
 
   trackId(index: number, item: IProducto): number {

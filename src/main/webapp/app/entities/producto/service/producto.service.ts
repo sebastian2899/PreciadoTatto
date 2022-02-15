@@ -10,6 +10,7 @@ import { IProducto, getProductoIdentifier } from '../producto.model';
 export type EntityResponseType = HttpResponse<IProducto>;
 export type EntityArrayResponseType = HttpResponse<IProducto[]>;
 export type NumberType = HttpResponse<number>;
+export type BooleanType = HttpResponse<boolean>;
 
 @Injectable({ providedIn: 'root' })
 export class ProductoService {
@@ -18,11 +19,17 @@ export class ProductoService {
   protected totalProduc = this.applicationConfigService.getEndpointFor('api/totalProductos');
   protected totalVent = this.applicationConfigService.getEndpointFor('api/totalVentas');
   protected totalCompr = this.applicationConfigService.getEndpointFor('api/totalCompras');
+  protected productoVentas = this.applicationConfigService.getEndpointFor('api/productosPorVentas');
+  protected productoFiltros = this.applicationConfigService.getEndpointFor('api/productosFiltro');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(producto: IProducto): Observable<EntityResponseType> {
     return this.http.post<IProducto>(this.resourceUrl, producto, { observe: 'response' });
+  }
+
+  productosFiltro(producto: IProducto): Observable<EntityArrayResponseType> {
+    return this.http.post<IProducto[]>(this.productoFiltros, producto, { observe: 'response' });
   }
 
   update(producto: IProducto): Observable<EntityResponseType> {
@@ -37,6 +44,10 @@ export class ProductoService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IProducto>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  productosPorVenta(id: number): Observable<BooleanType> {
+    return this.http.get<boolean>(`${this.productoVentas}/${id}`, { observe: 'response' });
   }
 
   totalProducto(): Observable<NumberType> {

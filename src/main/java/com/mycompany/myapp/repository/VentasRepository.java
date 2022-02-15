@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface VentasRepository extends JpaRepository<Ventas, Long> {
-    @Query("SELECT v FROM Ventas v WHERE v.id=id")
+    @Query("SELECT v FROM Ventas v WHERE v.id=:id")
     Ventas ventaPorId(@Param("id") Long id);
 }
