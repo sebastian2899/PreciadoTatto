@@ -17,6 +17,20 @@
         />
       </div>
 
+      <div class="col-md-1 form-group">
+        <label style="font-size: 13px" class="form-control-label aqua-text" for="field_nombre">Hora</label>
+        <input
+          placeholder="Hora"
+          (keyup)="consultarCitaFiltro()"
+          type="text"
+          class="form-control"
+          name="hora"
+          rarid="field_hora"
+          data-cy="hora"
+          [(ngModel)]="hora"
+        />
+      </div>
+
       <div class="col-md-3">
         <button style="margin-top: 45px" id="jh-create-entity" class="btn btn-dark aqua-text" (click)="consultarCitaFiltro()">
           <span> Filtrar </span>
@@ -25,9 +39,9 @@
     </div>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="preciadoTattoApp.citaTatto.home.refreshListLabel">Refresh List</span>
+      <button class="btn btn-dark aqua-text mr-2" (click)="generarReporte()">
+        <fa-icon icon="pencil-alt"></fa-icon>
+        <span>Generar Reporte Mensual </span>
       </button>
 
       <button
@@ -123,7 +137,13 @@
                 <span class="d-none d-md-inline">Consultar Abonos</span>
               </button>
 
-              <button type="submit" (click)="delete(citaTatto)" class="btn btn-dark aqua-text btn-sm" data-cy="entityDeleteButton">
+              <button
+                *ngIf="citaTatto.deuda! > 0"
+                type="submit"
+                (click)="delete(citaTatto)"
+                class="btn btn-dark aqua-text btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

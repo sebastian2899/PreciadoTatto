@@ -55,7 +55,7 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
             citaPerforacion.setEstado("Pagada");
         }
 
-        if (citaPerforacion.getValorPagado() == null && citaPerforacion.getId() == null) {
+        if (citaPerforacion.getValorPagado() == null) {
             citaPerforacion.setFechaCreacion(null);
         } else {
             citaPerforacion.setFechaCreacion(Instant.now());

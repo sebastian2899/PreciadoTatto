@@ -128,28 +128,59 @@ export class VentasUpdateComponent implements OnInit {
   cantProducto(cant?: number, producto?: IProducto): void {
     const idProducto = this.editForm.get(['producto'])!.value;
     const cantidadForm = this.editForm.get(['cantidad'])!.value;
+    let cantTotal = 0;
+
     let resp = false;
+    let resp2 = false;
 
     this.productoService.find(idProducto).subscribe((res: HttpResponse<IProducto>) => {
       this.productoValores = res.body;
       this.cantidad = this.productoValores?.cantidad;
       this.nombre = this.productoValores?.nombre;
 
+      //Recorro la lista para saber si el producto seleccionado se encuenta en la lista y validar si la suma de la cantidad acutal
+      //mas la suma digitada sobrepasa la cantidad totdal de productos disponibles
+
+      if (this.productosSeleccionados.length > 0) {
+        for (let i = 0; i < this.productosSeleccionados.length; i++) {
+          if (this.productosSeleccionados[i].id === Number(idProducto)) {
+            const cantActual = this.productosSeleccionados[i].cantidad;
+            cantTotal = Number(cantidadForm) + Number(cantActual);
+            break;
+          }
+        }
+      }
+
       if (this.cantidad && this.productoValores) {
-        if (cantidadForm > this.cantidad || (cant! > this.cantidad ? (resp = true) : (resp = false)) || this.cantidad === 0) {
+        if (
+          cantidadForm > this.cantidad ||
+          (cant! > this.cantidad ? (resp = true) : (resp = false)) ||
+          (cantTotal > this.cantidad ? (resp2 = true) : (resp = false))
+        ) {
           if (resp) {
-            this.eliminarProductoSeleccionado(producto!);
+            //this.eliminarProductoSeleccionado(producto!);
             this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
-            que se esta seleccionando ${String(cant)} y solo hay ${String(this.productoValores.cantidad)} productos
+            que se esta seleccionando ${String(cantidadForm)} y solo hay ${String(this.productoValores.cantidad)} productos
             disponibles.`;
             this.modal.open(this.content2);
+            this.validarCantidad = true;
+            return;
+          } else if (resp2) {
+            this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
+            que se esta seleccionando ${String(cantTotal)} y solo hay ${String(this.productoValores.cantidad)} productos
+            disponibles.`;
+            this.modal.open(this.content2);
+            this.validarCantidad = true;
+            return;
           } else {
+            //this.eliminarProductoSeleccionado(producto!);
             this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
             que se esta seleccionando ${String(cantidadForm)} y solo hay ${String(this.productoValores.cantidad)} productos
             disponibles.`;
             this.modal.open(this.content2);
             this.modalCantidad = true;
             this.validarCantidad = true;
+            return;
           }
         } else {
           this.modalCantidad = false;
@@ -158,10 +189,13 @@ export class VentasUpdateComponent implements OnInit {
             message: 'Cantidad disponible.',
           });
           this.modalCantidad = false;
-          this.validarCantidad = false;
+
+          return;
         }
       }
     });
+
+    this.validarCantidad = false;
   }
 
   eliminarProductoSeleccionado(producto: IProducto): void {
@@ -190,15 +224,14 @@ export class VentasUpdateComponent implements OnInit {
 
     if (this.productosSeleccionados.length > 0) {
       this.cantSuma = this.editForm.get(['cantidad'])!.value;
-
       for (let i = 0; i < this.productosSeleccionados.length; i++) {
         if (this.productosSeleccionados[i].id === idActual) {
           if (this.productoSeleccionado?.cantidad && this.cantSuma && this.productoSeleccionado.precio) {
             this.productoSeleccionado.cantidad += this.cantSuma;
             this.cantProducto(this.productoSeleccionado.cantidad, this.productoSeleccionado);
             this.productoSeleccionado.valorTotal = this.productoSeleccionado.cantidad * this.productoSeleccionado.precio;
-            this.validarCantidad = true;
           }
+
           break;
         }
       }
@@ -209,6 +242,7 @@ export class VentasUpdateComponent implements OnInit {
       if (this.productoSeleccionado.cantidad && this.productoSeleccionado.precio) {
         this.productoSeleccionado.cantidadDisponible = this.cantidad;
         this.productoSeleccionado.valorTotal = this.productoSeleccionado.precio * this.productoSeleccionado.cantidad;
+        this.validarCantidad = true;
       }
 
       this.productosSeleccionados.push(this.productoSeleccionado);
@@ -219,6 +253,7 @@ export class VentasUpdateComponent implements OnInit {
     this.editForm.get(['cantidad'])?.setValue(null);
 
     this.validarFactura = false;
+    this.validarCantidad = true;
   }
 
   calcularValores(): void {

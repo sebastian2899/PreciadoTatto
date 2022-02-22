@@ -49,4 +49,6 @@ public interface CitaTattoService {
     List<CitaTattoDTO> citaDia();
 
     List<CitaTattoDTO> citasPorFiltro(CitaTattoDTO citaTatto);
+
+    byte[] generarReporteCitas();
 }

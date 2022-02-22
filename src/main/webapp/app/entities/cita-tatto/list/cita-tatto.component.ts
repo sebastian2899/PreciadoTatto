@@ -8,6 +8,7 @@ import { CitaTattoDeleteDialogComponent } from '../delete/cita-tatto-delete-dial
 import { DataUtils } from 'app/core/util/data-util.service';
 import { Router } from '@angular/router';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-cita-tatto',
@@ -18,6 +19,7 @@ export class CitaTattoComponent implements OnInit {
   isLoading = false;
   pA = 1;
   nombreCliente = '';
+  hora = '';
   citaTatto?: ICitaTatto | null;
 
   constructor(
@@ -25,7 +27,8 @@ export class CitaTattoComponent implements OnInit {
     protected router: Router,
     protected citaTattoService: CitaTattoService,
     protected dataUtils: DataUtils,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected alert: AlertService
   ) {}
 
   loadAll(): void {
@@ -46,6 +49,7 @@ export class CitaTattoComponent implements OnInit {
     this.isLoading = true;
     this.citaTatto = new CitaTatto();
     this.citaTatto.infoCliente = this.nombreCliente;
+    this.citaTatto.hora = this.hora;
 
     this.citaTattoService.citasPorFiltro(this.citaTatto).subscribe(
       (res: HttpResponse<ICitaTatto[]>) => {
@@ -74,6 +78,22 @@ export class CitaTattoComponent implements OnInit {
 
   trackId(index: number, item: ICitaTatto): number {
     return item.id!;
+  }
+
+  generarReporte(): void {
+    this.citaTattoService.generarReporte().subscribe(
+      (res: any) => {
+        const file = new Blob([res], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      },
+      () => {
+        this.alert.addAlert({
+          type: 'warning',
+          message: 'Se presento un error en la previsualización',
+        });
+      }
+    );
   }
 
   byteSize(base64String: string): string {

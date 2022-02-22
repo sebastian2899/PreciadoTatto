@@ -165,6 +165,12 @@ public class CitaTattoResource {
         return citaTattoService.citaDia();
     }
 
+    @GetMapping("/generarReport")
+    public byte[] generarReporteCita() {
+        log.debug("REST request to generate Report cita");
+        return citaTattoService.generarReporteCitas();
+    }
+
     /**
      * {@code GET  /cita-tattos/:id} : get the "id" citaTatto.
      *

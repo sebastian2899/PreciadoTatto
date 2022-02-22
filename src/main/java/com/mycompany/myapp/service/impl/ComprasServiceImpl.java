@@ -56,6 +56,10 @@ public class ComprasServiceImpl implements ComprasService {
     public ComprasDTO save(ComprasDTO comprasDTO) {
         log.debug("Request to save Compras : {}", comprasDTO);
         Compras compras = comprasMapper.toEntity(comprasDTO);
+        if (compras.getId() == null) {
+            compras.setFechaCreacion(Instant.now());
+        }
+
         compras = comprasRepository.save(compras);
 
         ProductosComprados productosComprados = null;

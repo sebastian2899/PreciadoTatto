@@ -25,10 +25,14 @@ public final class Constants {
 
     public static final String CITA_TATTO_BASE = "SELECT c FROM CitaTatto c WHERE c.id IS NOT NULL";
     public static final String CITA_TATTO_NOMBRE = " AND UPPER(c.infoCliente) LIKE :nombre";
+    public static final String CITA_TATTO_HORA = " AND c.hora = :hora";
 
     public static final String CITA_PERFORACION_BASE = "SELECT c FROM CitaPerforacion c WHERE c.id IS NOT NULL";
     public static final String CITA_PERFORACION_NOMBRE = " AND UPPER(c.nombreCliente) LIKE :nombre";
     public static final String CITA_PERFORACION_HORA = " AND (c.hora)=:hora";
+
+    public static final String ELIMINAR_VALORES_CAJA_POR_CITA =
+        "UPDATE CajaTattos SET valorTattoDia = valorTattoDia-:valorDescontar " + "WHERE TO_CHAR(fechaCreacion,'dd/MM/yyyy')=:fechaAbono";
 
     private Constants() {}
 }

@@ -17,6 +17,7 @@ export class CitaTattoService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/cita-tattos');
   protected resourceUrlCitaDia = this.applicationConfigService.getEndpointFor('api/cita-tattos-dia');
   protected citaPorFiltros = this.applicationConfigService.getEndpointFor('api/citaTattoFiltro');
+  protected genReport = this.applicationConfigService.getEndpointFor('api/generarReport');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -52,6 +53,14 @@ export class CitaTattoService {
     return this.http
       .get<ICitaTatto>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  generarReporte(): Observable<any> {
+    const httpOptions = {
+      responseType: 'arraybuffer' as 'json',
+      //'responseType'  : 'blob' as 'json'        //This also worked
+    };
+    return this.http.get<any>(this.genReport, httpOptions);
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

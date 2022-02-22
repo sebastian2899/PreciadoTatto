@@ -19,4 +19,7 @@ public interface AbonoRepository extends JpaRepository<Abono, Long> {
 
     @Query("SELECT a FROM Abono a WHERE a.idCita=:idCita")
     List<Abono> abonosPorCita(@Param("idCita") Long idCita);
+
+    @Query("SELECT SUM(a.valorAbono) FROM Abono a WHERE a.id = :id")
+    BigDecimal valorAbono(@Param("id") Long id);
 }

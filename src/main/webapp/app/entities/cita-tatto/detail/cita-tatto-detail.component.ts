@@ -4,6 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ICitaTatto } from '../cita-tatto.model';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { CitaTattoService } from '../service/cita-tatto.service';
+import { HttpResponse } from '@angular/common/http';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-cita-tatto-detail',
@@ -11,12 +14,15 @@ import { StateStorageService } from 'app/core/auth/state-storage.service';
 })
 export class CitaTattoDetailComponent implements OnInit {
   citaTatto: ICitaTatto | null = null;
+  descargando = false;
 
   constructor(
     protected dataUtils: DataUtils,
     protected activatedRoute: ActivatedRoute,
     protected storage: StateStorageService,
-    protected router: Router
+    protected router: Router,
+    protected citaService: CitaTattoService,
+    protected alert: AlertService
   ) {}
 
   ngOnInit(): void {
