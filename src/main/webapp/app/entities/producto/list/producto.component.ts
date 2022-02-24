@@ -19,6 +19,7 @@ export class ProductoComponent implements OnInit {
   isLoading = false;
   mensaje?: string | null;
   productoNombre = '';
+  prodAgotados?: IProducto[];
 
   constructor(protected productoService: ProductoService, protected dataUtils: DataUtils, protected modalService: NgbModal) {}
 
@@ -52,6 +53,7 @@ export class ProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+    this.productosAgotados();
   }
 
   validarEliminacion(producto: IProducto): void {
@@ -79,6 +81,17 @@ export class ProductoComponent implements OnInit {
 
   openFile(base64String: string, contentType: string | null | undefined): void {
     return this.dataUtils.openFile(base64String, contentType);
+  }
+
+  productosAgotados(): void {
+    this.productoService.productosAgotados().subscribe(
+      (res: HttpResponse<IProducto[]>) => {
+        this.prodAgotados = res.body ?? [];
+      },
+      () => {
+        this.prodAgotados = [];
+      }
+    );
   }
 
   delete(producto: IProducto): void {

@@ -21,6 +21,7 @@ export class CitaTattoComponent implements OnInit {
   nombreCliente = '';
   hora = '';
   citaTatto?: ICitaTatto | null;
+  estadoCita = [''];
 
   constructor(
     private storage: StateStorageService,

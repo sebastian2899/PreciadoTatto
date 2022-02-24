@@ -22,4 +22,7 @@ public interface CitaTattoRepository extends JpaRepository<CitaTatto, Long> {
 
     @Query("SELECT c FROM CitaTatto c WHERE c.fechaCreacion BETWEEN :fechaInicio AND :fechaFin")
     List<CitaTatto> citasMensuales(@Param("fechaInicio") Instant fechaInicio, @Param("fechaFin") Instant fechaFin);
+
+    @Query("SELECT c FROM CitaTatto c")
+    List<CitaTatto> recordatorioCitas();
 }

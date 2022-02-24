@@ -60,10 +60,21 @@ public class CitaTatto implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "estado_cita")
+    private String estadoCita;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
         return this.id;
+    }
+
+    public String getEstadoCita() {
+        return estadoCita;
+    }
+
+    public void setEstadoCita(String estadoCita) {
+        this.estadoCita = estadoCita;
     }
 
     public String getInfoCliente() {

@@ -23,6 +23,8 @@ public class CitaTattoDTO implements Serializable {
 
     private String infoCliente;
 
+    private String estadoCita;
+
     @Lob
     private byte[] fotoDiseno;
 
@@ -55,6 +57,14 @@ public class CitaTattoDTO implements Serializable {
 
     public Instant getFechaCreacion() {
         return fechaCreacion;
+    }
+
+    public String getEstadoCita() {
+        return estadoCita;
+    }
+
+    public void setEstadoCita(String estadoCita) {
+        this.estadoCita = estadoCita;
     }
 
     public void setFechaCreacion(Instant fechaCreacion) {

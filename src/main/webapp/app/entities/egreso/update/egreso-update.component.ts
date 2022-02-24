@@ -17,6 +17,7 @@ import { EgresoService } from '../service/egreso.service';
 })
 export class EgresoUpdateComponent implements OnInit {
   isSaving = false;
+  titulo = 'Actualizar Egreso';
 
   editForm = this.fb.group({
     id: [],
@@ -30,6 +31,7 @@ export class EgresoUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ egreso }) => {
       if (egreso.id === undefined) {
+        this.titulo = 'Crear Egreso';
         const today = dayjs().startOf('day');
         egreso.fechaCreacion = today;
       }

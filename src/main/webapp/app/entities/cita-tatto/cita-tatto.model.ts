@@ -15,6 +15,7 @@ export interface ICitaTatto {
   descripcion?: string | null;
   nombreCliente?: string | null;
   infoCliente?: string | null;
+  estadoCita?: string | null;
 }
 
 export class CitaTatto implements ICitaTatto {
@@ -33,7 +34,8 @@ export class CitaTatto implements ICitaTatto {
     public estado?: string | null,
     public descripcion?: string | null,
     public nombreCliente?: string | null,
-    public infoCliente?: string | null
+    public infoCliente?: string | null,
+    public estadoCita?: string | null
   ) {}
 }
 

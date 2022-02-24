@@ -3,12 +3,8 @@ package com.mycompany.myapp.service.impl;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -24,15 +20,16 @@ import com.mycompany.myapp.service.mapper.CitaTattoMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -41,6 +38,7 @@ import javax.persistence.Query;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,6 +74,14 @@ public class CitaTattoServiceImpl implements CitaTattoService {
 
         if (citaTatto.getDeuda().equals(BigDecimal.ZERO)) {
             citaTatto.estado("Pagada");
+        }
+
+        if (citaTatto.getFechaCita().isBefore(Instant.now())) {
+            citaTatto.setEstadoCita("Finalizada");
+        } else if (citaTatto.getFechaCita().isAfter(Instant.now())) {
+            citaTatto.setEstadoCita("Pendiente");
+        } else {
+            citaTatto.setEstadoCita("Pendiente");
         }
 
         citaTatto = citaTattoRepository.save(citaTatto);
@@ -217,6 +223,8 @@ public class CitaTattoServiceImpl implements CitaTattoService {
             sb.append(Constants.CITA_TATTO_HORA);
             filtros.put("hora", citaTatto.getHora());
         }
+
+        sb.append(Constants.ORDENAR_CITAS_PORfECHA);
 
         Query q = entityManager.createQuery(sb.toString());
         for (Map.Entry<String, Object> entry : filtros.entrySet()) {
@@ -380,6 +388,75 @@ public class CitaTattoServiceImpl implements CitaTattoService {
             log.error("Error generacion archivo: " + e.getStackTrace());
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //0 0 6 * * ?
+    @Scheduled(cron = "0 0 8 * * *")
+    public void recordatorioCitas() {
+        log.debug("Request to send mails");
+
+        List<CitaTatto> citas = citaTattoRepository.recordatorioCitas();
+
+        for (CitaTatto cita : citas) {
+            ZonedDateTime zdt = ZonedDateTime.ofInstant(cita.getFechaCita(), ZoneId.systemDefault());
+            Calendar cal = GregorianCalendar.from(zdt);
+
+            //SE RESTA UN DIA A LA FECHA DE LA CITA.
+            cal.add(Calendar.DATE, -1);
+            Calendar fechaActual = Calendar.getInstance();
+
+            int resp = cal.compareTo(fechaActual);
+
+            if (resp == -1) {
+                enviarCorreoRecordatorio(cita);
+            }
+        }
+    }
+
+    @Scheduled(cron = "0 0 8 * * *")
+    public void cambiarEstadoCita() {
+        log.debug("Request to change estado cita");
+
+        List<CitaTatto> citaTattos = citaTattoRepository.findAll();
+
+        for (CitaTatto cita : citaTattos) {
+            if (cita.getFechaCita().isBefore(Instant.now())) {
+                cita.setEstadoCita("Finalizada");
+            } else {
+                cita.setEstado("Pendiente");
+            }
+            citaTattoRepository.save(cita);
+        }
+    }
+
+    private void enviarCorreoRecordatorio(CitaTatto citaTattoo) {
+        if (citaTattoo.getEmailCliente() != null && !citaTattoo.getEmailCliente().isEmpty()) {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            String mensaje =
+                "<html><head><title>Recordatorio Cita Tattoo Correo</title></head>" +
+                "<body style='background-color:black;'><p style='color:aqua;'>Buen dia " +
+                citaTattoo.getInfoCliente() +
+                ".<br/>" +
+                "Recuerde que tiene una cita pendiente para el dia de mañana" +
+                format.format(Date.from(citaTattoo.getFechaCita())) +
+                " a las " +
+                citaTattoo.getHora() +
+                ".</p>" +
+                "<p style='color:aqua;'>Recuerde llegar 10-15 minutos antes para la toma de medidas." +
+                "<br/>Muchas Gracias.<br/><br/><br/>Preciado Tattoo.</p></body></html>";
+
+            try {
+                log.debug("Request to send mail to client: " + citaTattoo.getEmailCliente());
+                EmailUtil.sendArchivoTLS(null, citaTattoo.getEmailCliente().trim(), "Confirmacion Cita Tattoo", mensaje);
+                log.debug("Send email to: " + citaTattoo.getEmailCliente());
+            } catch (Exception e) {
+                log.debug("Error enviando notificacion ", e);
+                log.debug("Error enviando notificacion ", e.getMessage());
+                log.error("Error enviando notificacion ", e);
+                log.error("Error enviando notificacion ", e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 }

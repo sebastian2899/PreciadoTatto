@@ -1,13 +1,8 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-egreso-heading"
-        class="text-black"
-        data-cy="EgresoCreateUpdateHeading"
-        jhiTranslate="preciadoTattoApp.egreso.home.createOrEditLabel"
-      >
-        Create or edit a Egreso
+      <h2 id="jhi-egreso-heading" class="text-black" data-cy="EgresoCreateUpdateHeading">
+        {{ titulo }}
       </h2>
 
       <div>

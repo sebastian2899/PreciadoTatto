@@ -47,6 +47,8 @@ public interface CitaPerforacionService {
      */
     void delete(Long id);
 
+    byte[] generarReporteCitasPerfo();
+
     List<CitaPerforacionDTO> findCitasToday();
 
     List<CitaPerforacionDTO> citasPerfoPorFiltro(CitaPerforacionDTO citaPerfo);

@@ -57,4 +57,6 @@ public interface ProductoService {
     Long comprasHoy();
 
     List<ProductoDTO> productosPorFiltro(ProductoDTO producto);
+
+    List<ProductoDTO> productosAgotados();
 }

@@ -170,6 +170,13 @@ public class CitaPerforacionResource {
         return ResponseUtil.wrapOrNotFound(citaPerforacionDTO);
     }
 
+    @GetMapping("/generarReportePerfo")
+    public byte[] generarReporte() {
+        log.debug("Rest Request to generate report cita perfo");
+        byte[] reporte = citaPerforacionService.generarReporteCitasPerfo();
+        return reporte;
+    }
+
     /**
      * {@code DELETE  /cita-perforacions/:id} : delete the "id" citaPerforacion.
      *

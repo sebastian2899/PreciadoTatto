@@ -17,6 +17,7 @@ export class CitaPerforacionService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/cita-perforacions');
   protected resourceUrlDay = this.applicationConfigService.getEndpointFor('api/cita-perforacions-day');
   protected citasPorFiltros = this.applicationConfigService.getEndpointFor('api/citaPerfoFiltro');
+  protected reporteCita = this.applicationConfigService.getEndpointFor('api/generarReportePerfo');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -56,6 +57,11 @@ export class CitaPerforacionService {
     return this.http
       .get<ICitaPerforacion>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  generarReporte(): Observable<any> {
+    const httpOption = { responseType: 'arrayBuffer' as 'json' };
+    return this.http.get<any>(this.reporteCita, httpOption);
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

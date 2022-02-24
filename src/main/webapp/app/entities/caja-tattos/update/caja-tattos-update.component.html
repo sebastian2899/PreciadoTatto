@@ -1,13 +1,8 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-caja-tattos-heading"
-        data-cy="CajaTattosCreateUpdateHeading"
-        jhiTranslate="preciadoTattoApp.cajaTattos.home.createOrEditLabel"
-        class="text-black"
-      >
-        Create or edit a Caja Tattos
+      <h2 id="jhi-caja-tattos-heading" data-cy="CajaTattosCreateUpdateHeading" class="text-black">
+        {{ titulo }}
       </h2>
 
       <div>

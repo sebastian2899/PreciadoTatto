@@ -18,6 +18,7 @@ import { AlertService } from 'app/core/util/alert.service';
 })
 export class CitaPerforacionUpdateComponent implements OnInit {
   isSaving = false;
+  titulo = 'Actualizar cita perforacion';
 
   editForm = this.fb.group({
     id: [],
@@ -41,6 +42,7 @@ export class CitaPerforacionUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ citaPerforacion }) => {
       if (citaPerforacion.id === undefined) {
+        this.titulo = 'Agendar cita perforacion';
         const today = dayjs().startOf('day');
         citaPerforacion.fechaCreacion = today;
         citaPerforacion.fechaCita = today;

@@ -10,9 +10,9 @@ public final class Constants {
 
     public static final String SYSTEM = "system";
     public static final String DEFAULT_LANGUAGE = "es";
-    public static final String ORDENAR_CITAS_PORfECHA = "SELECT c FROM CitaTatto c  ORDER BY fecha_cita DESC";
+    public static final String ORDENAR_CITAS_PORfECHA = " ORDER BY c.fechaCita DESC";
 
-    public static final String ORDENAR_CITASPERF_PORFECHA = "SELECT c FROM CitaPerforacion c  ORDER BY fecha_cita DESC";
+    public static final String ORDENAR_CITASPERF_PORFECHA = " ORDER BY fechaCita DESC";
 
     public static final String TOTAL_PRODUCTOS = "SELECT COUNT(*) FROM Producto p";
     public static final String TOTAL_VENTAS_HOY = "SELECT COUNT(*) FROM Ventas v WHERE TO_CHAR(v.fechaCreacion,'dd/MM/yyyy') = :fecha";
@@ -33,6 +33,8 @@ public final class Constants {
 
     public static final String ELIMINAR_VALORES_CAJA_POR_CITA =
         "UPDATE CajaTattos SET valorTattoDia = valorTattoDia-:valorDescontar " + "WHERE TO_CHAR(fechaCreacion,'dd/MM/yyyy')=:fechaAbono";
+
+    public static final String PRODUCTOS_AGOTADOS = "SELECT p FROM Producto p WHERE p.cantidad = 0";
 
     private Constants() {}
 }

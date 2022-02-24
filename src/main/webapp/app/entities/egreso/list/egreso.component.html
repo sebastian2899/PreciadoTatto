@@ -3,7 +3,7 @@
     <span class="aqua-text" jhiTranslate="preciadoTattoApp.egreso.home.title">Egresos</span>
 
     <div style="text-align: center" class="d-flex justify-content-center">
-      <b>Total</b><span style="color: aqua" class="ml-2 badge badge-dark">{{ egresoDia | currency: '$' }} </span>
+      <b>Total Diario</b><span style="color: aqua" class="ml-2 badge badge-dark">{{ egresoDia | currency: '$' }} </span>
     </div>
     <div class="d-flex justify-content-end">
       <button class="btn btn-dark aqua-text mr-2" (click)="loadAll2()" [disabled]="isLoading">

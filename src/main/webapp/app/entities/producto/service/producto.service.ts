@@ -21,6 +21,7 @@ export class ProductoService {
   protected totalCompr = this.applicationConfigService.getEndpointFor('api/totalCompras');
   protected productoVentas = this.applicationConfigService.getEndpointFor('api/productosPorVentas');
   protected productoFiltros = this.applicationConfigService.getEndpointFor('api/productosFiltro');
+  protected productoAgotados = this.applicationConfigService.getEndpointFor('api/productosAgotados');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -44,6 +45,10 @@ export class ProductoService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IProducto>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  productosAgotados(): Observable<EntityArrayResponseType> {
+    return this.http.get<IProducto[]>(this.productoAgotados, { observe: 'response' });
   }
 
   productosPorVenta(id: number): Observable<BooleanType> {

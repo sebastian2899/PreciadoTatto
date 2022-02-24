@@ -1,13 +1,8 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-cita-perforacion-heading"
-        data-cy="CitaPerforacionCreateUpdateHeading"
-        jhiTranslate="preciadoTattoApp.citaPerforacion.home.createOrEditLabel"
-        class="text-black"
-      >
-        Create or edit a Cita Perforacion
+      <h2 id="jhi-cita-perforacion-heading" data-cy="CitaPerforacionCreateUpdateHeading" class="text-black">
+        {{ titulo }}
       </h2>
 
       <div>

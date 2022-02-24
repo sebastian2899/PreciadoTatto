@@ -20,6 +20,7 @@ export class CajaTattosUpdateComponent implements OnInit {
   isSaving = false;
   saving?: boolean | undefined;
   validarCaja?: boolean | undefined;
+  titulo = 'Actualizar caja tattoos';
 
   @ViewChild('mensajeInicio', { static: true }) content: ElementRef | undefined;
 
@@ -39,6 +40,9 @@ export class CajaTattosUpdateComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ cajaTattos }) => {
+      if (cajaTattos.id === undefined) {
+        this.titulo = 'Crear caja tattoo';
+      }
       this.updateForm(cajaTattos);
     });
     this.valorDia();

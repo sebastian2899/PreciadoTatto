@@ -151,6 +151,12 @@ public class ProductoResource {
         return productoService.findAll();
     }
 
+    @GetMapping("/productosAgotados")
+    public List<ProductoDTO> productosAgotados() {
+        log.debug("REST requesto to get all not aviable productos");
+        return productoService.productosAgotados();
+    }
+
     @PostMapping("/productosFiltro")
     public ResponseEntity<List<ProductoDTO>> getAllProductosFiltro(@RequestBody ProductoDTO producto) throws URISyntaxException {
         log.debug("REST request to get all Productos Filtro");

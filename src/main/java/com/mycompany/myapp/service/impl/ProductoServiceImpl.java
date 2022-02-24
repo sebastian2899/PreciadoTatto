@@ -159,4 +159,15 @@ public class ProductoServiceImpl implements ProductoService {
 
         return resp;
     }
+
+    @Override
+    public List<ProductoDTO> productosAgotados() {
+        log.debug("Request to get all not aviable productos");
+
+        Query q = entityManager.createQuery(Constants.PRODUCTOS_AGOTADOS);
+
+        List<Producto> produtosAgotados = q.getResultList();
+
+        return productoMapper.toDto(produtosAgotados);
+    }
 }

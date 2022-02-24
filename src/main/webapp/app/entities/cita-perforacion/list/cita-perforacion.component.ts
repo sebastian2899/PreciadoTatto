@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CitaPerforacion, ICitaPerforacion } from '../cita-perforacion.model';
 import { CitaPerforacionService } from '../service/cita-perforacion.service';
 import { CitaPerforacionDeleteDialogComponent } from '../delete/cita-perforacion-delete-dialog.component';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-cita-perforacion',
@@ -17,7 +18,7 @@ export class CitaPerforacionComponent implements OnInit {
   nombreCliente = '';
   hora = '';
 
-  constructor(protected citaPerforacionService: CitaPerforacionService, protected modalService: NgbModal) {}
+  constructor(protected citaPerforacionService: CitaPerforacionService, protected modalService: NgbModal, protected alert: AlertService) {}
 
   loadAll(): void {
     this.isLoading = false;
@@ -46,6 +47,22 @@ export class CitaPerforacionComponent implements OnInit {
       },
       () => {
         this.isLoading = false;
+      }
+    );
+  }
+
+  generarReporteMensual(): void {
+    this.citaPerforacionService.generarReporte().subscribe(
+      (res: any) => {
+        const file = new Blob([res], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      },
+      () => {
+        this.alert.addAlert({
+          type: 'warning',
+          message: 'Se presento un error en la previsualización',
+        });
       }
     );
   }
