@@ -53,4 +53,6 @@ public interface EgresoService {
     BigDecimal valorEgresoDia();
 
     BigDecimal egresoMensual(Instant fechaInicio, Instant fechaFin);
+
+    byte[] generarReporteEgresoMensual();
 }

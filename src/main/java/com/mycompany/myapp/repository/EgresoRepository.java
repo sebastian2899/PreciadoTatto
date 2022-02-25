@@ -23,4 +23,7 @@ public interface EgresoRepository extends JpaRepository<Egreso, Long> {
 
     @Query("SELECT SUM(e.valor) FROM Egreso e WHERE e.fechaCreacion BETWEEN :fechaInicio AND :fechaFin ")
     BigDecimal egresoMensual(@Param("fechaInicio") Instant fechaInicio, @Param("fechaFin") Instant fechaFin);
+
+    @Query("SELECT e FROM Egreso e WHERE e.fechaCreacion BETWEEN :fechaInicio AND :fechaFin ")
+    List<Egreso> reporteEgresoMensual(@Param("fechaInicio") Instant fechaInicio, @Param("fechaFin") Instant fechaFin);
 }

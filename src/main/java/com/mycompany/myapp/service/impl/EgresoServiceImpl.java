@@ -1,18 +1,30 @@
 package com.mycompany.myapp.service.impl;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.mycompany.myapp.domain.Egreso;
 import com.mycompany.myapp.repository.EgresoRepository;
 import com.mycompany.myapp.service.EgresoService;
 import com.mycompany.myapp.service.dto.EgresoDTO;
 import com.mycompany.myapp.service.mapper.EgresoMapper;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -113,5 +125,104 @@ public class EgresoServiceImpl implements EgresoService {
             .stream()
             .map(egresoMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public byte[] generarReporteEgresoMensual() {
+        log.debug("Request to generate report egreso");
+        Document documento = null;
+        String nombreDocumento = null;
+
+        Calendar fechaInicio = Calendar.getInstance();
+        Calendar fechaFin = Calendar.getInstance();
+
+        fechaInicio.add(Calendar.MONTH, -1);
+
+        Instant fechaIni = fechaInicio.toInstant();
+        Instant fechaF = fechaFin.toInstant();
+
+        List<Egreso> egresoMes = egresoRepository.reporteEgresoMensual(fechaIni, fechaF);
+
+        try {
+            documento = new Document();
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+            nombreDocumento = "Reporte " + egresoMes.size() + ".pdf";
+            FileOutputStream fileOutput = new FileOutputStream(nombreDocumento);
+            PdfWriter.getInstance(documento, fileOutput);
+            documento.open();
+
+            Paragraph titulo = new Paragraph("Reporte Egreso Mensual");
+            titulo.setAlignment(1);
+
+            documento.add(titulo);
+
+            Date date = Date.from(fechaIni);
+            Date date2 = Date.from(fechaF);
+
+            String fechaI = format.format(date);
+            String fechaFn = format.format(date2);
+
+            Paragraph fi = new Paragraph("Del mes: " + fechaI);
+            Paragraph ff = new Paragraph("Al mes: " + fechaFn);
+            fi.setAlignment(2);
+            ff.setAlignment(2);
+            documento.add(fi);
+            documento.add(ff);
+
+            documento.add(Chunk.NEWLINE);
+
+            PdfPTable table = new PdfPTable(3);
+            table.setWidthPercentage(100);
+            PdfPCell fechaEgreso = new PdfPCell(new Phrase("Fecha del egreso"));
+            fechaEgreso.setBackgroundColor(BaseColor.ORANGE);
+            PdfPCell descripcion = new PdfPCell(new Phrase("Descripcion del egreso"));
+            descripcion.setBackgroundColor(BaseColor.ORANGE);
+            PdfPCell valor = new PdfPCell(new Phrase("Valor del egreso"));
+            valor.setBackgroundColor(BaseColor.ORANGE);
+
+            table.addCell(fechaEgreso);
+            table.addCell(descripcion);
+            table.addCell(valor);
+
+            BigDecimal valorTotal = BigDecimal.ZERO;
+            for (Egreso egreso : egresoMes) {
+                Date dat = Date.from(egreso.getFechaCreacion());
+                String fech = format.format(dat);
+                table.addCell(fech);
+                table.addCell(egreso.getDescripcion());
+                if (egreso.getValor() == null) {
+                    BigDecimal valr = BigDecimal.ZERO;
+                    table.addCell(valr.toString());
+                } else {
+                    table.addCell(egreso.getValor().toString());
+                    valorTotal = valorTotal.add(egreso.getValor());
+                }
+            }
+
+            documento.add(table);
+
+            table = new PdfPTable(1);
+            table.setWidthPercentage(100);
+            PdfPCell cell = new PdfPCell(new Phrase("Total Egreso Mensual: " + valorTotal.toString()));
+            cell.setBackgroundColor(BaseColor.YELLOW);
+            cell.setHorizontalAlignment(1);
+            table.addCell(cell);
+            documento.add(table);
+
+            log.debug("Generacion antes del close");
+            documento.close();
+
+            return FileUtils.readFileToByteArray(new File(nombreDocumento));
+        } catch (Exception e) {
+            log.info("info generacion archivo: " + e);
+            log.info("info generacion archivo: " + e.getMessage());
+            log.info("info generacion archivo: " + e.getStackTrace());
+            log.error("Error generacion archivo: " + e);
+            log.error("Error generacion archivo: " + e.getMessage());
+            log.error("Error generacion archivo: " + e.getStackTrace());
+            e.printStackTrace();
+            return null;
+        }
     }
 }

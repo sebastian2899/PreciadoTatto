@@ -17,6 +17,7 @@ export class ProductoComponent implements OnInit {
   productos?: IProducto[];
   producto?: IProducto;
   isLoading = false;
+  pA = 1;
   mensaje?: string | null;
   productoNombre = '';
   prodAgotados?: IProducto[];

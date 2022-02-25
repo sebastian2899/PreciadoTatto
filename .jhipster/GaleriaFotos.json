@@ -1,0 +1,29 @@
+{
+  "fields": [
+    {
+      "fieldName": "nombreDisenio",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "disenio",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "precioDisenio",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "relationships": [],
+  "service": "serviceImpl",
+  "dto": "mapstruct",
+  "jpaMetamodelFiltering": false,
+  "readOnly": false,
+  "pagination": "no",
+  "name": "GaleriaFotos",
+  "changelogDate": "20220225123803"
+}

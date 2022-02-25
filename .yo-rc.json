@@ -53,8 +53,9 @@
       "Ventas",
       "CitaTatto",
       "CitaPerforacion",
-      "Abono"
+      "Abono",
+      "GaleriaFotos"
     ],
-    "lastLiquibaseTimestamp": 1643595583000
+    "lastLiquibaseTimestamp": 1645792683000
   }
 }

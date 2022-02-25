@@ -1,0 +1,58 @@
+<div>
+  <h2 id="page-heading" data-cy="GaleriaFotosHeading" class="mb-4">
+    <span>Galeria Diseños</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.galeriaFotos.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-galeria-fotos"
+        [routerLink]="['/galeria-fotos/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="preciadoTattoApp.galeriaFotos.home.createLabel"> Create a new Galeria Fotos </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="galeriaFotos?.length === 0">
+    <span jhiTranslate="preciadoTattoApp.galeriaFotos.home.notFound">No galeriaFotos found</span>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-lg-3 col-md-6 mb-4" *ngFor="let foto of galeriaFotos">
+      <div class="card h-100" style="width: 20rem; padding: 10px">
+        <a *ngIf="foto.disenio" (click)="openFile(foto.disenio, foto.disenioContentType)">
+          <img
+            style="border-radius: 5%"
+            [src]="'data:' + foto.disenioContentType + ';base64,' + foto.disenio"
+            class="image-galeria"
+            alt="producto image"
+          />
+        </a>
+        <div class="card-body">
+          <span class="aqua-text">Nombre Diseño: </span>
+          <p class="card-text aqua-text">{{ foto.nombreDisenio }}</p>
+          <span class="aqua-text">Descripcion: </span>
+          <p class="card-text aqua-text">{{ foto.descripcion }}</p>
+          <span class="aqua-text">Precio : </span>
+          <p class="card-text aqua-text">{{ foto.precioDisenio }}</p>
+        </div>
+        <div style="display: flex; justify-content: space-evenly">
+          <button class="btn btn-black" [routerLink]="['/galeria-fotos', foto.id, 'edit']"><fa-icon icon="pencil-alt"></fa-icon></button>
+          <button class="btn btn-black" [routerLink]="['/galeria-fotos', foto.id, 'view']"><fa-icon icon="eye"></fa-icon></button>
+          <button class="btn btn-black" (click)="delete(foto)"><fa-icon icon="times"></fa-icon></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

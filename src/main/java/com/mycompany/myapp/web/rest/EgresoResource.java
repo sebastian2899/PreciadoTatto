@@ -183,6 +183,13 @@ public class EgresoResource {
         return valorMensual;
     }
 
+    @GetMapping("/reporteEgreso")
+    public ResponseEntity<byte[]> generarReporteEgreso() {
+        log.debug("REST request to generate report egreso");
+        byte[] reporte = egresoService.generarReporteEgresoMensual();
+        return ResponseEntity.ok().body(reporte);
+    }
+
     /**
      * {@code GET  /egresos/:id} : get the "id" egreso.
      *

@@ -7,25 +7,30 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Abono.
+        Added the entity GaleriaFotos.
     -->
-    <changeSet id="20220131021943-1" author="jhipster">
-        <createTable tableName="abono">
+    <changeSet id="20220225123803-1" author="jhipster">
+        <createTable tableName="galeria_fotos">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="fecha_abono" type="${datetimeType}">
+            <column name="nombre_disenio" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="id_cita" type="bigint">
+            <column name="disenio" type="longblob">
                 <constraints nullable="true" />
             </column>
-            <column name="valor_abono" type="decimal(21,2)">
+            <column name="disenio_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="descripcion" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="precio_disenio" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="abono" columnName="fecha_abono" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -38,17 +43,19 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-   <!--  <changeSet id="20220131021943-1-data" author="jhipster" context="faker">
+    <changeSet id="20220225123803-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/abono.csv"
+                  file="config/liquibase/fake-data/galeria_fotos.csv"
                   separator=";"
-                  tableName="abono"
+                  tableName="galeria_fotos"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="fecha_abono" type="date"/>
-            <column name="id_factura" type="numeric"/>
-            <column name="valor_abono" type="numeric"/>
-            jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here
+            <column name="nombre_disenio" type="string"/>
+            <column name="disenio" type="blob"/>
+            <column name="disenio_content_type" type="string"/>
+            <column name="descripcion" type="string"/>
+            <column name="precio_disenio" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
-    </changeSet> -->
+    </changeSet>
 </databaseChangeLog>

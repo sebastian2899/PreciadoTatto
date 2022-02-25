@@ -43,9 +43,9 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="cita_perforacion" columnName="fecha_creacion" columnDataType="${datetimeType}"/>
+       <!--  <dropDefaultValue tableName="cita_perforacion" columnName="fecha_creacion" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="cita_perforacion" columnName="fecha_cita" columnDataType="${datetimeType}"/>
-        <dropDefaultValue tableName="cita_perforacion_inicial" columnName="fecha_cita" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="cita_perforacion_inicial" columnName="fecha_cita" columnDataType="${datetimeType}"/> -->
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

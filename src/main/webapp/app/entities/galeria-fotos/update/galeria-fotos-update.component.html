@@ -1,0 +1,118 @@
+<div class="row justify-content-center">
+  <div class="col-8 botones-aqua">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-galeria-fotos-heading"
+        data-cy="GaleriaFotosCreateUpdateHeading"
+        jhiTranslate="preciadoTattoApp.galeriaFotos.home.createOrEditLabel"
+      >
+        Create or edit a Galeria Fotos
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <!-- <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div> -->
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="preciadoTattoApp.galeriaFotos.nombreDisenio" for="field_nombreDisenio"
+            >Nombre Disenio</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="nombreDisenio"
+            id="field_nombreDisenio"
+            data-cy="nombreDisenio"
+            formControlName="nombreDisenio"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="preciadoTattoApp.galeriaFotos.disenio" for="field_disenio">Disenio</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('disenioContentType')!.value + ';base64,' + editForm.get('disenio')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('disenio')!.value"
+              alt="galeriaFotos image"
+            />
+            <div *ngIf="editForm.get('disenio')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left">{{ editForm.get('disenioContentType')!.value }}, {{ byteSize(editForm.get('disenio')!.value) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('disenio', 'disenioContentType', 'file_disenio')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_disenio"
+              data-cy="disenio"
+              (change)="setFileData($event, 'disenio', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="disenio" id="field_disenio" data-cy="disenio" formControlName="disenio" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="disenioContentType"
+            id="field_disenioContentType"
+            formControlName="disenioContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="preciadoTattoApp.galeriaFotos.descripcion" for="field_descripcion"
+            >Descripcion</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="descripcion"
+            id="field_descripcion"
+            data-cy="descripcion"
+            formControlName="descripcion"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="preciadoTattoApp.galeriaFotos.precioDisenio" for="field_precioDisenio"
+            >Precio Disenio</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="precioDisenio"
+            id="field_precioDisenio"
+            data-cy="precioDisenio"
+            formControlName="precioDisenio"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

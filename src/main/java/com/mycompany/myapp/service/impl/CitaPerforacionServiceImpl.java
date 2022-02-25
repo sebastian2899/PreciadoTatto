@@ -229,6 +229,7 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
             table.addCell(deuda);
 
             BigDecimal valorTotal = BigDecimal.ZERO;
+            BigDecimal valorDeuda = BigDecimal.ZERO;
 
             for (CitaPerforacion cita : citasPorMes) {
                 table.addCell(cita.getNombreCliente());
@@ -239,6 +240,7 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
                 table.addCell(cita.getValorPerforacion().toString());
                 table.addCell(cita.getValorDeuda().toString());
                 valorTotal = valorTotal.add(cita.getValorPerforacion());
+                valorDeuda = valorDeuda.add(cita.getValorDeuda());
             }
 
             document.add(table);
@@ -248,12 +250,21 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
             fuente.setColor(BaseColor.ORANGE);
 
             table = new PdfPTable(1);
+            table.setWidthPercentage(100);
             PdfPCell cell = new PdfPCell();
             cell.setBackgroundColor(BaseColor.ORANGE);
-            cell.setColspan(1);
             Paragraph valTotal = new Paragraph("Valor Total: " + valorTotal.toString());
             valTotal.setAlignment(1);
             cell.addElement(valTotal);
+            table.addCell(cell);
+            document.add(table);
+            table = new PdfPTable(1);
+            table.setWidthPercentage(100);
+            cell = new PdfPCell();
+            cell.setBackgroundColor(BaseColor.ORANGE);
+            Paragraph valDeuda = new Paragraph("Valor Deuda: " + valorDeuda.toString());
+            valDeuda.setAlignment(1);
+            cell.addElement(valDeuda);
             table.addCell(cell);
             document.add(table);
 

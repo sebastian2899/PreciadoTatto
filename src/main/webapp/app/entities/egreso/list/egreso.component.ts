@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IEgreso } from '../egreso.model';
 import { EgresoService } from '../service/egreso.service';
 import { EgresoDeleteDialogComponent } from '../delete/egreso-delete-dialog.component';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-egreso',
@@ -15,7 +16,7 @@ export class EgresoComponent implements OnInit {
   isLoading = false;
   egresoDia?: number | null;
 
-  constructor(protected egresoService: EgresoService, protected modalService: NgbModal) {}
+  constructor(protected egresoService: EgresoService, protected modalService: NgbModal, protected alert: AlertService) {}
 
   loadAll(): void {
     this.isLoading = true;
@@ -59,6 +60,22 @@ export class EgresoComponent implements OnInit {
   ngOnInit(): void {
     this.loadAll();
     this.egresoDiario();
+  }
+
+  generarReporteEgreso(): void {
+    this.egresoService.reportEgreso().subscribe(
+      (res: any) => {
+        const file = new Blob([res], { type: 'application/pdf' });
+        const url = URL.createObjectURL(file);
+        window.open(url);
+      },
+      () => {
+        this.alert.addAlert({
+          type: 'warning',
+          message: 'Error al generar el archivo pdf',
+        });
+      }
+    );
   }
 
   trackId(index: number, item: IEgreso): number {

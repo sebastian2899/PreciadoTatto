@@ -1,0 +1,27 @@
+{
+  "preciadoTattoApp": {
+    "galeriaFotos": {
+      "home": {
+        "title": "Galeria Fotos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Galeria Fotos",
+        "createOrEditLabel": "Crear o editar Galeria Fotos",
+        "notFound": "Ningún Galeria Fotos encontrado"
+      },
+      "created": "Un nuevo Galeria Fotos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Galeria Fotos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Galeria Fotos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Galeria Fotos {{ id }}?"
+      },
+      "detail": {
+        "title": "Galeria Fotos"
+      },
+      "id": "ID",
+      "nombreDisenio": "Nombre Disenio",
+      "disenio": "Disenio",
+      "descripcion": "Descripcion",
+      "precioDisenio": "Precio Disenio"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="galeriaFotos">
+      <h2 data-cy="galeriaFotosDetailsHeading"><span jhiTranslate="preciadoTattoApp.galeriaFotos.detail.title">Galeria Fotos</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details botones-aqua">
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.galeriaFotos.nombreDisenio">Nombre Disenio</span></dt>
+        <dd>
+          <span class="text-black">{{ galeriaFotos.nombreDisenio }}</span>
+        </dd>
+        <dt><span class="text-black" class="text-black">Diseño</span></dt>
+        <dd>
+          <div *ngIf="galeriaFotos.disenio">
+            <a class="text-black" (click)="openFile(galeriaFotos.disenio, galeriaFotos.disenioContentType)">
+              <img
+                class="text-black"
+                [src]="'data:' + galeriaFotos.disenioContentType + ';base64,' + galeriaFotos.disenio"
+                style="max-width: 100%"
+                alt="galeriaFotos image"
+                class="image-galeria"
+              />
+            </a>
+            {{ galeriaFotos.disenioContentType }}, {{ byteSize(galeriaFotos.disenio) }}
+          </div>
+        </dd>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.galeriaFotos.descripcion">Descripcion</span></dt>
+        <dd>
+          <span class="text-black">{{ galeriaFotos.descripcion }}</span>
+        </dd>
+        <dt><span class="text-black" jhiTranslate="preciadoTattoApp.galeriaFotos.precioDisenio">Precio Disenio</span></dt>
+        <dd>
+          <span class="text-black">{{ galeriaFotos.precioDisenio }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/galeria-fotos', galeriaFotos.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

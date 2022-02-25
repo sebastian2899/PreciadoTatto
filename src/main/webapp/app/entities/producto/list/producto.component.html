@@ -1,5 +1,5 @@
 <div style="height: 700px">
-  <h2 id="page-heading" data-cy="ProductoHeading">
+  <h2 style="margin-bottom: 80px" id="page-heading" data-cy="ProductoHeading">
     <span class="aqua-text" jhiTranslate="preciadoTattoApp.producto.home.title">Productos</span>
 
     <div class="row">
@@ -79,7 +79,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let producto of productos; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let producto of productos | paginate: { itemsPerPage: 5, currentPage: pA }; trackBy: trackId" data-cy="entityTable">
           <td>
             <a *ngIf="producto.foto" (click)="openFile(producto.foto, producto.fotoContentType)">
               <img [src]="'data:' + producto.fotoContentType + ';base64,' + producto.foto" style="max-height: 30px" alt="producto image" />
@@ -126,6 +126,7 @@
         </tr>
       </tbody>
     </table>
+    <pagination-controls style="text-align: center" (pageChange)="pA = $event"></pagination-controls>
   </div>
 </div>
 

@@ -138,14 +138,14 @@
               </button>
 
               <button
-                *ngIf="citaTatto.deuda! > 0"
+                *ngIf="citaTatto.deuda! > 0 || citaTatto.estadoCita === 'Pendiente'"
                 type="submit"
                 (click)="delete(citaTatto)"
                 class="btn btn-dark aqua-text btn-sm"
                 data-cy="entityDeleteButton"
               >
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                <span class="d-none d-md-inline">Cancelar</span>
               </button>
             </div>
           </td>

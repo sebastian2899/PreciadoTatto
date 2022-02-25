@@ -51,8 +51,15 @@ Generic styles
 }
 
 .fondo-image {
-  background: url('../../content/images/fondo2.png');
+  background: url('../../content/images/fondo4.jpg');
+
   background-size: contain;
+}
+
+.fondo-image2 {
+  background: url('../../content/images/fondo3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .error {
@@ -157,6 +164,12 @@ Custom alerts for notification
 
 .home-linear {
   background: linear-gradient(45deg, #2c2c2c, #2c4a55b8);
+}
+
+.image-galeria {
+  width: 280px;
+  height: 200px;
+  overflow: hidden;
 }
 
 .imagen-table {
