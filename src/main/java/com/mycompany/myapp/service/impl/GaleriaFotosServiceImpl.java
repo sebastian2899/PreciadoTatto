@@ -1,14 +1,22 @@
 package com.mycompany.myapp.service.impl;
 
+import com.itextpdf.text.pdf.events.IndexEvents.Entry;
+import com.mycompany.myapp.config.Constants;
 import com.mycompany.myapp.domain.GaleriaFotos;
 import com.mycompany.myapp.repository.GaleriaFotosRepository;
 import com.mycompany.myapp.service.GaleriaFotosService;
 import com.mycompany.myapp.service.dto.GaleriaFotosDTO;
 import com.mycompany.myapp.service.mapper.GaleriaFotosMapper;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,6 +34,9 @@ public class GaleriaFotosServiceImpl implements GaleriaFotosService {
     private final GaleriaFotosRepository galeriaFotosRepository;
 
     private final GaleriaFotosMapper galeriaFotosMapper;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     public GaleriaFotosServiceImpl(GaleriaFotosRepository galeriaFotosRepository, GaleriaFotosMapper galeriaFotosMapper) {
         this.galeriaFotosRepository = galeriaFotosRepository;
@@ -53,6 +64,64 @@ public class GaleriaFotosServiceImpl implements GaleriaFotosService {
             })
             .map(galeriaFotosRepository::save)
             .map(galeriaFotosMapper::toDto);
+    }
+
+    @Override
+    @Transactional
+    public List<GaleriaFotosDTO> galeriaPorFiltro(GaleriaFotosDTO galeriaFotos) {
+        log.debug("Request to get pictures per filtres");
+        StringBuilder sb = new StringBuilder();
+        Map<String, Object> filtros = new HashMap<String, Object>();
+
+        sb.append(Constants.FOTO_DISENIO_BASE);
+
+        if (galeriaFotos.getNombreDisenio() != null && !galeriaFotos.getNombreDisenio().isEmpty()) {
+            sb.append(Constants.FOTO_DISENIO_NOMBRE);
+            filtros.put("nombre", "%" + galeriaFotos.getNombreDisenio().toUpperCase() + "%");
+        }
+
+        if (galeriaFotos.getPrecioDisenio() != null) {
+            int resultado = galeriaFotos.getPrecioDisenio().compareTo(BigDecimal.ZERO);
+            if (resultado != 0) {
+                sb.append(Constants.FOTO_DISENIO_PRECIO);
+                filtros.put("precio", galeriaFotos.getPrecioDisenio());
+            }
+        }
+
+        Query q = entityManager.createQuery(sb.toString());
+        for (Map.Entry<String, Object> filtro : filtros.entrySet()) {
+            q.setParameter(filtro.getKey(), filtro.getValue());
+        }
+
+        List<GaleriaFotos> galFotos = q.getResultList();
+
+        // return
+        // galFotos.stream().map(galeriaFotosMapper::toDto).collect(Collectors.toCollection(LinkedList
+        // :: new));
+        return galeriaFotosMapper.toDto(galFotos);
+    }
+
+    @Override
+    @Transactional
+    public List<GaleriaFotosDTO> galeriaFotosOrder(String tipoOrden) {
+        log.debug("Request to get picter per selection");
+
+        List<GaleriaFotos> galeriaFotos = null;
+
+        if (tipoOrden != null && !tipoOrden.isEmpty()) {
+            if (tipoOrden.equalsIgnoreCase("Por Defecto")) {
+                Query q = entityManager.createQuery(Constants.FOTO_DISENIO_BASE);
+                galeriaFotos = q.getResultList();
+            } else if (tipoOrden.equalsIgnoreCase("Mayor precio")) {
+                Query q = entityManager.createQuery(Constants.FOTO_DINSENIO_MAYOR_PRECIO);
+                galeriaFotos = q.getResultList();
+            } else if (tipoOrden.equalsIgnoreCase("Menor precio")) {
+                Query q = entityManager.createQuery(Constants.FOTO_DISENIO_MENOR_PRECIO);
+                galeriaFotos = q.getResultList();
+            }
+        }
+
+        return galeriaFotos.stream().map(galeriaFotosMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override

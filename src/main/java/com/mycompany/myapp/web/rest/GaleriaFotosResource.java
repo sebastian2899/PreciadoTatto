@@ -154,6 +154,18 @@ public class GaleriaFotosResource {
         return ResponseUtil.wrapOrNotFound(galeriaFotosDTO);
     }
 
+    @PostMapping("/galeriaFiltros")
+    public List<GaleriaFotosDTO> galeriaPorFiltros(@RequestBody GaleriaFotosDTO galerias) {
+        log.debug("REST request to get pictures per filtres");
+        return galeriaFotosService.galeriaPorFiltro(galerias);
+    }
+
+    @GetMapping("/galeriaSelect/{select}")
+    public List<GaleriaFotosDTO> galeriaPorFiltros(@PathVariable String select) {
+        log.debug("REST request to get pictures per filtres");
+        return galeriaFotosService.galeriaFotosOrder(select);
+    }
+
     /**
      * {@code DELETE  /galeria-fotos/:id} : delete the "id" galeriaFotos.
      *

@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.CitaTattoDTO;
+import com.mycompany.myapp.service.dto.MensajeValidacionCitaDTO;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,4 +52,6 @@ public interface CitaTattoService {
     List<CitaTattoDTO> citasPorFiltro(CitaTattoDTO citaTatto);
 
     byte[] generarReporteCitas();
+
+    MensajeValidacionCitaDTO validarFechaCita(CitaTattoDTO citaTatto);
 }

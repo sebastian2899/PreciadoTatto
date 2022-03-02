@@ -32,6 +32,12 @@ public class CitaTatto implements Serializable {
     @Column(name = "fecha_cita")
     private Instant fechaCita;
 
+    @Column(name = "hora_inicio")
+    private String horaInicio;
+
+    @Column(name = "hora_fin")
+    private String horaFin;
+
     @Column(name = "hora")
     private String hora;
 
@@ -67,6 +73,22 @@ public class CitaTatto implements Serializable {
 
     public Long getId() {
         return this.id;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
     }
 
     public String getEstadoCita() {

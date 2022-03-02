@@ -3,7 +3,7 @@
     <span>Galeria Diseños</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="preciadoTattoApp.galeriaFotos.home.refreshListLabel">Refresh List</span>
       </button>
@@ -11,7 +11,7 @@
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-galeria-fotos"
+        class="btn btn-dark aqua-text jh-create-entity create-galeria-fotos"
         [routerLink]="['/galeria-fotos/new']"
       >
         <fa-icon icon="plus"></fa-icon>
@@ -19,6 +19,51 @@
       </button>
     </div>
   </h2>
+
+  <div class="row">
+    <div class="col-md-2 form-group">
+      <label for="field_nombre" class="form-control-label aqua-text">Nombre</label>
+      <input
+        type="text"
+        placeholder="Nombre Diseño"
+        name="nombre"
+        class="form-control"
+        rarid="field_nombre"
+        data-cy="nombre"
+        (keyup)="diseniosPorFiltro()"
+        [(ngModel)]="nombre"
+      />
+    </div>
+
+    <div class="col-md-1 form-group">
+      <label for="field_precio" class="form-control-label aqua-text">Precio</label>
+      <input
+        type="text"
+        placeholder="Precio"
+        name="precio"
+        class="form-control"
+        rarid="field_precio"
+        data-cy="precio"
+        [(ngModel)]="precio"
+      />
+    </div>
+
+    <div class="col-md-3">
+      <button (click)="diseniosPorFiltro()" style="margin-top: 29px" class="btn btn-dark aqua-text">FILTRAR</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <mat-icon style="position: relative; top: 6px; color: aqua; background-color: black"> toc</mat-icon>
+      <label for="field_orden" class="form-control-label">Ordenar Diseños </label>
+      <select (click)="galeriaPorOrden()" type="text" class="form-control" [(ngModel)]="orden" data-cy="field_orden" id="orden">
+        <option valur="Por Defecto">Por Defecto</option>
+        <option valur="Mayor precio">Mayor precio</option>
+        <option valur="Menor precio">Menor precio</option>
+      </select>
+    </div>
+  </div>
 
   <jhi-alert-error></jhi-alert-error>
 
@@ -29,7 +74,7 @@
   </div>
 
   <div class="row text-center">
-    <div class="col-lg-3 col-md-6 mb-4" *ngFor="let foto of galeriaFotos">
+    <!-- <div class="col-lg-3 col-md-6 mb-4" *ngFor="let foto of galeriaFotos">
       <div class="card h-100" style="width: 20rem; padding: 10px">
         <a *ngIf="foto.disenio" (click)="openFile(foto.disenio, foto.disenioContentType)">
           <img
@@ -53,6 +98,41 @@
           <button class="btn btn-black" (click)="delete(foto)"><fa-icon icon="times"></fa-icon></button>
         </div>
       </div>
-    </div>
+    </div> -->
+
+    <mat-card class="col-lg-3 col-md-6 mb-4" *ngFor="let foto of galeriaFotos! | paginate: { itemsPerPage: 12, currentPage: pA }">
+      <div class="card h-100" style="width: 20rem; padding: 10px">
+        <a *ngIf="foto.disenio" (click)="openFile(foto.disenio, foto.disenioContentType)">
+          <img
+            style="border-radius: 5%"
+            [src]="'data:' + foto.disenioContentType + ';base64,' + foto.disenio"
+            class="image-galeria"
+            alt="producto image"
+          />
+        </a>
+        <mat-card-content style="margin-top: 10px; background-color: black; border-radius: 20%; padding: 15px">
+          <div style="background-color: rgb(67, 67, 67); padding: 20px; background-color: rgb(67, 67, 67); margin: 5px; border-radius: 24%">
+            <span class="aqua-text">Nombre Diseño: </span>
+            <p class="card-text aqua-text">{{ foto.nombreDisenio }}</p>
+            <span class="aqua-text">Descripcion: </span>
+            <p class="card-text aqua-text">{{ foto.descripcion }}</p>
+            <span class="aqua-text">Precio : </span>
+            <p class="card-text aqua-text">{{ foto.precioDisenio }}</p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div style="display: flex; justify-content: space-evenly">
+            <button mat-button class="btn btn-black" [routerLink]="['/galeria-fotos', foto.id, 'edit']">
+              <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+            <button class="btn btn-black" [routerLink]="['/galeria-fotos', foto.id, 'view']"><fa-icon icon="eye"></fa-icon></button>
+            <button class="btn btn-black" (click)="delete(foto)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>
+      </div>
+    </mat-card>
   </div>
+  <pagination-controls style="text-align: center" (pageChange)="pA = $event"></pagination-controls>
 </div>

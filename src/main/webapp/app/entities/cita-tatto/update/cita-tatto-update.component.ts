@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,17 +15,23 @@ import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { ICliente } from 'app/entities/cliente/cliente.model';
 import { ClienteService } from 'app/entities/cliente/service/cliente.service';
 import { AlertService } from 'app/core/util/alert.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IMensajeValidacionCita } from '../mensaje-validacion';
 
 @Component({
   selector: 'jhi-cita-tatto-update',
   templateUrl: './cita-tatto-update.component.html',
 })
 export class CitaTattoUpdateComponent implements OnInit {
+  @ViewChild('mensajeCitaTatto', { static: true }) content: ElementRef | undefined;
+
   isSaving = false;
   clientes: ICliente[] = [];
   updateCita = false;
   saving = true;
   titulo?: string | undefined;
+  mensaje?: string | null;
+  mensajeValidacio?: IMensajeValidacionCita | null;
 
   editForm = this.fb.group({
     id: [],
@@ -36,6 +42,8 @@ export class CitaTattoUpdateComponent implements OnInit {
     emailCliente: [],
     fotoDiseno: [],
     fotoDisenoContentType: [],
+    horaInicio: [],
+    horaFin: [],
     valorTatto: [],
     valorPagado: [],
     abono: [],
@@ -52,7 +60,8 @@ export class CitaTattoUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
     protected clienteService: ClienteService,
-    protected alertService: AlertService
+    protected alertService: AlertService,
+    protected modal: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -119,8 +128,22 @@ export class CitaTattoUpdateComponent implements OnInit {
     window.history.back();
   }
 
+  validarSave(): void {
+    const citaTatto = this.createFromForm();
+    this.citaTattoService.validarFechaCita(citaTatto).subscribe((res: HttpResponse<IMensajeValidacionCita>) => {
+      this.mensajeValidacio = res.body;
+      if (this.mensajeValidacio?.mensaje) {
+        this.mensaje = this.mensajeValidacio.mensaje;
+        this.modal.open(this.content);
+      } else {
+        this.save();
+        this.isSaving = false;
+      }
+    });
+  }
+
   save(): void {
-    this.isSaving = true;
+    this.isSaving = false;
     const citaTatto = this.createFromForm();
     if (citaTatto.id !== undefined) {
       this.subscribeToSaveResponse(this.citaTattoService.update(citaTatto));
@@ -157,6 +180,8 @@ export class CitaTattoUpdateComponent implements OnInit {
       emailCliente: citaTatto.emailCliente,
       fotoDiseno: citaTatto.fotoDiseno,
       fotoDisenoContentType: citaTatto.fotoDisenoContentType,
+      horaInicio: citaTatto.horaInicio,
+      horaFIn: citaTatto.horaFin,
       valorTatto: citaTatto.valorTatto,
       valorPagado: citaTatto.valorPagado,
       deuda: citaTatto.deuda,
@@ -178,6 +203,8 @@ export class CitaTattoUpdateComponent implements OnInit {
       emailCliente: this.editForm.get(['emailCliente'])!.value,
       fotoDisenoContentType: this.editForm.get(['fotoDisenoContentType'])!.value,
       fotoDiseno: this.editForm.get(['fotoDiseno'])!.value,
+      horaInicio: this.editForm.get(['horaInicio'])!.value,
+      horaFin: this.editForm.get(['horaFin'])!.value,
       valorTatto: this.editForm.get(['valorTatto'])!.value,
       valorPagado: this.editForm.get(['valorPagado'])!.value,
       deuda: this.editForm.get(['deuda'])!.value,

@@ -8,9 +8,12 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICitaTatto, getCitaTattoIdentifier } from '../cita-tatto.model';
+import { IMensajeValidacionCita } from '../mensaje-validacion';
 
 export type EntityResponseType = HttpResponse<ICitaTatto>;
 export type EntityArrayResponseType = HttpResponse<ICitaTatto[]>;
+export type StringType = HttpResponse<string>;
+export type MensjaeValidacionType = HttpResponse<IMensajeValidacionCita>;
 
 @Injectable({ providedIn: 'root' })
 export class CitaTattoService {
@@ -18,6 +21,7 @@ export class CitaTattoService {
   protected resourceUrlCitaDia = this.applicationConfigService.getEndpointFor('api/cita-tattos-dia');
   protected citaPorFiltros = this.applicationConfigService.getEndpointFor('api/citaTattoFiltro');
   protected genReport = this.applicationConfigService.getEndpointFor('api/generarReport');
+  protected validarCita = this.applicationConfigService.getEndpointFor('api/validarCita');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -53,6 +57,10 @@ export class CitaTattoService {
     return this.http
       .get<ICitaTatto>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  validarFechaCita(citaTatto: ICitaTatto): Observable<MensjaeValidacionType> {
+    return this.http.post<IMensajeValidacionCita>(this.validarCita, citaTatto, { observe: 'response' });
   }
 
   generarReporte(): Observable<any> {

@@ -36,5 +36,11 @@ public final class Constants {
 
     public static final String PRODUCTOS_AGOTADOS = "SELECT p FROM Producto p WHERE p.cantidad = 0";
 
+    public static final String FOTO_DISENIO_BASE = "SELECT g FROM GaleriaFotos g WHERE g.id IS NOT NULL";
+    public static final String FOTO_DISENIO_NOMBRE = " AND UPPER(g.nombreDisenio) LIKE :nombre";
+    public static final String FOTO_DISENIO_PRECIO = " AND g.precioDisenio = :precio";
+    public static final String FOTO_DISENIO_MENOR_PRECIO = "SELECT g FROM GaleriaFotos g ORDER BY g.precioDisenio ASC";
+    public static final String FOTO_DINSENIO_MAYOR_PRECIO = "SELECT g FROM GaleriaFotos g ORDER BY g.precioDisenio DESC ";
+
     private Constants() {}
 }

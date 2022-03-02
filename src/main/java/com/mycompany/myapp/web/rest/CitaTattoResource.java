@@ -1,9 +1,9 @@
 package com.mycompany.myapp.web.rest;
 
-import com.mycompany.myapp.domain.CitaTatto;
 import com.mycompany.myapp.repository.CitaTattoRepository;
 import com.mycompany.myapp.service.CitaTattoService;
 import com.mycompany.myapp.service.dto.CitaTattoDTO;
+import com.mycompany.myapp.service.dto.MensajeValidacionCitaDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -157,6 +157,13 @@ public class CitaTattoResource {
     public List<CitaTattoDTO> getAllCitaTattos() {
         log.debug("REST request to get all CitaTattos");
         return citaTattoService.findAll();
+    }
+
+    @PostMapping("validarCita")
+    public ResponseEntity<MensajeValidacionCitaDTO> validarDisponibilidad(@RequestBody CitaTattoDTO citaTatto) {
+        log.debug("REST request to validation date cita tatto");
+        MensajeValidacionCitaDTO mensaje = citaTattoService.validarFechaCita(citaTatto);
+        return ResponseEntity.ok().body(mensaje);
     }
 
     @GetMapping("/cita-tattos-dia")

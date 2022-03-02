@@ -6,6 +6,8 @@ export interface ICitaTatto {
   fechaCita?: dayjs.Dayjs | null;
   hora?: string | null;
   emailCliente?: string | null;
+  horaInicio?: string | null;
+  horaFin?: string | null;
   fotoDisenoContentType?: string | null;
   fotoDiseno?: string | null;
   valorTatto?: number | null;
@@ -31,6 +33,8 @@ export class CitaTatto implements ICitaTatto {
     public valorPagado?: number | null,
     public abono?: number | null,
     public deuda?: number | null,
+    public horaInicio?: string | null,
+    public horaFin?: string | null,
     public estado?: string | null,
     public descripcion?: string | null,
     public nombreCliente?: string | null,

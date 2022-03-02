@@ -74,6 +74,8 @@
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.hora">Hora</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.emailCliente">Email Cliente</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno">Foto Diseno</span></th>
+          <th class="text-black" scope="col"><span>Hora Inicio</span></th>
+          <th class="text-black" scope="col"><span>Hora Fin</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorTatto">Valor Tatto</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorPagado">Valor Pagado</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.deuda">Deuda</span></th>
@@ -99,6 +101,8 @@
             </a>
             <span *ngIf="citaTatto.fotoDiseno">{{ citaTatto.fotoDisenoContentType }}, {{ byteSize(citaTatto.fotoDiseno) }}</span>
           </td>
+          <td class="text-black">{{ citaTatto.horaInicio }}</td>
+          <td class="text-black">{{ citaTatto.horaFin }}</td>
           <td class="text-black">{{ citaTatto.valorTatto }}</td>
           <td class="text-black">{{ citaTatto.valorPagado }}</td>
           <td class="text-black">{{ citaTatto.deuda }}</td>

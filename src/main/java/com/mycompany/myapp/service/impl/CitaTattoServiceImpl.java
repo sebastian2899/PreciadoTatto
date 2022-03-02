@@ -16,6 +16,7 @@ import com.mycompany.myapp.repository.AbonoRepository;
 import com.mycompany.myapp.repository.CitaTattoRepository;
 import com.mycompany.myapp.service.CitaTattoService;
 import com.mycompany.myapp.service.dto.CitaTattoDTO;
+import com.mycompany.myapp.service.dto.MensajeValidacionCitaDTO;
 import com.mycompany.myapp.service.mapper.CitaTattoMapper;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,7 +25,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -57,6 +57,8 @@ public class CitaTattoServiceImpl implements CitaTattoService {
 
     private final CitaTattoMapper citaTattoMapper;
 
+    public static String MENSAJE_CITA_INVALIDA;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -74,6 +76,23 @@ public class CitaTattoServiceImpl implements CitaTattoService {
 
         if (citaTatto.getDeuda().equals(BigDecimal.ZERO)) {
             citaTatto.estado("Pagada");
+        }
+
+        //SE QUITAN LOS ESPACIOS EN BLANCO A TODAS LAS HORAS
+        String hora = citaTatto.getHora();
+        String formatoHora = hora.replaceAll("\\s+", "").strip();
+        citaTatto.setHora(formatoHora);
+
+        String horaInicio = citaTatto.getHoraInicio();
+        String horaIniFormat = horaInicio.replaceAll("\\s+", "").strip();
+        citaTatto.setHoraInicio(horaIniFormat);
+
+        String horaFin = citaTatto.getHoraFin();
+        String horaFinFormat = horaFin.replaceAll("\\s+", "");
+        citaTatto.setHoraFin(horaFinFormat);
+
+        if (citaTattoDTO.getValorPagado() == null) {
+            citaTattoDTO.setValorPagado(BigDecimal.ZERO);
         }
 
         if (citaTatto.getFechaCita().isBefore(Instant.now())) {
@@ -105,6 +124,56 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         }
 
         return citaTattoMapper.toDto(citaTatto);
+    }
+
+    @Override
+    public MensajeValidacionCitaDTO validarFechaCita(CitaTattoDTO citaTatto) {
+        MensajeValidacionCitaDTO mensajeValidacion = new MensajeValidacionCitaDTO();
+
+        //SE TOMA EL PRIMERO DIGITO DE CADA HORA DE LA CITA QUE SERA VALIDADA CON EL RESTO DE LAS CITAS EXISTENTES.
+
+        String hIni = citaTatto.getHoraInicio();
+        String newHIni = hIni.substring(0, 1);
+        int horaIn = Integer.parseInt(newHIni);
+
+        String hFn = citaTatto.getHoraFin();
+        String newHfn = hFn.substring(0, 1);
+        int horaFn = Integer.parseInt(newHfn);
+
+        //VALIDACION CITA DISPONIBLE
+        List<CitaTatto> citas = citaTattoRepository.findAll();
+        for (CitaTatto cita : citas) {
+            //SE TOMA EL PRIMERO DIGITO DE CADA HORA
+            String horaIni = cita.getHoraInicio();
+            String newHoraIni = horaIni.substring(0, 1);
+            int horaIm = Integer.parseInt(newHoraIni);
+
+            String horFin = cita.getHoraFin();
+            String newHoraFin = horFin.substring(0, 1);
+            int horFn = Integer.parseInt(newHoraFin);
+
+            if (
+                cita.getFechaCita().equals(citaTatto.getFechaCita()) &&
+                (
+                    !(horaIn <= horaIm && horaFn <= horaIm) &&
+                    (!(horaIn > horFn && horaFn > horFn)) ||
+                    citaTatto.getHora().equals(cita.getHora())
+                )
+            ) {
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                Date fech = Date.from(citaTatto.getFechaCita());
+                String fecha = format.format(fech);
+                mensajeValidacion.setMensaje(
+                    "No se puede agendar la cita para la fecha: ( " +
+                    fecha +
+                    " ) debido " +
+                    " ha que ya hay una cita agendada para esta fecha y hora."
+                );
+            } else {
+                mensajeValidacion.setMensaje(null);
+            }
+        }
+        return mensajeValidacion;
     }
 
     private void enviarCorreoConfirmacion(CitaTatto citaTattoo) {

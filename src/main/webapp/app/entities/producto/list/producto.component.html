@@ -103,13 +103,14 @@
               </button>
 
               <button
+                mat-menu-item
                 type="submit"
                 [routerLink]="['/producto', producto.id, 'edit']"
                 class="btn btn-dark aqua-text btn-sm"
                 data-cy="entityEditButton"
               >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <mat-icon aria-hidden="false" aria-label="Editar">edit_note</mat-icon>
+                <span>Editar</span>
               </button>
 
               <button

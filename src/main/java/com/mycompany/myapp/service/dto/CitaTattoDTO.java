@@ -25,10 +25,15 @@ public class CitaTattoDTO implements Serializable {
 
     private String estadoCita;
 
+    private String horaInicio;
+
+    private String horaFin;
+
     @Lob
     private byte[] fotoDiseno;
 
     private String fotoDisenoContentType;
+
     private BigDecimal valorTatto;
 
     private BigDecimal valorPagado;
@@ -53,6 +58,22 @@ public class CitaTattoDTO implements Serializable {
 
     public void setInfoCliente(String infoCliente) {
         this.infoCliente = infoCliente;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
     }
 
     public Instant getFechaCreacion() {

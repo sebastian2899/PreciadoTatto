@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.GaleriaFotos;
 import com.mycompany.myapp.service.dto.GaleriaFotosDTO;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,12 @@ public interface GaleriaFotosService {
      * Delete the "id" galeriaFotos.
      *
      * @param id the id of the entity.
+     *
      */
+
+    List<GaleriaFotosDTO> galeriaPorFiltro(GaleriaFotosDTO galeriaFotos);
+
+    List<GaleriaFotosDTO> galeriaFotosOrder(String tipoOrden);
+
     void delete(Long id);
 }

@@ -50,7 +50,13 @@
              <column name="info_cliente" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-              <column name="estadp_cita" type="varchar(255)">
+              <column name="estado_cita" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+              <column name="hora_inicio" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+              <column name="hora_fin" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

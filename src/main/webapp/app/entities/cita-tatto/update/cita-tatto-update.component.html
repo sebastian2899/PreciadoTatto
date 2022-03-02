@@ -32,7 +32,7 @@
                 class="form-control"
                 name="fechaCita"
                 formControlName="fechaCita"
-                placeholder="YYYY-MM-DD HH:mm"
+                placeholder="YYYY-MM-DD"
               />
             </div>
           </div>
@@ -41,7 +41,8 @@
         <div class="row">
           <div class="col-md-2 form-group">
             <label class="form-control-label text-black" jhiTranslate="preciadoTattoApp.citaTatto.hora" for="field_hora">Hora</label>
-            <input type="text" class="form-control" name="hora" id="field_hora" data-cy="hora" formControlName="hora" />
+            <input required type="text" class="form-control" name="hora" id="field_hora" data-cy="hora" formControlName="hora" />
+            <div class="alert alert-warning" *ngIf="editForm.get(['hora'])!.invalid">Obligatorio</div>
           </div>
           <div class="col-md-4 form-group">
             <label class="form-control-label text-black" for="field_emailCliente">Email Cliente (Opcional)</label>
@@ -103,7 +104,35 @@
           </div>
         </div>
 
-        <div class="row"></div>
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-2 form-group">
+            <label for="horaInicio" class="form-control-label text-black">Hora Inicio Tattoo</label>
+            <input
+              type="text"
+              class="form-control"
+              name="horaInicio"
+              id="field_horaInicio"
+              data-cy="horaInicio"
+              formControlName="horaInicio"
+              [required]="true"
+            />
+            <div class="alert alert-warning" *ngIf="editForm.get(['horaInicio'])!.invalid">Obligatorio</div>
+          </div>
+
+          <div class="col-md-2 form-group">
+            <label for="horaFin" class="form-control-label text-black">Hora Fin Tattoo</label>
+            <input
+              [required]="true"
+              type="text"
+              class="form-control"
+              name="horaFin"
+              id="field_horaFin"
+              data-cy="horaFin"
+              formControlName="horaFin"
+            />
+            <div class="alert alert-warning" *ngIf="editForm.get(['horaFin'])!.invalid">Obligatorio</div>
+          </div>
+        </div>
 
         <div class="row">
           <div class="col-md-6 form-group">
@@ -167,7 +196,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row d-flex justify-content-center">
           <div class="col-md-6 form-group text-black">
             <label class="form-control-label" jhiTranslate="preciadoTattoApp.citaTatto.descripcion" for="field_descripcion"
               >Descripcion</label
@@ -211,11 +240,12 @@
         </button>
 
         <button
-          type="submit"
+          type="button"
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving || saving"
           class="btn btn-dark aqua-text"
+          (click)="validarSave()"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
@@ -223,3 +253,15 @@
     </form>
   </div>
 </div>
+
+<ng-template #mensajeCitaTatto>
+  <div class="modal-header color-toggle">
+    <h4 class="modal-title text-black">Error</h4>
+  </div>
+  <div class="modal-body">
+    <div>{{ mensaje }}</div>
+  </div>
+  <div class="modal-footer color-toggle text-black">
+    <h4>Steven Preciado Tattoo</h4>
+  </div>
+</ng-template>

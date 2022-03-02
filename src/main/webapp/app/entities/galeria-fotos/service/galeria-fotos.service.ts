@@ -13,6 +13,8 @@ export type EntityArrayResponseType = HttpResponse<IGaleriaFotos[]>;
 @Injectable({ providedIn: 'root' })
 export class GaleriaFotosService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/galeria-fotos');
+  protected galeriaFiltros = this.applicationConfigService.getEndpointFor('api/galeriaFiltros');
+  protected galeriaPorOrden = this.applicationConfigService.getEndpointFor('api/galeriaSelect');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -36,9 +38,17 @@ export class GaleriaFotosService {
     return this.http.get<IGaleriaFotos>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  galeriaOrden(tipOrden: string): Observable<EntityArrayResponseType> {
+    return this.http.get<IGaleriaFotos[]>(`${this.galeriaPorOrden}/${tipOrden}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IGaleriaFotos[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  galeriaFiltro(disenio: IGaleriaFotos): Observable<EntityArrayResponseType> {
+    return this.http.post<IGaleriaFotos[]>(this.galeriaFiltros, disenio, { observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
