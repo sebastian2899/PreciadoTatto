@@ -10,6 +10,11 @@ import java.util.Objects;
  */
 public class CitaPerforacionDTO implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     private Long id;
 
     private Instant fechaCreacionInicial;
@@ -22,6 +27,12 @@ public class CitaPerforacionDTO implements Serializable {
 
     private String nombreCliente;
 
+    private String tipoCita;
+
+    private BigDecimal valorTotalDescuento;
+
+    private BigDecimal valorCaja;
+
     private BigDecimal valorPerforacion;
 
     private BigDecimal valorPagado;
@@ -29,6 +40,8 @@ public class CitaPerforacionDTO implements Serializable {
     private BigDecimal valorDeuda;
 
     private String estado;
+
+    private String estadoCita;
 
     public Long getId() {
         return id;
@@ -46,8 +59,40 @@ public class CitaPerforacionDTO implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
+    public String getEstadoCita() {
+        return estadoCita;
+    }
+
+    public void setEstadoCita(String estadoCita) {
+        this.estadoCita = estadoCita;
+    }
+
+    public BigDecimal getValorCaja() {
+        return valorCaja;
+    }
+
+    public void setValorCaja(BigDecimal valorCaja) {
+        this.valorCaja = valorCaja;
+    }
+
     public Instant getFechaCita() {
         return fechaCita;
+    }
+
+    public String getTipoCita() {
+        return tipoCita;
+    }
+
+    public void setTipoCita(String tipoCita) {
+        this.tipoCita = tipoCita;
+    }
+
+    public BigDecimal getValorTotalDescuento() {
+        return valorTotalDescuento;
+    }
+
+    public void setValorTotalDescuento(BigDecimal valorTotalDescuento) {
+        this.valorTotalDescuento = valorTotalDescuento;
     }
 
     public void setFechaCita(Instant fechaCita) {

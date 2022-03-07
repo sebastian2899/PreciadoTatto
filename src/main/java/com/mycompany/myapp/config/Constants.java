@@ -26,13 +26,24 @@ public final class Constants {
     public static final String CITA_TATTO_BASE = "SELECT c FROM CitaTatto c WHERE c.id IS NOT NULL";
     public static final String CITA_TATTO_NOMBRE = " AND UPPER(c.infoCliente) LIKE :nombre";
     public static final String CITA_TATTO_HORA = " AND c.hora = :hora";
+    public static final String CITA_TATTO_FECHA = "SELECT c FROM CitaTatto c WHERE TO_CHAR(fechaCita, 'yyyy-MM-dd')=:fechaCita";
 
     public static final String CITA_PERFORACION_BASE = "SELECT c FROM CitaPerforacion c WHERE c.id IS NOT NULL";
     public static final String CITA_PERFORACION_NOMBRE = " AND UPPER(c.nombreCliente) LIKE :nombre";
     public static final String CITA_PERFORACION_HORA = " AND (c.hora)=:hora";
+    public static final String CITA_PERFORACION_FECHA =
+        "SELECT c FROM CitaPerforacion c WHERE TO_CHAR(c.fechaCita,'yyyy-MM-dd')=:fechaCita";
+    public static final String ELIMINAR_ABONOS_POR_CITA = "DELETE FROM Abono WHERE idCita = :idCita";
 
     public static final String ELIMINAR_VALORES_CAJA_POR_CITA =
         "UPDATE CajaTattos SET valorTattoDia = valorTattoDia-:valorDescontar " + "WHERE TO_CHAR(fechaCreacion,'dd/MM/yyyy')=:fechaAbono";
+
+    public static final String ELIMINAR_VALORES_CAJA_POR_CITA_PERFO =
+        "UPDATE CajaIngresos SET valorVendidoDia = valorVendidoDia-:descontar" + " WHERE TO_CHAR(fechaCreacion,'dd/MM/yyyy') =:fechaCita";
+
+    // AND TO_CHAR(fechaCreacion,'dd/MM/yyyy') =:abonofechaPerfo
+
+    public static final String ELIMINAR_VALORES_CAJA_POR_CITA_PERFO_ABONO = " AND TO_CHAR(fechaCreacion,'dd/MM/yyyy') =:abonofechaPerfo";
 
     public static final String PRODUCTOS_AGOTADOS = "SELECT p FROM Producto p WHERE p.cantidad = 0";
 

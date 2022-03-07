@@ -41,6 +41,18 @@
              <column name="fecha_creacion_incial" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
+            <column name="tipo_cita" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="valor_total_descuento" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+             <column name="valor_caja" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+             <column name="estado_cita" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
        <!--  <dropDefaultValue tableName="cita_perforacion" columnName="fecha_creacion" columnDataType="${datetimeType}"/>

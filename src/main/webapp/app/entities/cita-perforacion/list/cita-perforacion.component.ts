@@ -6,6 +6,9 @@ import { CitaPerforacion, ICitaPerforacion } from '../cita-perforacion.model';
 import { CitaPerforacionService } from '../service/cita-perforacion.service';
 import { CitaPerforacionDeleteDialogComponent } from '../delete/cita-perforacion-delete-dialog.component';
 import { AlertService } from 'app/core/util/alert.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { Router } from '@angular/router';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'jhi-cita-perforacion',
@@ -15,10 +18,17 @@ export class CitaPerforacionComponent implements OnInit {
   citaPerforacions?: ICitaPerforacion[];
   citaPerforacion?: ICitaPerforacion;
   isLoading = false;
+  fechaCita?: dayjs.Dayjs | null;
   nombreCliente = '';
   hora = '';
 
-  constructor(protected citaPerforacionService: CitaPerforacionService, protected modalService: NgbModal, protected alert: AlertService) {}
+  constructor(
+    protected citaPerforacionService: CitaPerforacionService,
+    protected modalService: NgbModal,
+    protected alert: AlertService,
+    protected sotagre: StateStorageService,
+    protected route: Router
+  ) {}
 
   loadAll(): void {
     this.isLoading = false;
@@ -39,7 +49,6 @@ export class CitaPerforacionComponent implements OnInit {
     this.citaPerforacion = new CitaPerforacion();
     this.citaPerforacion.nombreCliente = this.nombreCliente;
     this.citaPerforacion.hora = this.hora;
-
     this.citaPerforacionService.cirasPorFiltro(this.citaPerforacion).subscribe(
       (res: HttpResponse<ICitaPerforacion[]>) => {
         this.isLoading = false;
@@ -49,6 +58,19 @@ export class CitaPerforacionComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  consultarCitasPorFecha(): void {
+    if (this.fechaCita) {
+      this.citaPerforacionService.citasPorFecha(this.fechaCita.toString()).subscribe(
+        (res: HttpResponse<ICitaPerforacion[]>) => {
+          this.citaPerforacions = res.body ?? [];
+        },
+        () => {
+          this.citaPerforacions = [];
+        }
+      );
+    }
   }
 
   generarReporteMensual(): void {
@@ -65,6 +87,16 @@ export class CitaPerforacionComponent implements OnInit {
         });
       }
     );
+  }
+
+  realizarAbono(idCita: number): void {
+    this.sotagre.pasoParametroCita(idCita);
+    this.route.navigate(['abono/new']);
+  }
+
+  pasoParametroVerAbonos(idCita: number): void {
+    this.sotagre.pasoParametroCita(idCita);
+    this.route.navigate(['abono']);
   }
 
   ngOnInit(): void {

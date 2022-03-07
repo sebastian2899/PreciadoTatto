@@ -12,6 +12,8 @@ import { IAbono, Abono } from '../abono.model';
 import { AbonoService } from '../service/abono.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { AlertService } from 'app/core/util/alert.service';
+import { CitaPerforacionService } from 'app/entities/cita-perforacion/service/cita-perforacion.service';
+import { ICitaPerforacion } from 'app/entities/cita-perforacion/cita-perforacion.model';
 
 @Component({
   selector: 'jhi-abono-update',
@@ -21,6 +23,11 @@ export class AbonoUpdateComponent implements OnInit {
   isSaving = false;
   idCita?: number | null;
   desBoton?: boolean | null;
+  consultarCitaPerf?: boolean | null;
+  citaPerfo?: ICitaPerforacion | null;
+  resp?: number | null;
+  valorCaja = 0;
+  valorMafe = 0;
 
   editForm = this.fb.group({
     id: [],
@@ -35,7 +42,8 @@ export class AbonoUpdateComponent implements OnInit {
     private storage: StateStorageService,
     protected abonoService: AbonoService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected citaPerforacionService: CitaPerforacionService
   ) {}
 
   ngOnInit(): void {
@@ -48,12 +56,55 @@ export class AbonoUpdateComponent implements OnInit {
 
       if (this.idCita) {
         this.consultarValorDeuda(this.idCita);
+        this.consultarAbonoPerforacion(this.idCita);
       }
     });
   }
 
   previousState(): void {
     window.history.back();
+  }
+
+  consultarAbonoPerforacion(id: number): void {
+    this.citaPerforacionService.consulTipoCita(Number(id)).subscribe((res: HttpResponse<number>) => {
+      this.resp = res.body;
+      if (Number(this.resp) === Number(1)) {
+        this.consultarCitaPerf = true;
+        this.alert.addAlert({
+          type: 'success',
+          message: 'Abono destinado a Cita:  (Maria Fernanda)',
+        });
+      } else if (Number(this.resp) === Number(2)) {
+        this.consultarCitaPerf = false;
+        this.alert.addAlert({
+          type: 'success',
+          message: 'Abono destinado a Cita (Steven Preciado)',
+        });
+      }
+    });
+  }
+
+  calcularDescuentos(): void {
+    if (this.consultarCitaPerf && this.resp === 1) {
+      this.citaPerforacionService.find(this.idCita!).subscribe((res: HttpResponse<ICitaPerforacion>) => {
+        this.citaPerfo = res.body;
+
+        const valorAbono = this.editForm.get(['valorAbono'])!.value;
+        if (this.citaPerfo?.tipoCita === 'Cita Tattoo') {
+          const DESCUENTO = 30;
+          this.valorCaja = (valorAbono * DESCUENTO) / 100;
+          this.valorMafe = valorAbono - this.valorCaja;
+        } else if (this.citaPerfo?.tipoCita === 'Cita Perforacion') {
+          const DESCUENTO = 50;
+          this.valorCaja = (valorAbono * DESCUENTO) / 100;
+          this.valorMafe = valorAbono - this.valorCaja;
+        }
+        if (valorAbono === 0 || valorAbono === null) {
+          this.valorCaja = 0;
+          this.valorMafe = 0;
+        }
+      });
+    }
   }
 
   consultarValorDeuda(idCita: number): void {

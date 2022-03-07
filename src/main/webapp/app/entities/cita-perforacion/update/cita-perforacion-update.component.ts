@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -11,14 +11,23 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ICitaPerforacion, CitaPerforacion } from '../cita-perforacion.model';
 import { CitaPerforacionService } from '../service/cita-perforacion.service';
 import { AlertService } from 'app/core/util/alert.service';
+import { IMensajeValidacionCita } from 'app/entities/cita-tatto/mensaje-validacion';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'jhi-cita-perforacion-update',
   templateUrl: './cita-perforacion-update.component.html',
 })
 export class CitaPerforacionUpdateComponent implements OnInit {
+  @ViewChild('mensajeValidacion', { static: true }) content: ElementRef | undefined;
+
   isSaving = false;
   titulo = 'Actualizar cita perforacion';
+  tipoDeCitas = ['Cita Perforacion', 'Cita Tattoo'];
+  valorMafe?: number | null;
+  valorCaja?: number | null;
+  mensajeValidacion?: IMensajeValidacionCita | null;
+  mensaje?: string | null;
 
   editForm = this.fb.group({
     id: [],
@@ -26,7 +35,11 @@ export class CitaPerforacionUpdateComponent implements OnInit {
     fechaCita: [],
     hora: [],
     nombreCliente: [],
+    valorTotalDescueto: [],
+    tipoCita: [],
     valorPerforacion: [],
+    valorTotalDescuento: [],
+    valorCaja: [],
     valorPagado: [],
     valorDeuda: [],
     estado: [],
@@ -36,7 +49,8 @@ export class CitaPerforacionUpdateComponent implements OnInit {
     protected citaPerforacionService: CitaPerforacionService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
-    private alert: AlertService
+    private alert: AlertService,
+    protected modal: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +68,46 @@ export class CitaPerforacionUpdateComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  calcularDescuentos(): void {
+    const valorPagado = this.editForm.get(['valorPagado'])!.value;
+    const tipoCita = this.editForm.get(['tipoCita'])!.value;
+    if (valorPagado) {
+      if (tipoCita === 'Cita Perforacion') {
+        const DESCUENTO = 50;
+        const VALOR_DESCONTAR = (valorPagado * DESCUENTO) / 100;
+        this.valorCaja = VALOR_DESCONTAR;
+        this.valorMafe = valorPagado - VALOR_DESCONTAR;
+        this.editForm.get(['valorCaja'])?.setValue(this.valorCaja);
+        this.editForm.get(['valorTotalDescuento'])?.setValue(this.valorMafe);
+      } else if (tipoCita === 'Cita Tattoo') {
+        const DESCUENTO = 30;
+        const VALOR_DESCONTAR = (valorPagado * DESCUENTO) / 100;
+        this.valorCaja = VALOR_DESCONTAR;
+        this.valorMafe = valorPagado - VALOR_DESCONTAR;
+        this.editForm.get(['valorCaja'])?.setValue(this.valorCaja);
+        this.editForm.get(['valorTotalDescuento'])?.setValue(this.valorMafe);
+      }
+    } else if (valorPagado === 0 || valorPagado === null) {
+      this.valorCaja = 0;
+      this.valorMafe = 0;
+    }
+  }
+
+  validarFechaSave(): void {
+    this.isSaving = true;
+    const citaPerforacio = this.createFromForm();
+    this.citaPerforacionService.validarCitaSave(citaPerforacio).subscribe((res: HttpResponse<IMensajeValidacionCita>) => {
+      this.mensajeValidacion = res.body;
+      if (this.mensajeValidacion?.mensaje) {
+        this.mensaje = this.mensajeValidacion.mensaje;
+        this.modal.open(this.content);
+        this.isSaving = false;
+      } else {
+        this.save();
+      }
+    });
   }
 
   save(): void {
@@ -119,8 +173,11 @@ export class CitaPerforacionUpdateComponent implements OnInit {
       fechaCita: citaPerforacion.fechaCita ? citaPerforacion.fechaCita.format(DATE_TIME_FORMAT) : null,
       hora: citaPerforacion.hora,
       nombreCliente: citaPerforacion.nombreCliente,
+      tipCita: citaPerforacion.tipoCita,
       valorPerforacion: citaPerforacion.valorPerforacion,
       valorPagado: citaPerforacion.valorPagado,
+      valorTotalDescuento: citaPerforacion.valorTotalDescuento,
+      valorCaja: citaPerforacion.valorCaja,
       valorDeuda: citaPerforacion.valorDeuda,
       estado: citaPerforacion.estado,
     });
@@ -136,6 +193,9 @@ export class CitaPerforacionUpdateComponent implements OnInit {
       fechaCita: this.editForm.get(['fechaCita'])!.value ? dayjs(this.editForm.get(['fechaCita'])!.value, DATE_TIME_FORMAT) : undefined,
       hora: this.editForm.get(['hora'])!.value,
       nombreCliente: this.editForm.get(['nombreCliente'])!.value,
+      tipoCita: this.editForm.get(['tipoCita'])!.value,
+      valorTotalDescuento: this.editForm.get(['valorTotalDescuento'])!.value,
+      valorCaja: this.editForm.get(['valorCaja'])!.value,
       valorPerforacion: this.editForm.get(['valorPerforacion'])!.value,
       valorPagado: this.editForm.get(['valorPagado'])!.value,
       valorDeuda: this.editForm.get(['valorDeuda'])!.value,

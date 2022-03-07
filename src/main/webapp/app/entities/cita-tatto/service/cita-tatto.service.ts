@@ -22,6 +22,7 @@ export class CitaTattoService {
   protected citaPorFiltros = this.applicationConfigService.getEndpointFor('api/citaTattoFiltro');
   protected genReport = this.applicationConfigService.getEndpointFor('api/generarReport');
   protected validarCita = this.applicationConfigService.getEndpointFor('api/validarCita');
+  protected citasPorFecha = this.applicationConfigService.getEndpointFor('api/citasPorFecha');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -61,6 +62,12 @@ export class CitaTattoService {
 
   validarFechaCita(citaTatto: ICitaTatto): Observable<MensjaeValidacionType> {
     return this.http.post<IMensajeValidacionCita>(this.validarCita, citaTatto, { observe: 'response' });
+  }
+
+  cPorFecha(fechaCita: string): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<ICitaTatto[]>(`${this.citasPorFecha}/${fechaCita}`, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   generarReporte(): Observable<any> {

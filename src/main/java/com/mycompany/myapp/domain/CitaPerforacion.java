@@ -32,11 +32,17 @@ public class CitaPerforacion implements Serializable {
     @Column(name = "fecha_cita")
     private Instant fechaCita;
 
+    @Column(name = "tipo_cita")
+    private String tipoCita;
+
     @Column(name = "hora")
     private String hora;
 
     @Column(name = "nombre_cliente")
     private String nombreCliente;
+
+    @Column(name = "valor_total_descuento", precision = 21, scale = 2)
+    private BigDecimal valorTotalDescuento;
 
     @Column(name = "valor_perforacion", precision = 21, scale = 2)
     private BigDecimal valorPerforacion;
@@ -44,11 +50,17 @@ public class CitaPerforacion implements Serializable {
     @Column(name = "valor_pagado", precision = 21, scale = 2)
     private BigDecimal valorPagado;
 
+    @Column(name = "valor_caja", precision = 21, scale = 2)
+    private BigDecimal valorCaja;
+
     @Column(name = "valor_deuda", precision = 21, scale = 2)
     private BigDecimal valorDeuda;
 
     @Column(name = "estado")
     private String estado;
+
+    @Column(name = "estado_cita")
+    private String estadoCita;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -69,8 +81,40 @@ public class CitaPerforacion implements Serializable {
         return this;
     }
 
+    public BigDecimal getValorCaja() {
+        return valorCaja;
+    }
+
+    public void setValorCaja(BigDecimal valorCaja) {
+        this.valorCaja = valorCaja;
+    }
+
+    public String getEstadoCita() {
+        return estadoCita;
+    }
+
+    public void setEstadoCita(String estadoCita) {
+        this.estadoCita = estadoCita;
+    }
+
+    public String getTipoCita() {
+        return tipoCita;
+    }
+
+    public void setTipoCita(String tipoCita) {
+        this.tipoCita = tipoCita;
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigDecimal getValorTotalDescuento() {
+        return valorTotalDescuento;
+    }
+
+    public void setValorTotalDescuento(BigDecimal valorTotalDescuento) {
+        this.valorTotalDescuento = valorTotalDescuento;
     }
 
     public Instant getFechaCreacion() {

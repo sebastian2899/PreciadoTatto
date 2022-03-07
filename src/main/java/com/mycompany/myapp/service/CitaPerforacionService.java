@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.service.dto.CitaPerforacionDTO;
+import com.mycompany.myapp.service.dto.MensajeValidacionCitaDTO;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -52,4 +53,10 @@ public interface CitaPerforacionService {
     List<CitaPerforacionDTO> findCitasToday();
 
     List<CitaPerforacionDTO> citasPerfoPorFiltro(CitaPerforacionDTO citaPerfo);
+
+    int consultarTipoCita(Long id);
+
+    MensajeValidacionCitaDTO mensajeValidacion(CitaPerforacionDTO citaPerforacionDTO);
+
+    List<CitaPerforacionDTO> citasPorFecha(String fechaCita);
 }

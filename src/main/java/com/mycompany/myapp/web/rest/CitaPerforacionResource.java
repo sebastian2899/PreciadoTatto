@@ -3,6 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.repository.CitaPerforacionRepository;
 import com.mycompany.myapp.service.CitaPerforacionService;
 import com.mycompany.myapp.service.dto.CitaPerforacionDTO;
+import com.mycompany.myapp.service.dto.MensajeValidacionCitaDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -68,6 +69,15 @@ public class CitaPerforacionResource {
         List<CitaPerforacionDTO> citas = citaPerforacionService.citasPerfoPorFiltro(citaPerfo);
 
         return ResponseEntity.ok().body(citas);
+    }
+
+    @PostMapping("/mensajeValidacion")
+    public ResponseEntity<MensajeValidacionCitaDTO> mensajeValidacion(@RequestBody CitaPerforacionDTO citaPerforacionDTO) {
+        log.debug("REST request to get validation message");
+
+        MensajeValidacionCitaDTO mensaje = citaPerforacionService.mensajeValidacion(citaPerforacionDTO);
+
+        return ResponseEntity.ok().body(mensaje);
     }
 
     /**
@@ -149,6 +159,18 @@ public class CitaPerforacionResource {
     public List<CitaPerforacionDTO> getAllCitaPerforacions() {
         log.debug("REST request to get all CitaPerforacions");
         return citaPerforacionService.findAll();
+    }
+
+    @GetMapping("/citasQueryPorFecha/{fechaCita}")
+    public List<CitaPerforacionDTO> citasPorFecha(@PathVariable String fechaCita) {
+        log.debug("REST request to get all citas perforacion per date", fechaCita);
+        return citaPerforacionService.citasPorFecha(fechaCita);
+    }
+
+    @GetMapping("/consultarTipoCita/{id}")
+    public int getConsultarTipoCita(@PathVariable Long id) {
+        log.debug("REST request to get Cita type");
+        return citaPerforacionService.consultarTipoCita(id);
     }
 
     @GetMapping("/cita-perforacions-day")

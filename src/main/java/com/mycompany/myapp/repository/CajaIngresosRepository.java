@@ -15,8 +15,14 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface CajaIngresosRepository extends JpaRepository<CajaIngresos, Long> {
-    @Query("SELECT SUM(c.valorPagado) FROM CitaPerforacion c WHERE TO_CHAR(c.fechaCreacion, 'dd/MM/yyyy')=:fecha")
+    @Query("SELECT SUM(c.valorCaja) FROM CitaPerforacion c WHERE TO_CHAR(c.fechaCreacion, 'dd/MM/yyyy')=:fecha")
     BigDecimal valorCitas(@Param("fecha") String fecha);
+
+    @Query(
+        "SELECT SUM(a.valorAbono) FROM Abono a WHERE TO_CHAR(a.fechaAbono, 'dd/MM/yyyy') =:fecha" +
+        " AND (a.tipoCita = 'Cita Tattoo' OR a.tipoCita = 'Cita Perforacion')"
+    )
+    BigDecimal valorTotalAbonos(@Param("fecha") String fecha);
 
     @Query("SELECT SUM(v.valorVenta) FROM Ventas v WHERE TO_CHAR(v.fechaCreacion, 'dd/MM/yyyy') =:fecha")
     BigDecimal valorVentaDia(@Param("fecha") String fecha);

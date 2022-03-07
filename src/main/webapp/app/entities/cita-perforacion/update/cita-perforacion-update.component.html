@@ -48,6 +48,21 @@
               />
             </div>
           </div>
+
+          <div class="col-md-4 form-group">
+            <label for="tipoCita" class="form-control-label text-black">Tipo De Cita</label>
+            <select
+              (blur)="calcularDescuentos()"
+              class="form-control"
+              name="tipoCita"
+              type="text"
+              id="tipoCita"
+              formControlName="tipoCita"
+              data-cy="tipoCita"
+            >
+              <option [value]="tipo" *ngFor="let tipo of tipoDeCitas">{{ tipo }}</option>
+            </select>
+          </div>
         </div>
 
         <div class="row">
@@ -99,6 +114,7 @@
             >
             <input
               (keyup)="calcularValores()"
+              (keyup)="calcularDescuentos()"
               type="number"
               class="form-control"
               name="valorPagado"
@@ -106,6 +122,22 @@
               data-cy="valorPagado"
               formControlName="valorPagado"
             />
+            <div style="margin-top: 5px" *ngIf="valorCaja! > 0 && valorMafe! > 0">
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Valor A Caja</th>
+                    <th scope="col">Ganancia Maria Fernanda</th>
+                  </tr>
+                </thead>
+                <tbody style="background-color: rgb(255, 255, 255)">
+                  <tr>
+                    <td style="color: black">{{ valorCaja }}</td>
+                    <td style="color: black">{{ valorMafe }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -148,7 +180,7 @@
         </button>
 
         <button
-          type="submit"
+          (click)="validarFechaSave()"
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
@@ -160,3 +192,15 @@
     </form>
   </div>
 </div>
+
+<ng-template #mensajeValidacion>
+  <div class="modal-header color-toggle">
+    <h4 class="modal-title text-black">Error</h4>
+  </div>
+  <div class="modal-body">
+    <div>{{ mensaje }}</div>
+  </div>
+  <div class="modal-footer color-toggle text-black">
+    <h4>Steven Preciado Tattoo</h4>
+  </div>
+</ng-template>

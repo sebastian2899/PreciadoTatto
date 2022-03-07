@@ -9,18 +9,23 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.events.IndexEvents.Entry;
 import com.mycompany.myapp.config.Constants;
+import com.mycompany.myapp.domain.Abono;
 import com.mycompany.myapp.domain.CitaPerforacion;
+import com.mycompany.myapp.domain.CitaTatto;
+import com.mycompany.myapp.repository.AbonoRepository;
 import com.mycompany.myapp.repository.CitaPerforacionRepository;
+import com.mycompany.myapp.repository.CitaTattoRepository;
 import com.mycompany.myapp.service.CitaPerforacionService;
 import com.mycompany.myapp.service.dto.CitaPerforacionDTO;
+import com.mycompany.myapp.service.dto.MensajeValidacionCitaDTO;
 import com.mycompany.myapp.service.mapper.CitaPerforacionMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,8 +36,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.apache.commons.io.FileUtils;
+import org.mapstruct.ap.shaded.freemarker.template.SimpleDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,12 +56,23 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
 
     private final CitaPerforacionMapper citaPerforacionMapper;
 
+    private final AbonoRepository abonoRepository;
+
+    private final CitaTattoRepository citaTattoRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
-    public CitaPerforacionServiceImpl(CitaPerforacionRepository citaPerforacionRepository, CitaPerforacionMapper citaPerforacionMapper) {
+    public CitaPerforacionServiceImpl(
+        CitaPerforacionRepository citaPerforacionRepository,
+        AbonoRepository abonoRepository,
+        CitaPerforacionMapper citaPerforacionMapper,
+        CitaTattoRepository citaTattoRepository
+    ) {
         this.citaPerforacionRepository = citaPerforacionRepository;
         this.citaPerforacionMapper = citaPerforacionMapper;
+        this.abonoRepository = abonoRepository;
+        this.citaTattoRepository = citaTattoRepository;
     }
 
     @Override
@@ -62,6 +80,12 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
         log.debug("Request to save CitaPerforacion : {}", citaPerforacionDTO);
         CitaPerforacion citaPerforacion = citaPerforacionMapper.toEntity(citaPerforacionDTO);
         citaPerforacion.setFechaCreacionInicial(Instant.now());
+
+        if (citaPerforacion.getFechaCita().isAfter(Instant.now())) {
+            citaPerforacion.setEstadoCita("Pendiente");
+        } else {
+            citaPerforacion.setEstadoCita("Finalizada.");
+        }
 
         citaPerforacion.setEstado("Deuda");
 
@@ -76,6 +100,7 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
         }
 
         citaPerforacion = citaPerforacionRepository.save(citaPerforacion);
+
         return citaPerforacionMapper.toDto(citaPerforacion);
     }
 
@@ -159,9 +184,165 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
     }
 
     @Override
+    @Transactional
+    public int consultarTipoCita(Long id) {
+        log.debug("Request to get cita type");
+
+        CitaPerforacion citaPerfo = citaPerforacionRepository.citaPorId(id);
+
+        CitaTatto citaTattoo = citaTattoRepository.citaById(id);
+        int resp = 0;
+
+        // SI EXISTE LA CITA PERFORACION CON EL ID ENVIADO, SE RETORNA UN 1
+        if (citaPerfo != null) {
+            return 1;
+        }
+
+        // SI EXISTE LA CITA TATTOO CON EL ID ENVIADO, SE RETORNA UN 2
+        if (citaTattoo != null) {
+            resp = 2;
+        }
+
+        return resp;
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete CitaPerforacion : {}", id);
+
+        CitaPerforacion citaPerfo = citaPerforacionRepository.citaPorId(id);
+        StringBuilder sb = new StringBuilder();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        Map<String, Object> filtros = new HashMap<>();
+
+        List<Abono> abonosPorCita = abonoRepository.abonosPorCita(id);
+
+        BigDecimal valorTotalDescontar = BigDecimal.ZERO;
+
+        /*
+         * SE VALIDA QUE EXISTA UNA FECHA DE CREACION DE LA CITA DONDE HAYA SIDO PAGADA Y SE VALIDA QUE EXISTA UN VALOR PAGADO.
+         * SE AGREGA AL MAPA EL NOMBRE Y EL VALOR DE EL PARAMETRO QUE IRA A LA CONSULTA
+         */
+
+        if (citaPerfo.getFechaCreacion() != null) {
+            Date fechaDate = Date.from(citaPerfo.getFechaCreacion());
+            String fecha = format.format(fechaDate);
+            filtros.put("fechaCita", fecha);
+        }
+
+        if (citaPerfo.getValorCaja() != null && !(citaPerfo.getValorCaja().equals(new BigDecimal(0)))) {
+            valorTotalDescontar = valorTotalDescontar.add(citaPerfo.getValorCaja());
+            filtros.put("descontar", valorTotalDescontar);
+        }
+
+        //CON LOS VALORES RECOLECTADOS POR LA VALIDACION SE AGREGA AL STRING BUILDER LA CONSULTA QUE RESTARA LOS VALORES A LA CAJA.
+        sb.append(Constants.ELIMINAR_VALORES_CAJA_POR_CITA_PERFO);
+
+        //SI EXISTE ALGUN ABONO REFERENTE A LA CITA
+        if (abonosPorCita != null) {
+            for (Abono abono : abonosPorCita) {
+                if (abono.getValorAbono() != null && !(abono.getValorAbono().equals(new BigDecimal(0)))) {
+                    valorTotalDescontar.add(citaPerfo.getValorCaja());
+                    filtros.put("descontar", valorTotalDescontar);
+                }
+
+                if (abono.getFechaAbono() != null) {
+                    Date dateFecha = Date.from(abono.getFechaAbono());
+                    String fechaAbono = format.format(dateFecha);
+                    sb.append(Constants.ELIMINAR_VALORES_CAJA_POR_CITA_PERFO_ABONO);
+                    filtros.put("abonofechaPerfo", fechaAbono);
+                }
+            }
+        }
+
+        Query qu = entityManager.createQuery(sb.toString());
+        for (Map.Entry<String, Object> filtro : filtros.entrySet()) {
+            qu.setParameter(filtro.getKey(), filtro.getValue());
+        }
+
+        qu.executeUpdate();
+
+        Query q = entityManager.createQuery(Constants.ELIMINAR_ABONOS_POR_CITA).setParameter("idCita", id);
+
+        q.executeUpdate();
+
         citaPerforacionRepository.deleteById(id);
+    }
+
+    @Scheduled(cron = "0 0 8 * * *")
+    //0 0 8 * * *
+    public void cambiarEstadoCita() {
+        log.debug("Request to change state cita");
+
+        List<CitaPerforacion> citas = citaPerforacionRepository.findAll();
+        Instant fechaActual = Instant.now();
+
+        for (CitaPerforacion cita : citas) {
+            if (cita.getFechaCita().isAfter(fechaActual)) {
+                cita.setEstadoCita("Pendiente");
+            } else {
+                cita.setEstadoCita("Finalizada");
+            }
+
+            citaPerforacionRepository.save(cita);
+        }
+    }
+
+    @Override
+    public MensajeValidacionCitaDTO mensajeValidacion(CitaPerforacionDTO citaPerforacionDTO) {
+        log.debug("Request to validation save Cita Perforacion");
+
+        MensajeValidacionCitaDTO mensaje = new MensajeValidacionCitaDTO();
+        //SE FORMATEA LA HORA DEL TATTO PARA RECUPERAR SOLO EL PRIMER DIGITO PARA COMPARARLO DESPUES.
+        /*
+         * String horaC = citaPerforacionDTO.getHora().substring(0,1); int horaCita =
+         * Integer.parseInt(horaC);
+         */
+
+        //SE RECUPERAN TODAS LAS CITAS DE MARIA FERNANDA QUE EXISTAN PARA VALIDAR CADA CITA CON LA NUEVA CITA QUE NOS ESTA LLEGANDO
+        List<CitaPerforacion> citasPerfo = citaPerforacionRepository.findAll();
+
+        //SE HACE LA VALIDACION CORRESPONDIENTE
+        for (CitaPerforacion cita : citasPerfo) {
+            /*
+             * String hCita = cita.getHora().substring(0,1); int hCitaInt =
+             * Integer.parseInt(hCita);
+             */
+
+            if (
+                cita.getFechaCita().equals(citaPerforacionDTO.getFechaCita()) &&
+                cita.getHora().equalsIgnoreCase(citaPerforacionDTO.getHora())
+            ) {
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                Date date = Date.from(cita.getFechaCita());
+                String fecha = format.format(date);
+                mensaje.setMensaje(
+                    "No se puede crear la cita para la fecha " +
+                    fecha +
+                    " debido a que ya hay una cita existente para" +
+                    " esta fecha y hora ingresada ( " +
+                    cita.getHora() +
+                    " ) Por favor ingrese una fecha valida para la creacion de la cita."
+                );
+            }
+        }
+
+        return mensaje;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CitaPerforacionDTO> citasPorFecha(String fechaCita) {
+        log.debug("Request to get citas per date");
+
+        String fecha = fechaCita.substring(0, fechaCita.indexOf("T"));
+
+        Query q = entityManager.createQuery(Constants.CITA_PERFORACION_FECHA).setParameter("fechaCita", fecha);
+
+        List<CitaPerforacion> citasPorFecha = q.getResultList();
+
+        return citaPerforacionMapper.toDto(citasPorFecha);
     }
 
     public byte[] generarReporteCitasPerfo() {

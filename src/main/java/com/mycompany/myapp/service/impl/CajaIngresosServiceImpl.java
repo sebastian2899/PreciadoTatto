@@ -88,7 +88,6 @@ public class CajaIngresosServiceImpl implements CajaIngresosService {
         String fechaActual = format.format(new Date());
 
         BigDecimal valorPerfo = cajaIngresosRepository.valorCitas(fechaActual);
-
         if (valorPerfo == null) {
             valorPerfo = BigDecimal.ZERO;
         }
@@ -99,7 +98,12 @@ public class CajaIngresosServiceImpl implements CajaIngresosService {
             valorVenta = BigDecimal.ZERO;
         }
 
-        BigDecimal valorTotal = valorPerfo.add(valorVenta);
+        BigDecimal valorAbonos = cajaIngresosRepository.valorTotalAbonos(fechaActual);
+        if (valorAbonos == null) {
+            valorAbonos = BigDecimal.ZERO;
+        }
+
+        BigDecimal valorTotal = valorPerfo.add(valorAbonos).add(valorVenta);
 
         return valorTotal;
     }

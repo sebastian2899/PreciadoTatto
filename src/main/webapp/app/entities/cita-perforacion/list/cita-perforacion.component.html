@@ -31,8 +31,21 @@
         />
       </div>
 
+      <div class="col-md-2 form-group">
+        <label style="font-size: 13px" class="form-control-label aqua-text" for="field_fechaCita">Consultar Por Fecha</label>
+        <input
+          (keyup)="consultarCitaPorFiltro()"
+          type="datetime-local"
+          class="form-control"
+          name="fechaCita"
+          rarid="field_fechaCita"
+          data-cy="fechaCita"
+          [(ngModel)]="fechaCita"
+        />
+      </div>
+
       <div class="col-md-3">
-        <button style="margin-top: 45px" id="jh-create-entity" class="btn btn-dark aqua-text" (click)="consultarCitaPorFiltro()">
+        <button style="margin-top: 48px" id="jh-create-entity" class="btn btn-dark aqua-text" (click)="consultarCitasPorFecha()">
           <span> Filtrar </span>
         </button>
       </div>
@@ -111,6 +124,27 @@
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button
+                type="submit"
+                (click)="pasoParametroVerAbonos(citaPerforacion.id!)"
+                class="btn btn-dark aqua-text btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Consultar Abonos</span>
+              </button>
+
+              <button
+                *ngIf="citaPerforacion.valorDeuda! > 0"
+                type="button"
+                (click)="realizarAbono(citaPerforacion.id!)"
+                class="btn btn-dark aqua-text btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Abonar</span>
               </button>
 
               <button type="submit" (click)="delete(citaPerforacion)" class="btn btn-dark aqua-text btn-sm" data-cy="entityDeleteButton">

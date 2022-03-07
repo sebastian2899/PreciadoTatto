@@ -18,6 +18,8 @@ public class AbonoDTO implements Serializable {
 
     private BigDecimal valorAbono;
 
+    private String tipoCita;
+
     public Long getId() {
         return id;
     }
@@ -32,6 +34,14 @@ public class AbonoDTO implements Serializable {
 
     public void setFechaAbono(Instant fechaAbono) {
         this.fechaAbono = fechaAbono;
+    }
+
+    public String getTipoCita() {
+        return tipoCita;
+    }
+
+    public void setTipoCita(String tipoCita) {
+        this.tipoCita = tipoCita;
     }
 
     public Long getIdCita() {

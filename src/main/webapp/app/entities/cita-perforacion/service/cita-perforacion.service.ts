@@ -8,9 +8,12 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICitaPerforacion, getCitaPerforacionIdentifier } from '../cita-perforacion.model';
+import { IMensajeValidacionCita } from 'app/entities/cita-tatto/mensaje-validacion';
 
 export type EntityResponseType = HttpResponse<ICitaPerforacion>;
 export type EntityArrayResponseType = HttpResponse<ICitaPerforacion[]>;
+export type NumberType = HttpResponse<number>;
+export type MensajeValidacionType = HttpResponse<IMensajeValidacionCita>;
 
 @Injectable({ providedIn: 'root' })
 export class CitaPerforacionService {
@@ -18,6 +21,9 @@ export class CitaPerforacionService {
   protected resourceUrlDay = this.applicationConfigService.getEndpointFor('api/cita-perforacions-day');
   protected citasPorFiltros = this.applicationConfigService.getEndpointFor('api/citaPerfoFiltro');
   protected reporteCita = this.applicationConfigService.getEndpointFor('api/generarReportePerfo');
+  protected consultarTipoCita = this.applicationConfigService.getEndpointFor('api/consultarTipoCita');
+  protected mensajeValidacion = this.applicationConfigService.getEndpointFor('api/mensajeValidacion');
+  protected queryPorFecha = this.applicationConfigService.getEndpointFor('api/citasQueryPorFecha');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -26,6 +32,11 @@ export class CitaPerforacionService {
     return this.http
       .post<ICitaPerforacion>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  validarCitaSave(citaPerforacion: ICitaPerforacion): Observable<MensajeValidacionType> {
+    const copy = this.convertDateFromClient(citaPerforacion);
+    return this.http.post<IMensajeValidacionCita>(this.mensajeValidacion, copy, { observe: 'response' });
   }
 
   cirasPorFiltro(resp2: any): Observable<EntityArrayResponseType> {
@@ -57,6 +68,14 @@ export class CitaPerforacionService {
     return this.http
       .get<ICitaPerforacion>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  citasPorFecha(fechaCita: string): Observable<EntityArrayResponseType> {
+    return this.http.get<ICitaPerforacion[]>(`${this.queryPorFecha}/${fechaCita}`, { observe: 'response' });
+  }
+
+  consulTipoCita(id: number): Observable<NumberType> {
+    return this.http.get<number>(`${this.consultarTipoCita}/${id}`, { observe: 'response' });
   }
 
   generarReporte(): Observable<any> {

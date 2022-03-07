@@ -32,6 +32,9 @@ public class Abono implements Serializable {
     @Column(name = "valor_abono", precision = 21, scale = 2)
     private BigDecimal valorAbono;
 
+    @Column(name = "tipo_cita")
+    private String tipoCita;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -45,6 +48,14 @@ public class Abono implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTipoCita() {
+        return tipoCita;
+    }
+
+    public void setTipoCita(String tipoCita) {
+        this.tipoCita = tipoCita;
     }
 
     public Instant getFechaAbono() {

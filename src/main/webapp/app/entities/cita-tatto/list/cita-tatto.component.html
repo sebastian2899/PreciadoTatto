@@ -31,6 +31,19 @@
         />
       </div>
 
+      <div class="col-md-2 form-group">
+        <label style="font-size: 13px" class="form-control-label aqua-text" for="field_fechaFin">Consultar fechas</label>
+        <input
+          id="field_fechaFin"
+          data-cy="fechaFin"
+          type="datetime-local"
+          class="form-control"
+          name="fechaFin"
+          [(ngModel)]="fechaTatto"
+          placeholder="YYYY"
+        />
+      </div>
+
       <div class="col-md-3">
         <button style="margin-top: 45px" id="jh-create-entity" class="btn btn-dark aqua-text" (click)="consultarCitaFiltro()">
           <span> Filtrar </span>
@@ -72,8 +85,6 @@
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCreacion">Fecha Creacion</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fechaCita">Fecha Cita</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.hora">Hora</span></th>
-          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.emailCliente">Email Cliente</span></th>
-          <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.fotoDiseno">Foto Diseno</span></th>
           <th class="text-black" scope="col"><span>Hora Inicio</span></th>
           <th class="text-black" scope="col"><span>Hora Fin</span></th>
           <th class="text-black" scope="col"><span jhiTranslate="preciadoTattoApp.citaTatto.valorTatto">Valor Tatto</span></th>
@@ -90,8 +101,10 @@
           <td class="text-black">{{ citaTatto.fechaCreacion | formatMediumDatetime }}</td>
           <td class="text-black">{{ citaTatto.fechaCita | formatMediumDatetime }}</td>
           <td class="text-black">{{ citaTatto.hora }}</td>
-          <td class="text-black">{{ citaTatto.emailCliente }}</td>
-          <td class="text-black">
+
+          <!--
+             <td class="text-black">{{ citaTatto.emailCliente }}</td>
+            <td class="text-black">
             <a *ngIf="citaTatto.fotoDiseno" (click)="openFile(citaTatto.fotoDiseno, citaTatto.fotoDisenoContentType)">
               <img
                 [src]="'data:' + citaTatto.fotoDisenoContentType + ';base64,' + citaTatto.fotoDiseno"
@@ -100,7 +113,7 @@
               />
             </a>
             <span *ngIf="citaTatto.fotoDiseno">{{ citaTatto.fotoDisenoContentType }}, {{ byteSize(citaTatto.fotoDiseno) }}</span>
-          </td>
+          </td> -->
           <td class="text-black">{{ citaTatto.horaInicio }}</td>
           <td class="text-black">{{ citaTatto.horaFin }}</td>
           <td class="text-black">{{ citaTatto.valorTatto }}</td>

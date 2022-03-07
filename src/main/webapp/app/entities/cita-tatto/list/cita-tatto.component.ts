@@ -9,6 +9,7 @@ import { DataUtils } from 'app/core/util/data-util.service';
 import { Router } from '@angular/router';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { AlertService } from 'app/core/util/alert.service';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'jhi-cita-tatto',
@@ -22,6 +23,7 @@ export class CitaTattoComponent implements OnInit {
   hora = '';
   citaTatto?: ICitaTatto | null;
   estadoCita = [''];
+  fechaTatto?: dayjs.Dayjs | null;
 
   constructor(
     private storage: StateStorageService,
@@ -52,18 +54,30 @@ export class CitaTattoComponent implements OnInit {
     this.citaTatto.infoCliente = this.nombreCliente;
     this.citaTatto.hora = this.hora;
 
-    this.citaTattoService.citasPorFiltro(this.citaTatto).subscribe(
-      (res: HttpResponse<ICitaTatto[]>) => {
-        this.isLoading = false;
-        this.citaTattos = res.body ?? [];
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
+    if (this.nombreCliente || this.hora) {
+      this.citaTattoService.citasPorFiltro(this.citaTatto).subscribe(
+        (res: HttpResponse<ICitaTatto[]>) => {
+          this.isLoading = false;
+          this.citaTattos = res.body ?? [];
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+    } else if (this.fechaTatto != null) {
+      this.citaTattoService.cPorFecha(this.fechaTatto.toString()).subscribe(
+        (res: HttpResponse<ICitaTatto[]>) => {
+          this.citaTattos = res.body ?? [];
+        },
+        () => {
+          this.citaTattos = [];
+        }
+      );
+    }
   }
 
   ngOnInit(): void {
+    //this.fechaTatto = dayjs().startOf('day');
     this.loadAll();
   }
 

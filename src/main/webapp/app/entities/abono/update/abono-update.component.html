@@ -5,12 +5,7 @@
         Create or edit a Abono
       </h2>
 
-      <div>
-        <jhi-alert-error></jhi-alert-error>
-        <jhi-alert></jhi-alert>
-
-        <div class="row">
-          <div class="col-md-6 form-group">
+      <!-- <div class="col-md-6 form-group">
             <label class="form-control-label" jhiTranslate="preciadoTattoApp.abono.fechaAbono" for="field_fechaAbono">Fecha Abono</label>
             <div class="d-flex">
               <input
@@ -23,6 +18,12 @@
                 placeholder="YYYY-MM-DD HH:mm"
               />
             </div>
+          </div> -->
+      <div class="d-flex justify-content-center">
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label class="form-control-label" for="field_valorAbono">Valor Deuda</label>
+            <input class="form-control" type="number" readonly="true" name="deuda" id="deuda" data-cy="deuda" formControlName="deuda" />
           </div>
 
           <div class="col-md-6 form-group">
@@ -34,21 +35,36 @@
               id="field_valorAbono"
               data-cy="valorAbono"
               formControlName="valorAbono"
+              (keyup)="calcularDescuentos()"
               (keyup)="restarAbono()"
             />
-          </div>
-        </div>
 
-        <div class="row">
-          <div style="margin-left: 306px; margin-top: 21px" class="cold-md-4 form-group">
-            <label class="form-control-label" for="field_valorAbono">Valor Deuda</label>
-            <input type="number" readonly="true" name="deuda" id="deuda" data-cy="deuda" formControlName="deuda" />
+            <div style="margin-top: 5px" *ngIf="consultarCitaPerf && valorCaja > 0 && valorMafe > 0">
+              <table>
+                <thead class="table-dark">
+                  <th class="aqua-text">Valor Destinado Caja</th>
+                  <th class="aqua-text">Ganancia Maria Fernanda</th>
+                </thead>
+                <tbody style="background-color: white">
+                  <td style="color: black">{{ valorCaja }}</td>
+                  <td style="color: black">{{ valorMafe }}</td>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-dark aqua-text" (click)="previousState()">
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert style="text-align: center"></jhi-alert>
+      <div class="d-flex justify-content-center">
+        <button
+          style="margin-right: 10px"
+          type="button"
+          id="cancel-save"
+          data-cy="entityCreateCancelButton"
+          class="btn btn-dark aqua-text"
+          (click)="previousState()"
+        >
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 

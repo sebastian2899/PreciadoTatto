@@ -6,6 +6,9 @@ export interface ICitaPerforacion {
   fechaCreacion?: dayjs.Dayjs | null;
   fechaCita?: dayjs.Dayjs | null;
   hora?: string | null;
+  tipoCita?: string | null;
+  valorTotalDescuento?: number | null;
+  valorCaja?: number | null;
   nombreCliente?: string | null;
   valorPerforacion?: number | null;
   valorPagado?: number | null;
@@ -20,7 +23,10 @@ export class CitaPerforacion implements ICitaPerforacion {
     public fechaCita?: dayjs.Dayjs | null,
     public hora?: string | null,
     public nombreCliente?: string | null,
+    public tipoCita?: string | null,
+    public valorTotalDesuento?: number | null,
     public valorPerforacion?: number | null,
+    public valorCaja?: number | null,
     public valorPagado?: number | null,
     public valorDeuda?: number | null,
     public estado?: string | null

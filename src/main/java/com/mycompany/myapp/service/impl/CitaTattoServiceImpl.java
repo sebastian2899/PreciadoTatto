@@ -21,6 +21,7 @@ import com.mycompany.myapp.service.mapper.CitaTattoMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -78,7 +79,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
             citaTatto.estado("Pagada");
         }
 
-        //SE QUITAN LOS ESPACIOS EN BLANCO A TODAS LAS HORAS
+        // SE QUITAN LOS ESPACIOS EN BLANCO A TODAS LAS HORAS
         String hora = citaTatto.getHora();
         String formatoHora = hora.replaceAll("\\s+", "").strip();
         citaTatto.setHora(formatoHora);
@@ -117,6 +118,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
                 abono = new Abono();
                 abono.setIdCita(citaTatto.getId());
                 abono.setFechaAbono(citaTatto.getFechaCreacion());
+                abono.setTipoCita("Cita Preciado");
                 abono.setValorAbono(citaTatto.getValorPagado());
 
                 this.abonoRepository.save(abono);
@@ -130,7 +132,8 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     public MensajeValidacionCitaDTO validarFechaCita(CitaTattoDTO citaTatto) {
         MensajeValidacionCitaDTO mensajeValidacion = new MensajeValidacionCitaDTO();
 
-        //SE TOMA EL PRIMERO DIGITO DE CADA HORA DE LA CITA QUE SERA VALIDADA CON EL RESTO DE LAS CITAS EXISTENTES.
+        // SE TOMA EL PRIMERO DIGITO DE CADA HORA DE LA CITA QUE SERA VALIDADA CON EL
+        // RESTO DE LAS CITAS EXISTENTES.
 
         String hIni = citaTatto.getHoraInicio();
         String newHIni = hIni.substring(0, 1);
@@ -140,10 +143,10 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         String newHfn = hFn.substring(0, 1);
         int horaFn = Integer.parseInt(newHfn);
 
-        //VALIDACION CITA DISPONIBLE
+        // VALIDACION CITA DISPONIBLE
         List<CitaTatto> citas = citaTattoRepository.findAll();
         for (CitaTatto cita : citas) {
-            //SE TOMA EL PRIMERO DIGITO DE CADA HORA
+            // SE TOMA EL PRIMERO DIGITO DE CADA HORA
             String horaIni = cita.getHoraInicio();
             String newHoraIni = horaIni.substring(0, 1);
             int horaIm = Integer.parseInt(newHoraIni);
@@ -157,7 +160,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
                 (
                     !(horaIn <= horaIm && horaFn <= horaIm) &&
                     (!(horaIn > horFn && horaFn > horFn)) ||
-                    citaTatto.getHora().equals(cita.getHora())
+                    citaTatto.getHora().equalsIgnoreCase(cita.getHora())
                 )
             ) {
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -282,6 +285,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
 
         StringBuilder sb = new StringBuilder();
         Map<String, Object> filtros = new HashMap<>();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         sb.append(Constants.CITA_TATTO_BASE);
         if (citaTatto.getInfoCliente() != null && !citaTatto.getInfoCliente().isEmpty()) {
@@ -291,6 +295,13 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         if (citaTatto.getHora() != null && !citaTatto.getHora().isEmpty()) {
             sb.append(Constants.CITA_TATTO_HORA);
             filtros.put("hora", citaTatto.getHora());
+        }
+
+        if (citaTatto.getFechaCita() != null) {
+            Date date = Date.from(citaTatto.getFechaCita());
+            String fecha = format.format(date);
+            sb.append(Constants.CITA_TATTO_FECHA);
+            filtros.put("fechaCita", fecha);
         }
 
         sb.append(Constants.ORDENAR_CITAS_PORfECHA);
@@ -303,6 +314,22 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         List<CitaTatto> citas = q.getResultList();
 
         return citaTattoMapper.toDto(citas);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CitaTattoDTO> citasPorFecha(String fechaCita) {
+        log.debug("Request to get all citas tatto per date");
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+        String fechaCitaFormat = fechaCita.substring(0, fechaCita.indexOf("T"));
+
+        Query q = entityManager.createQuery(Constants.CITA_TATTO_FECHA).setParameter("fechaCita", fechaCitaFormat);
+
+        List<CitaTatto> citasFecha = q.getResultList();
+
+        return citaTattoMapper.toDto(citasFecha);
     }
 
     @Override
@@ -343,14 +370,14 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         File archivo = null;
         String nombreCita = null;
 
-        //Se declaran las 2 fechas con fecha actual
+        // Se declaran las 2 fechas con fecha actual
         Calendar fechaInicio = Calendar.getInstance();
         Calendar fechaFin = Calendar.getInstance();
 
-        //Se resta un mes a la fecha fin
+        // Se resta un mes a la fecha fin
         fechaFin.add(Calendar.MONTH, -1);
 
-        //SE TRANSFORMAN LAS FECHAS A INSTANT
+        // SE TRANSFORMAN LAS FECHAS A INSTANT
         Instant fechaIni = fechaInicio.toInstant();
         Instant fechaFn = fechaFin.toInstant();
 
@@ -460,7 +487,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         }
     }
 
-    //0 0 6 * * ?
+    // 0 0 6 * * ?
     @Scheduled(cron = "0 0 8 * * *")
     public void recordatorioCitas() {
         log.debug("Request to send mails");
@@ -471,7 +498,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
             ZonedDateTime zdt = ZonedDateTime.ofInstant(cita.getFechaCita(), ZoneId.systemDefault());
             Calendar cal = GregorianCalendar.from(zdt);
 
-            //SE RESTA UN DIA A LA FECHA DE LA CITA.
+            // SE RESTA UN DIA A LA FECHA DE LA CITA.
             cal.add(Calendar.DATE, -1);
             Calendar fechaActual = Calendar.getInstance();
 

@@ -19,4 +19,7 @@ public interface CitaPerforacionRepository extends JpaRepository<CitaPerforacion
 
     @Query("SELECT c FROM CitaPerforacion c WHERE c.fechaCita BETWEEN :fechaInicio AND :fechaFin")
     List<CitaPerforacion> citasPorFechas(@Param("fechaInicio") Instant fechaInicio, @Param("fechaFin") Instant fechaFin);
+
+    @Query("SELECT c FROM CitaPerforacion c WHERE c.id=:id")
+    CitaPerforacion citaPorId(@Param("id") Long id);
 }
