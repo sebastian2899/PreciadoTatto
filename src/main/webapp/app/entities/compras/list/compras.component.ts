@@ -13,6 +13,7 @@ import { ComprasDeleteDialogComponent } from '../delete/compras-delete-dialog.co
 export class ComprasComponent implements OnInit {
   compras?: ICompras[];
   isLoading = false;
+  pA = 1;
 
   constructor(protected comprasService: ComprasService, protected modalService: NgbModal) {}
 

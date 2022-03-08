@@ -6,9 +6,10 @@ import { CajaIngresosUpdateComponent } from './update/caja-ingresos-update.compo
 import { CajaIngresosDeleteDialogComponent } from './delete/caja-ingresos-delete-dialog.component';
 import { CajaIngresosRoutingModule } from './route/caja-ingresos-routing.module';
 import { CajaIngFechaComponent } from './caja-ing-fecha/caja-ing-fecha.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  imports: [SharedModule, CajaIngresosRoutingModule],
+  imports: [SharedModule, CajaIngresosRoutingModule, NgxPaginationModule],
   declarations: [
     CajaIngresosComponent,
     CajaIngresosDetailComponent,

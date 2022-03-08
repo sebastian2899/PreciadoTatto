@@ -6,9 +6,10 @@ import { EgresoUpdateComponent } from './update/egreso-update.component';
 import { EgresoDeleteDialogComponent } from './delete/egreso-delete-dialog.component';
 import { EgresoRoutingModule } from './route/egreso-routing.module';
 import { EgresoMesComponent } from './egreso-mes/egreso-mes.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  imports: [SharedModule, EgresoRoutingModule],
+  imports: [SharedModule, EgresoRoutingModule, NgxPaginationModule],
   declarations: [EgresoComponent, EgresoDetailComponent, EgresoUpdateComponent, EgresoDeleteDialogComponent, EgresoMesComponent],
   entryComponents: [EgresoDeleteDialogComponent],
 })

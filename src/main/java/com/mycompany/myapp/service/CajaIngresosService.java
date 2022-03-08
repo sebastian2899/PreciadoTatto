@@ -51,5 +51,7 @@ public interface CajaIngresosService {
 
     BigDecimal valoresDia();
 
+    byte[] reporteCajaIngresoMensual();
+
     RegistroHistoricoCajaDTO cajaIngresosFecha(Instant fechaInicio, Instant fechaFin);
 }

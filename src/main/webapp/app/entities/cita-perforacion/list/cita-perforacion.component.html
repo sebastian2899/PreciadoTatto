@@ -95,7 +95,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let citaPerforacion of citaPerforacions; trackBy: trackId" data-cy="entityTable">
+        <tr
+          *ngFor="let citaPerforacion of citaPerforacions | paginate: { itemsPerPage: 5, currentPage: pA }; trackBy: trackId"
+          data-cy="entityTable"
+        >
           <td class="text-black">{{ citaPerforacion.nombreCliente }}</td>
           <td class="text-black">{{ citaPerforacion.fechaCreacionInicial | formatMediumDatetime }}</td>
           <td class="text-black">{{ citaPerforacion.fechaCita | formatMediumDatetime }}</td>
@@ -156,5 +159,6 @@
         </tr>
       </tbody>
     </table>
+    <pagination-controls style="text-align: center" (pageChange)="pA = $event"></pagination-controls>
   </div>
 </div>

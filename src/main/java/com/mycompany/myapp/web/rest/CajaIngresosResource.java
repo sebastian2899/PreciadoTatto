@@ -170,6 +170,13 @@ public class CajaIngresosResource {
         return rhcd;
     }
 
+    @GetMapping("/generarReporteIngreso")
+    public ResponseEntity<byte[]> generarReporteIng() {
+        log.debug("REST request to generate report ");
+        byte[] reporte = cajaIngresosService.reporteCajaIngresoMensual();
+        return ResponseEntity.ok().body(reporte);
+    }
+
     @GetMapping("/caja-ingresosDia")
     public BigDecimal valorCajaDia() {
         log.debug("REST request to get all CajaIngresos");

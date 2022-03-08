@@ -22,6 +22,7 @@
 
   <div class="d-flex justify-content-center mb-2">
     <button class="btn btn-dark aqua-text" (click)="consultarCajaFecha()">
+      <mat-icon>find_in_page</mat-icon>
       <span>Consultar Caja mensual</span>
     </button>
   </div>
@@ -45,7 +46,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let cajaTattos of cajaTattos; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let cajaTattos of cajaTattos | paginate: { itemsPerPage: 5, currentPage: pA }; trackBy: trackId" data-cy="entityTable">
           <td class="text-black">{{ cajaTattos.valorTattoDia }}</td>
           <td class="text-black">{{ cajaTattos.valorRegistrado }}</td>
           <td class="text-black">{{ cajaTattos.diferencia }}</td>
@@ -80,5 +81,6 @@
         </tr>
       </tbody>
     </table>
+    <pagination-controls style="text-align: center" (pageChange)="pA = $event"></pagination-controls>
   </div>
 </div>

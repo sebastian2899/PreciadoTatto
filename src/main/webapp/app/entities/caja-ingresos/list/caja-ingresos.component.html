@@ -25,8 +25,12 @@
   <jhi-alert></jhi-alert>
   <div class="d-flex justify-content-center mb-2">
     <button [routerLink]="['/caja-ingresos/caja-ing-fecha']" class="btn btn-dark aqua-text mr-2">
-      <i class="fa-solid fa-magnifying-glass"></i>
+      <mat-icon style="position: relative; top: 7px">find_in_page</mat-icon>
       <span>Consultar Caja mensual</span>
+    </button>
+    <button (click)="generarReporteIngreso()" class="btn btn-dark aqua-text mr-2">
+      <mat-icon style="position: relative; top: 7px">picture_as_pdf</mat-icon>
+      <span>Generar Reporte Mensual (PDF)</span>
     </button>
   </div>
 
@@ -49,7 +53,10 @@
         </tr>
       </thead>
       <tbody style="background: radial-gradient(rgba(0, 255, 255, rgba(255, 255, 255, 0.474) 7), white)">
-        <tr *ngFor="let cajaIngresos of cajaIngresos; trackBy: trackId" data-cy="entityTable">
+        <tr
+          *ngFor="let cajaIngresos of cajaIngresos | paginate: { itemsPerPage: 5, currentPage: pA }; trackBy: trackId"
+          data-cy="entityTable"
+        >
           <td class="text-black">{{ cajaIngresos.valorVendidoDia }}</td>
           <td class="text-black">{{ cajaIngresos.valorRegistradoDia }}</td>
           <td class="text-black">{{ cajaIngresos.diferencia }}</td>
@@ -84,5 +91,6 @@
         </tr>
       </tbody>
     </table>
+    <pagination-controls style="text-align: center" (pageChange)="pA = $event"></pagination-controls>
   </div>
 </div>

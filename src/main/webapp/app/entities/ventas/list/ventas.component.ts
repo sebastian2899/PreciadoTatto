@@ -16,6 +16,7 @@ export class VentasComponent implements OnInit {
   ventas?: IVentas[];
   isLoading = false;
   nombre?: string | null;
+  pA = 1;
 
   constructor(protected ventasService: VentasService, protected modalService: NgbModal, protected clienteService: ClienteService) {}
 

@@ -15,6 +15,7 @@ export class EgresoComponent implements OnInit {
   egresos?: IEgreso[];
   isLoading = false;
   egresoDia?: number | null;
+  pA = 1;
 
   constructor(protected egresoService: EgresoService, protected modalService: NgbModal, protected alert: AlertService) {}
 

@@ -15,6 +15,7 @@ export class CajaTattosComponent implements OnInit {
   cajaTattos?: ICajaTattos[];
   isLoading = false;
   validCaja = true;
+  pA = 1;
 
   constructor(protected router: Router, protected cajaTattosService: CajaTattosService, protected modalService: NgbModal) {}
 

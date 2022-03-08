@@ -18,6 +18,7 @@ export class CajaIngresosService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/caja-ingresos');
   protected valorcajaDia = this.applicationConfigService.getEndpointFor('api/caja-ingresosDia');
   protected cajaFechas = this.applicationConfigService.getEndpointFor('api/cajaIngresosFecha');
+  protected generarReporte = this.applicationConfigService.getEndpointFor('api/generarReporteIngreso');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -39,6 +40,11 @@ export class CajaIngresosService {
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<ICajaIngresos>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  generarReport(): Observable<any> {
+    const httpOption = { responseType: 'arrayBuffer' as 'json' };
+    return this.http.get<any>(this.generarReporte, httpOption);
   }
 
   cajaDia(): Observable<NumberType> {

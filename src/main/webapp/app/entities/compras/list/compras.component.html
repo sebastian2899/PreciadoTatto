@@ -41,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let compras of compras; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let compras of compras | paginate: { itemsPerPage: 5, currentPage: pA }; trackBy: trackId" data-cy="entityTable">
           <td class="text-black">{{ compras.fechaCreacion | formatMediumDatetime }}</td>
           <td class="text-black">{{ compras.valorCompra }}</td>
           <td class="text-black">{{ compras.valorPagado }}</td>
@@ -78,5 +78,6 @@
         </tr>
       </tbody>
     </table>
+    <pagination-controls style="text-align: center" (pageChange)="pA = $event"></pagination-controls>
   </div>
 </div>

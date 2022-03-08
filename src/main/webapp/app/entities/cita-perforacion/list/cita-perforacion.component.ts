@@ -21,6 +21,7 @@ export class CitaPerforacionComponent implements OnInit {
   fechaCita?: dayjs.Dayjs | null;
   nombreCliente = '';
   hora = '';
+  pA = 1;
 
   constructor(
     protected citaPerforacionService: CitaPerforacionService,

@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICajaIngresos } from '../caja-ingresos.model';
 import { CajaIngresosService } from '../service/caja-ingresos.service';
 import { CajaIngresosDeleteDialogComponent } from '../delete/caja-ingresos-delete-dialog.component';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-caja-ingresos',
@@ -13,8 +14,9 @@ import { CajaIngresosDeleteDialogComponent } from '../delete/caja-ingresos-delet
 export class CajaIngresosComponent implements OnInit {
   cajaIngresos?: ICajaIngresos[];
   isLoading = false;
+  pA = 1;
 
-  constructor(protected cajaIngresosService: CajaIngresosService, protected modalService: NgbModal) {}
+  constructor(protected cajaIngresosService: CajaIngresosService, protected modalService: NgbModal, protected alert: AlertService) {}
 
   loadAll(): void {
     this.isLoading = true;
@@ -32,6 +34,22 @@ export class CajaIngresosComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+  }
+
+  generarReporteIngreso(): void {
+    this.cajaIngresosService.generarReport().subscribe(
+      (res: any) => {
+        const FILE = new Blob([res], { type: 'application/pdf' });
+        const url = URL.createObjectURL(FILE);
+        window.open(url);
+      },
+      () => {
+        this.alert.addAlert({
+          type: 'warning',
+          message: 'Error al generar el archivo PDF',
+        });
+      }
+    );
   }
 
   trackId(index: number, item: ICajaIngresos): number {

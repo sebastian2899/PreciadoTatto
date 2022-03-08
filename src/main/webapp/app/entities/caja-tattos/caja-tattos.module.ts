@@ -6,9 +6,10 @@ import { CajaTattosUpdateComponent } from './update/caja-tattos-update.component
 import { CajaTattosDeleteDialogComponent } from './delete/caja-tattos-delete-dialog.component';
 import { CajaTattosRoutingModule } from './route/caja-tattos-routing.module';
 import { CajaFechasComponent } from './caja-fechas/caja-fechas.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  imports: [SharedModule, CajaTattosRoutingModule],
+  imports: [SharedModule, CajaTattosRoutingModule, NgxPaginationModule],
   declarations: [
     CajaTattosComponent,
     CajaTattosDetailComponent,
