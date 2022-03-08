@@ -18,10 +18,10 @@ import com.mycompany.myapp.service.CitaTattoService;
 import com.mycompany.myapp.service.dto.CitaTattoDTO;
 import com.mycompany.myapp.service.dto.MensajeValidacionCitaDTO;
 import com.mycompany.myapp.service.mapper.CitaTattoMapper;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.text.ParseException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -367,7 +367,6 @@ public class CitaTattoServiceImpl implements CitaTattoService {
     @Override
     public byte[] generarReporteCitas() {
         Document documento = null;
-        File archivo = null;
         String nombreCita = null;
 
         // Se declaran las 2 fechas con fecha actual
@@ -386,7 +385,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
             documento = new Document();
-            nombreCita = "Reporte: " + citaTattos.size() + ".pdf";
+            nombreCita = "Reporte " + citaTattos.size() + ".pdf";
             FileOutputStream fileOutput = new FileOutputStream(nombreCita);
             PdfWriter.getInstance(documento, fileOutput);
             documento.open();
@@ -474,7 +473,7 @@ public class CitaTattoServiceImpl implements CitaTattoService {
             log.info("info generacion arhivo despues del close y delte" + nombreCita);
             documento.close();
 
-            return FileUtils.readFileToByteArray(new File(nombreCita));
+            return Files.readAllBytes(Paths.get(nombreCita));
         } catch (Exception e) {
             log.info("info generacion archivo: " + e);
             log.info("info generacion archivo: " + e.getMessage());

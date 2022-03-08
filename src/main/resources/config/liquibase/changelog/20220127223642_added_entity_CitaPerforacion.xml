@@ -38,7 +38,7 @@
             <column name="estado" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-             <column name="fecha_creacion_incial" type="${datetimeType}">
+             <column name="fecha_creacion_inicial" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
             <column name="tipo_cita" type="varchar(255)">

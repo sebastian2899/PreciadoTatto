@@ -13,9 +13,10 @@ import com.mycompany.myapp.service.CajaIngresosService;
 import com.mycompany.myapp.service.dto.CajaIngresosDTO;
 import com.mycompany.myapp.service.dto.RegistroHistoricoCajaDTO;
 import com.mycompany.myapp.service.mapper.CajaIngresosMapper;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
@@ -24,8 +25,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.apache.commons.io.FileUtils;
-import org.hibernate.hql.spi.id.AbstractTableBasedBulkIdHandler;
+//import org.apache.commons.io.FileUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -243,7 +244,7 @@ public class CajaIngresosServiceImpl implements CajaIngresosService {
             log.info("info generacion arhivo despues del close y delte" + nombreDocumento);
             document.close();
 
-            return FileUtils.readFileToByteArray(new File(nombreDocumento));
+            return Files.readAllBytes(Paths.get(nombreDocumento));
         } catch (Exception e) {
             log.info("info generacion archivo: " + e);
             log.info("info generacion archivo: " + e.getMessage());

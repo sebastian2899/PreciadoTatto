@@ -13,9 +13,10 @@ import com.mycompany.myapp.repository.EgresoRepository;
 import com.mycompany.myapp.service.EgresoService;
 import com.mycompany.myapp.service.dto.EgresoDTO;
 import com.mycompany.myapp.service.mapper.EgresoMapper;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
@@ -24,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -213,7 +213,7 @@ public class EgresoServiceImpl implements EgresoService {
             log.debug("Generacion antes del close");
             documento.close();
 
-            return FileUtils.readFileToByteArray(new File(nombreDocumento));
+            return Files.readAllBytes(Paths.get(nombreDocumento));
         } catch (Exception e) {
             log.info("info generacion archivo: " + e);
             log.info("info generacion archivo: " + e.getMessage());

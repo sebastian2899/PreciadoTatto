@@ -20,9 +20,10 @@ import com.mycompany.myapp.service.CitaPerforacionService;
 import com.mycompany.myapp.service.dto.CitaPerforacionDTO;
 import com.mycompany.myapp.service.dto.MensajeValidacionCitaDTO;
 import com.mycompany.myapp.service.mapper.CitaPerforacionMapper;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Calendar;
@@ -34,7 +35,6 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -362,7 +362,7 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
             document = new Document();
-            nombreDocumento = "Reporte: " + citasPorMes.size() + ".pdf";
+            nombreDocumento = "Reporte " + citasPorMes.size() + ".pdf";
             FileOutputStream fileOutput = new FileOutputStream(nombreDocumento);
             PdfWriter.getInstance(document, fileOutput);
             document.open();
@@ -450,7 +450,7 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
             log.info("info generacion arhivo despues del close y delte" + nombreDocumento);
             document.close();
 
-            return FileUtils.readFileToByteArray(new File(nombreDocumento));
+            return Files.readAllBytes(Paths.get(nombreDocumento));
         } catch (Exception e) {
             log.info("info generacion archivo: " + e);
             log.info("info generacion archivo: " + e.getMessage());

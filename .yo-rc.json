@@ -56,6 +56,9 @@
       "Abono",
       "GaleriaFotos"
     ],
-    "lastLiquibaseTimestamp": 1645792683000
+    "lastLiquibaseTimestamp": 1645792683000,
+    "herokuAppName": "preciado-tatto",
+    "herokuDeployType": "jar",
+    "herokuJavaVersion": "11"
   }
 }
