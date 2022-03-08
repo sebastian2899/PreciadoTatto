@@ -10,6 +10,11 @@ import java.util.Objects;
  */
 public class AbonoDTO implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     private Long id;
 
     private Instant fechaAbono;
