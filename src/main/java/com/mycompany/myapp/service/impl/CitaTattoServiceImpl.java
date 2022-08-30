@@ -80,21 +80,16 @@ public class CitaTattoServiceImpl implements CitaTattoService {
         }
 
         // SE QUITAN LOS ESPACIOS EN BLANCO A TODAS LAS HORAS
-        String hora = citaTatto.getHora();
-        String formatoHora = hora.replaceAll("\\s+", "").strip();
-        citaTatto.setHora(formatoHora);
+        citaTatto.setHora(citaTattoDTO.getHora().replaceAll("\\s+", "").strip());
 
-        String horaInicio = citaTatto.getHoraInicio();
-        String horaIniFormat = horaInicio.replaceAll("\\s+", "").strip();
-        citaTatto.setHoraInicio(horaIniFormat);
+        citaTatto.setHoraInicio(citaTattoDTO.getHoraInicio().replaceAll("\\s+", "").strip());
 
-        String horaFin = citaTatto.getHoraFin();
-        String horaFinFormat = horaFin.replaceAll("\\s+", "");
-        citaTatto.setHoraFin(horaFinFormat);
+        citaTatto.setHoraFin(citaTattoDTO.getHoraFin().replaceAll("\\s+", ""));
 
         if (citaTattoDTO.getValorPagado() == null) {
             citaTattoDTO.setValorPagado(BigDecimal.ZERO);
         }
+        citaTattoDTO.setValorPagado(citaTatto.getValorPagado() == null ? BigDecimal.ZERO : citaTattoDTO.getValorPagado());
 
         if (citaTatto.getFechaCita().isBefore(Instant.now())) {
             citaTatto.setEstadoCita("Finalizada");
@@ -111,18 +106,16 @@ public class CitaTattoServiceImpl implements CitaTattoService {
             enviarCorreoConfirmacion(citaTatto);
         }
 
-        if (citaTattoDTO.getId() == null) {
+        if (citaTattoDTO.getId() == null && citaTatto.getValorTatto() != null) {
             Abono abono = null;
 
-            if (citaTatto.getValorPagado() != null) {
-                abono = new Abono();
-                abono.setIdCita(citaTatto.getId());
-                abono.setFechaAbono(citaTatto.getFechaCreacion());
-                abono.setTipoCita("Cita Preciado");
-                abono.setValorAbono(citaTatto.getValorPagado());
+            abono = new Abono();
+            abono.setIdCita(citaTatto.getId());
+            abono.setFechaAbono(citaTatto.getFechaCreacion());
+            abono.setTipoCita("Cita Preciado");
+            abono.setValorAbono(citaTatto.getValorPagado());
 
-                this.abonoRepository.save(abono);
-            }
+            this.abonoRepository.save(abono);
         }
 
         return citaTattoMapper.toDto(citaTatto);

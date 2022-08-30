@@ -74,7 +74,7 @@ export class VentasUpdateComponent implements OnInit {
     });
     this.consultarProductos();
     this.consultarCliente();
-    this.modal.open(this.content);
+    //this.modal.open(this.content);
   }
 
   previousState(): void {
@@ -114,89 +114,78 @@ export class VentasUpdateComponent implements OnInit {
     );
   }
 
-  validarCant(): void {
-    const cantidadForm = this.editForm.get(['cantidad'])!.value;
-    if (cantidadForm === 0 || cantidadForm === null || cantidadForm === undefined || cantidadForm < 0) {
-      this.cantidadCero = true;
-      this.validarCantidad = true;
-      this.modal.open(this.content);
-    } else {
-      this.cantidadCero = false;
-    }
-  }
+  // cantProducto(cant?: number, producto?: IProducto): void {
+  //   const idProducto = this.editForm.get(['producto'])!.value;
+  //   const cantidadForm = this.editForm.get(['cantidad'])!.value;
+  //   let cantTotal = 0;
 
-  cantProducto(cant?: number, producto?: IProducto): void {
-    const idProducto = this.editForm.get(['producto'])!.value;
-    const cantidadForm = this.editForm.get(['cantidad'])!.value;
-    let cantTotal = 0;
+  //   let resp = false;
+  //   let resp2 = false;
 
-    let resp = false;
-    let resp2 = false;
+  //   this.productoService.find(idProducto).subscribe((res: HttpResponse<IProducto>) => {
+  //     this.productoValores = res.body;
+  //     this.cantidad = this.productoValores?.cantidad;
+  //     this.nombre = this.productoValores?.nombre;
 
-    this.productoService.find(idProducto).subscribe((res: HttpResponse<IProducto>) => {
-      this.productoValores = res.body;
-      this.cantidad = this.productoValores?.cantidad;
-      this.nombre = this.productoValores?.nombre;
+  //     //Recorro la lista para saber si el producto seleccionado se encuenta en la lista y validar si la suma de la cantidad acutal
+  //     //mas la suma digitada sobrepasa la cantidad totdal de productos disponibles
 
-      //Recorro la lista para saber si el producto seleccionado se encuenta en la lista y validar si la suma de la cantidad acutal
-      //mas la suma digitada sobrepasa la cantidad totdal de productos disponibles
+  //     if (this.productosSeleccionados.length > 0) {
+  //       for (let i = 0; i < this.productosSeleccionados.length; i++) {
+  //         if (this.productosSeleccionados[i].id === Number(idProducto)) {
+  //           const cantActual = this.productosSeleccionados[i].cantidad;
+  //           cantTotal = Number(cantidadForm) + Number(cantActual);
+  //           break;
+  //         }
+  //       }
+  //     }
 
-      if (this.productosSeleccionados.length > 0) {
-        for (let i = 0; i < this.productosSeleccionados.length; i++) {
-          if (this.productosSeleccionados[i].id === Number(idProducto)) {
-            const cantActual = this.productosSeleccionados[i].cantidad;
-            cantTotal = Number(cantidadForm) + Number(cantActual);
-            break;
-          }
-        }
-      }
+  //     if (this.cantidad && this.productoValores) {
+  //       if (
+  //         cantidadForm > this.cantidad ||
+  //         (cant! > this.cantidad ? (resp = true) : (resp = false)) ||
+  //         (cantTotal > this.cantidad ? (resp2 = true) : (resp = false))
+  //       ) {
+  //         if (resp) {
+  //           //this.eliminarProductoSeleccionado(producto!);
+  //           this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
+  //           que se esta seleccionando ${String(cantidadForm)} y solo hay ${String(this.productoValores.cantidad)} productos
+  //           disponibles.`;
+  //           this.modal.open(this.content2);
+  //           this.validarCantidad = true;
+  //           return;
+  //         } else if (resp2) {
+  //           this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
+  //           que se esta seleccionando ${String(cantTotal)} y solo hay ${String(this.productoValores.cantidad)} productos
+  //           disponibles.`;
+  //           this.modal.open(this.content2);
+  //           this.validarCantidad = true;
+  //           return;
+  //         } else {
+  //           //this.eliminarProductoSeleccionado(producto!);
+  //           this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
+  //           que se esta seleccionando ${String(cantidadForm)} y solo hay ${String(this.productoValores.cantidad)} productos
+  //           disponibles.`;
+  //           this.modal.open(this.content2);
+  //           this.modalCantidad = true;
+  //           this.validarCantidad = true;
+  //           return;
+  //         }
+  //       } else {
+  //         this.modalCantidad = false;
+  //         this.alert.addAlert({
+  //           type: 'info',
+  //           message: 'Cantidad disponible.',
+  //         });
+  //         this.modalCantidad = false;
 
-      if (this.cantidad && this.productoValores) {
-        if (
-          cantidadForm > this.cantidad ||
-          (cant! > this.cantidad ? (resp = true) : (resp = false)) ||
-          (cantTotal > this.cantidad ? (resp2 = true) : (resp = false))
-        ) {
-          if (resp) {
-            //this.eliminarProductoSeleccionado(producto!);
-            this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
-            que se esta seleccionando ${String(cantidadForm)} y solo hay ${String(this.productoValores.cantidad)} productos
-            disponibles.`;
-            this.modal.open(this.content2);
-            this.validarCantidad = true;
-            return;
-          } else if (resp2) {
-            this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
-            que se esta seleccionando ${String(cantTotal)} y solo hay ${String(this.productoValores.cantidad)} productos
-            disponibles.`;
-            this.modal.open(this.content2);
-            this.validarCantidad = true;
-            return;
-          } else {
-            //this.eliminarProductoSeleccionado(producto!);
-            this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoValores.nombre)}, ya
-            que se esta seleccionando ${String(cantidadForm)} y solo hay ${String(this.productoValores.cantidad)} productos
-            disponibles.`;
-            this.modal.open(this.content2);
-            this.modalCantidad = true;
-            this.validarCantidad = true;
-            return;
-          }
-        } else {
-          this.modalCantidad = false;
-          this.alert.addAlert({
-            type: 'info',
-            message: 'Cantidad disponible.',
-          });
-          this.modalCantidad = false;
+  //         return;
+  //       }
+  //     }
+  //   });
 
-          return;
-        }
-      }
-    });
-
-    this.validarCantidad = false;
-  }
+  //   this.validarCantidad = false;
+  // }
 
   eliminarProductoSeleccionado(producto: IProducto): void {
     const index = this.productosSeleccionados.indexOf(producto);
@@ -222,32 +211,48 @@ export class VentasUpdateComponent implements OnInit {
 
     const idActual = this.productoSeleccionado?.id;
 
-    if (this.productosSeleccionados.length > 0) {
-      this.cantSuma = this.editForm.get(['cantidad'])!.value;
+    if (this.productosSeleccionados.length > 0 || this.productoSeleccionado) {
+      this.cantidad = this.editForm.get(['cantidad'])!.value;
       for (let i = 0; i < this.productosSeleccionados.length; i++) {
         if (this.productosSeleccionados[i].id === idActual) {
-          if (this.productoSeleccionado?.cantidad && this.cantSuma && this.productoSeleccionado.precio) {
-            this.productoSeleccionado.cantidad += this.cantSuma;
-            this.cantProducto(this.productoSeleccionado.cantidad, this.productoSeleccionado);
-            this.productoSeleccionado.valorTotal = this.productoSeleccionado.cantidad * this.productoSeleccionado.precio;
+          const cant = this.productosSeleccionados[i].cantidadSeleccionada! + this.cantidad!;
+          if (Number(cant) > this.productosSeleccionados[i].cantidad!) {
+            this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productosSeleccionados[i].nombre!)}, ya
+              que se esta seleccionando ${String(cant)} y solo hay ${String(this.productosSeleccionados[i].cantidad)} productos
+               disponibles.`;
+            this.alert.addAlert({
+              type: 'danger',
+              message: this.mensajeCantidad,
+            });
+          } else {
+            this.productosSeleccionados[i].cantidadSeleccionada = Number(cant);
+            this.productosSeleccionados[i].valorTotal =
+              this.productosSeleccionados[i].cantidadSeleccionada! * this.productosSeleccionados[i].precio!;
           }
-
           break;
         }
       }
     }
 
     if (this.productoSeleccionado && this.productosSeleccionados.includes(this.productoSeleccionado) === false) {
-      this.productoSeleccionado.cantidad = this.editForm.get(['cantidad'])!.value;
-      if (this.productoSeleccionado.cantidad && this.productoSeleccionado.precio) {
-        this.productoSeleccionado.cantidadDisponible = this.cantidad;
-        this.productoSeleccionado.valorTotal = this.productoSeleccionado.precio * this.productoSeleccionado.cantidad;
+      this.productoSeleccionado.cantidadSeleccionada = this.editForm.get(['cantidad'])!.value;
+      this.productoSeleccionado.valorTotal = this.productoSeleccionado.precio! * this.productoSeleccionado.cantidadSeleccionada!;
+      if (this.productoSeleccionado.cantidadSeleccionada! > this.productoSeleccionado.cantidad!) {
+        this.mensajeCantidad = `No se puede seleccionar el producto ${String(this.productoSeleccionado.nombre)}, 
+            estas seleccionando ${String(this.productoSeleccionado.cantidadSeleccionada)} y solo hay ${String(
+          this.productoSeleccionado.cantidad
+        )} disponibles`;
+        this.alert.addAlert({
+          type: 'danger',
+          message: this.mensajeCantidad,
+        });
+      } else {
         this.validarCantidad = true;
+        this.productosSeleccionados.push(this.productoSeleccionado);
       }
-
-      this.productosSeleccionados.push(this.productoSeleccionado);
     }
 
+    this.productoSeleccionado = null;
     this.calcularValores();
     this.editForm.get(['producto'])?.setValue(null);
     this.editForm.get(['cantidad'])?.setValue(null);

@@ -20,35 +20,11 @@
           <div class="cold-md-3 form-group">
             <label class="form-control-label text-black" for="field_cantidad">Cantidad</label>
 
-            <input
-              (keyup)="validarCant()"
-              type="number"
-              class="form-control"
-              name="cantidad"
-              id="field_cantidad"
-              data-cy="cantidad"
-              formControlName="cantidad"
-            />
+            <input type="number" class="form-control" name="cantidad" id="field_cantidad" data-cy="cantidad" formControlName="cantidad" />
           </div>
 
           <div class="col-md-4 form-group">
-            <button
-              [disabled]="cantidadCero"
-              style="margin-top: 32px; margin-right: 8px"
-              (click)="cantProducto()"
-              type="button"
-              class="btn btn-dark aqua-text"
-            >
-              <span>Validar</span>
-            </button>
-
-            <button
-              [disabled]="validarCantidad"
-              style="margin-top: 32px"
-              (click)="agregarProducto()"
-              type="button"
-              class="btn btn-dark aqua-text"
-            >
+            <button style="margin-top: 32px" (click)="agregarProducto()" type="button" class="btn btn-dark aqua-text">
               <span>Seleccionar</span>
             </button>
           </div>
@@ -68,10 +44,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let producto of productosSeleccionados">
-                <td>{{ producto.nombre }}</td>
+                <td>
+                  {{ producto.nombre }} <img [src]="'data:' + producto.fotoContentType + ';base64,' + producto.foto" style="width: 30%" />
+                </td>
                 <td>{{ producto.precio }}</td>
-                <td>{{ producto.cantidadDisponible }}</td>
                 <td>{{ producto.cantidad }}</td>
+                <td>{{ producto.cantidadSeleccionada }}</td>
                 <td>{{ producto.valorTotal | currency: '$' }}</td>
                 <td>
                   <div class="btn-group">

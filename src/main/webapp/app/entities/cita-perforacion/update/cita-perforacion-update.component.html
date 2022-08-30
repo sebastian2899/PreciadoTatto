@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col-8">
+  <div class="col-12">
     <form style="padding: 31px" name="editForm" role="form" class="color-toggle" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-cita-perforacion-heading" data-cy="CitaPerforacionCreateUpdateHeading" class="text-black">
         {{ titulo }}
@@ -49,7 +49,7 @@
             </div>
           </div>
 
-          <div class="col-md-4 form-group">
+          <div class="col-md-6 form-group">
             <label for="tipoCita" class="form-control-label text-black">Tipo De Cita</label>
             <select
               (blur)="calcularDescuentos()"

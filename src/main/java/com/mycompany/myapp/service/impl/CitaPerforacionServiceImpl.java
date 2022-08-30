@@ -79,23 +79,11 @@ public class CitaPerforacionServiceImpl implements CitaPerforacionService {
         CitaPerforacion citaPerforacion = citaPerforacionMapper.toEntity(citaPerforacionDTO);
         citaPerforacion.setFechaCreacionInicial(Instant.now());
 
-        if (citaPerforacion.getFechaCita().isAfter(Instant.now())) {
-            citaPerforacion.setEstadoCita("Pendiente");
-        } else {
-            citaPerforacion.setEstadoCita("Finalizada.");
-        }
+        citaPerforacion.setEstadoCita(citaPerforacion.getFechaCita().isAfter(Instant.now()) ? "Pendiente" : "Finalizaada");
 
-        citaPerforacion.setEstado("Deuda");
+        citaPerforacion.setEstado(citaPerforacionDTO.getValorDeuda().equals(BigDecimal.ZERO) ? "Pagada" : "Deuda");
 
-        if (citaPerforacionDTO.getValorDeuda().equals(BigDecimal.ZERO)) {
-            citaPerforacion.setEstado("Pagada");
-        }
-
-        if (citaPerforacion.getValorPagado() == null) {
-            citaPerforacion.setFechaCreacion(null);
-        } else {
-            citaPerforacion.setFechaCreacion(Instant.now());
-        }
+        citaPerforacion.setFechaCreacion(citaPerforacion.getValorPagado() == null ? null : Instant.now());
 
         citaPerforacion = citaPerforacionRepository.save(citaPerforacion);
 

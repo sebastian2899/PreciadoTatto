@@ -7,6 +7,8 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICajaIngresos, getCajaIngresosIdentifier } from '../caja-ingresos.model';
 import { ICajaFechaIngresos } from '../caja-fechas.';
+import * as dayjs from 'dayjs';
+import { map } from 'rxjs/operators';
 
 export type EntityResponseType = HttpResponse<ICajaIngresos>;
 export type EntityArrayResponseType = HttpResponse<ICajaIngresos[]>;
@@ -23,13 +25,17 @@ export class CajaIngresosService {
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(cajaIngresos: ICajaIngresos): Observable<EntityResponseType> {
-    return this.http.post<ICajaIngresos>(this.resourceUrl, cajaIngresos, { observe: 'response' });
+    return this.http
+      .post<ICajaIngresos>(this.resourceUrl, cajaIngresos, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   update(cajaIngresos: ICajaIngresos): Observable<EntityResponseType> {
-    return this.http.put<ICajaIngresos>(`${this.resourceUrl}/${getCajaIngresosIdentifier(cajaIngresos) as number}`, cajaIngresos, {
-      observe: 'response',
-    });
+    return this.http
+      .put<ICajaIngresos>(`${this.resourceUrl}/${getCajaIngresosIdentifier(cajaIngresos) as number}`, cajaIngresos, {
+        observe: 'response',
+      })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   partialUpdate(cajaIngresos: ICajaIngresos): Observable<EntityResponseType> {
@@ -39,7 +45,9 @@ export class CajaIngresosService {
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<ICajaIngresos>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http
+      .get<ICajaIngresos>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   generarReport(): Observable<any> {
@@ -53,7 +61,9 @@ export class CajaIngresosService {
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<ICajaIngresos[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http
+      .get<ICajaIngresos[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   cajaIngFechas(fechaInicio: string, fechaFin: string): Observable<CajaFechasType> {
@@ -84,5 +94,27 @@ export class CajaIngresosService {
       return [...cajaIngresosToAdd, ...cajaIngresosCollection];
     }
     return cajaIngresosCollection;
+  }
+
+  protected convertDateFromClient(cajaTattoo: ICajaIngresos): ICajaIngresos {
+    return Object.assign({}, cajaTattoo, {
+      fechaCreacion: cajaTattoo.fechaCreacion?.isValid() ? cajaTattoo.fechaCreacion.toJSON() : undefined,
+    });
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.fechaCreacion = res.body.fechaCreacion ? dayjs(res.body.fechaCreacion) : undefined;
+    }
+    return res;
+  }
+
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((cajaIngresos: ICajaIngresos) => {
+        cajaIngresos.fechaCreacion = cajaIngresos.fechaCreacion ? dayjs(cajaIngresos.fechaCreacion) : undefined;
+      });
+    }
+    return res;
   }
 }

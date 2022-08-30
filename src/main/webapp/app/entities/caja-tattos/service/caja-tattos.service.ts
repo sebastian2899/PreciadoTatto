@@ -40,7 +40,9 @@ export class CajaTattosService {
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http.get<ICajaTattos>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http
+      .get<ICajaTattos>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   valorDia(): Observable<NumberType> {
@@ -55,7 +57,9 @@ export class CajaTattosService {
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<ICajaTattos[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http
+      .get<ICajaTattos[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

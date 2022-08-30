@@ -43,6 +43,9 @@
       <thead>
         <tr>
           <th class="text-black" scope="col">
+            <span>Fecha Creación</span>
+          </th>
+          <th class="text-black" scope="col">
             <span jhiTranslate="preciadoTattoApp.cajaIngresos.valorVendidoDia">Valor Vendido Dia</span>
           </th>
           <th class="text-black" scope="col">
@@ -57,6 +60,7 @@
           *ngFor="let cajaIngresos of cajaIngresos | paginate: { itemsPerPage: 5, currentPage: pA }; trackBy: trackId"
           data-cy="entityTable"
         >
+          <td class="text-black">{{ cajaIngresos.fechaCreacion | formatMediumDatetime }}</td>
           <td class="text-black">{{ cajaIngresos.valorVendidoDia }}</td>
           <td class="text-black">{{ cajaIngresos.valorRegistradoDia }}</td>
           <td class="text-black">{{ cajaIngresos.diferencia }}</td>

@@ -20,7 +20,8 @@
       "id": "ID",
       "valorTattoDia": "Valor Tatto Dia",
       "valorRegistrado": "Valor Registrado",
-      "diferencia": "Diferencia"
+      "diferencia": "Diferencia",
+      "fechaCreacion": "fechaCreacion"
     }
   }
 }

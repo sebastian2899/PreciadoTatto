@@ -22,27 +22,27 @@
           <span> Filtrar </span>
         </button>
       </div>
-
-      <div style="margin-left: 360px; height: 42px; margin-top: 39px" class="d-flex justify-content-end">
-        <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
-          <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-          <span jhiTranslate="preciadoTattoApp.producto.home.refreshListLabel">Refresh List</span>
-        </button>
-
-        <button
-          id="jh-create-entity"
-          data-cy="entityCreateButton"
-          class="btn btn-dark aqua-text jh-create-entity create-producto"
-          [routerLink]="['/producto/new']"
-        >
-          <fa-icon icon="plus"></fa-icon>
-          <span jhiTranslate="preciadoTattoApp.producto.home.createLabel"> Create a new Producto </span>
-        </button>
-      </div>
     </div>
   </h2>
 
-  <div style="margin-top: -73px" class="d-flex justify-content-center">
+  <div class="mb-3 d-flex justify-content-end">
+    <button class="btn btn-dark aqua-text mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      <span jhiTranslate="preciadoTattoApp.producto.home.refreshListLabel">Refresh List</span>
+    </button>
+
+    <button
+      id="jh-create-entity"
+      data-cy="entityCreateButton"
+      class="btn btn-dark aqua-text jh-create-entity create-producto"
+      [routerLink]="['/producto/new']"
+    >
+      <fa-icon icon="plus"></fa-icon>
+      <span jhiTranslate="preciadoTattoApp.producto.home.createLabel"> Create a new Producto </span>
+    </button>
+  </div>
+
+  <div class="d-flex justify-content-center">
     <div style="width: 295px; margin-bottom: 8px" *ngIf="prodAgotados!.length > 0">
       <h5 class="aqua-text">Productos agotados en el momento:</h5>
       <ul class="list-group">
